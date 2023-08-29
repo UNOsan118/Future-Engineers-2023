@@ -1,4 +1,4 @@
-import hub # 本戦用
+import hub # 本戦用 #2023
 import time
 import re
 from gyro_testUNO import Gyro_remake
