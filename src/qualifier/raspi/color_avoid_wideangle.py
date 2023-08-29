@@ -1,4 +1,4 @@
-# カラー検出及び制御量の算出と制御 # オープンチャレンジ(旧予選)用 # テスト用 # 2023
+# カラー検出及び制御量の算出と制御 # オープンチャレンジ用 # テスト用 # 2023
 import serial
 import time
 import color_tracking_remake
