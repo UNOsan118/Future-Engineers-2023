@@ -71,16 +71,6 @@ while True:
         black_left_ratio
     ) = color_tracking_remake.detect_sign_area(cap)
 
-    # 黒色の比の大きさでどこの壁なのかを特定
-    if black_right_ratio > 0.75 and black_left_ratio > 0.75:
-        wall_right = True
-        wall_left = True
-    elif black_right_ratio > 0.4 or black_left_ratio > 0.4:
-        if black_right_ratio > black_left_ratio:
-            wall_right = True
-        else:
-            wall_left = True
-
     area_red = blob_red["area"]
     area_green = blob_green["area"]
 
@@ -322,7 +312,7 @@ while True:
             and center_ratio_green < 0.7
             and green_ratio < 0.005
         ):
-            sign_flag = 6
+            # sign_flag = 6
             rmode = 1
             #steer = 50
         if (
@@ -330,7 +320,7 @@ while True:
             or (sign_flag == 2 and center_ratio_green > 0.7 and green_ratio < 0.012)
         ) and blue_center_y < 1:
             rmode = 1
-            sign_flag = 6
+            # sign_flag = 6
             #steer = 90 # 120
             speed = speed #- 20
         elif sign_flag == 2 and center_ratio_green <= 0.65:
@@ -346,7 +336,7 @@ while True:
             and center_red_x / width > 0.3
             and red_ratio < 0.005 #0.012
         ):
-            sign_flag = 6
+            # sign_flag = 6
             rmode = 2
             #steer = -50
         if (
@@ -354,13 +344,23 @@ while True:
             or (sign_flag == 1 and center_red_x / width < 0.4 and red_ratio < 0.012)
         ) and orange_center_y < 1:
             rmode = 2
-            sign_flag = 6
+            # sign_flag = 6
             #steer = -90 # 120
             speed = speed #- 20
         elif sign_flag == 1 and center_red_x / width >= 0.35:
             rmode = 2
         else:
             rmode = 2
+
+    # 黒色の比の大きさでどこの壁なのかを特定
+    if black_right_ratio > 0.75 and black_left_ratio > 0.75:
+        wall_right = True
+        wall_left = True
+    elif black_right_ratio > 0.35 or black_left_ratio > 0.35:
+        if black_right_ratio > black_left_ratio:
+            wall_right = True
+        else:
+            wall_left = True
 
     # print("r_ratio", black_right_ratio)
     # print("l_ratio", black_left_ratio)
@@ -371,11 +371,15 @@ while True:
             sign_flag = 7
             steer = -30
             speed =30
+        elif black_right_ratio > 0.85:
+            sign_flag = 4
+            steer = -70
+            speed = 30
         elif sign_flag == 2:
             pass
         else:
             sign_flag = 4
-            steer = -70
+            steer = -50
             speed = 30
 
     # 左壁が近い時の処理
@@ -384,11 +388,15 @@ while True:
             sign_flag = 8
             steer = 30
             speed = 30
+        elif black_left_ratio > 0.85:
+            sign_flag = 4
+            steer = 70
+            speed = 30
         elif sign_flag == 1:
             pass
         else:
             sign_flag = 4
-            steer = 70
+            steer = 50
             speed = 30
 
     # 正面に壁がある時の処理
@@ -428,7 +436,7 @@ while True:
 
     else: # 何かしら標識がみえる
         if red_ratio > green_ratio: # 赤の占める面積が大きい
-            if green_ratio > 0.001:
+            if green_ratio > 0.0015:
                 if center_green_y > 0.65:
                     over_sign = 1
                 else:
@@ -447,7 +455,7 @@ while True:
                 pass
 
         else: # 緑の占める面積が大きい
-            if red_ratio > 0.001: # 緑のほうが近いのに赤の標識を認識する
+            if red_ratio > 0.0015: # 緑のほうが近いのに赤の標識を認識する
                 if center_red_y > 0.65:
                     over_sign = 2
                 else:
