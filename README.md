@@ -1,12 +1,13 @@
-Engineering materials [石川高専B]
+Engineering materials [National Institute of Technology, Ishikawa College]
 ====
-This repository contains materials for participating in WRO Future Engineers2022.
+This repository contains materials for participating in WRO Future Engineers2023.
 
 ## Team members.
 ***
 Shinichi Uno
-Toshiyuki Mannen
-Shunsuke Sakai (Coach)
+Akimasa Hiu
+Kandai Kita
+Makoto Koshino (Coach)
 
 ## Contents
 ***
