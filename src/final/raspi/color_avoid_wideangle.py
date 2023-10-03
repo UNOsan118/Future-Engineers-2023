@@ -9,7 +9,7 @@ import numpy as np
 ser = serial.Serial("/dev/ttyAMA1", 115200)
 throttle = 80
 
-data_dir = "/home/pi/WRO2022/data"
+data_dir = "/home/pi/WRO2023/data"
 save_dir = os.path.join(data_dir, "train")
 SAVE_FPS = 0.5
 
@@ -499,7 +499,7 @@ while True:
 
     cmd = "{:4d},{:3d},{},{},{:3d}@".format(steer_int, speed, sign_flag, rmode, over_sign)
     # print(cmd)
-    ser.write(cmd.encode("utf-8"))
+    ser.write(cmd.encode("utf-8")) #シリアル
     # print(cmd.encode("utf-8"))
 
     for i in range(1):  # 読み飛ばす処理（遅延して昔の値を取っている場合があるため）

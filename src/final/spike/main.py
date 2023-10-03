@@ -46,7 +46,7 @@ if True:
         print(reply)
         if reply == b"":
             break
-
+    
     end = time.ticks_us()
     print("elapse_time: {}[ms]".format((end - start) / 1000))
     print("--waiting RasPi--")

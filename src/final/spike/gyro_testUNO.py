@@ -14,7 +14,7 @@ class Gyro_remake(Basic_motion):
 
         self.motor_steer = motor_steer
         self.motor = motor
-        self.past_change = 0  # 0change 1back
+        self.past_change = 0  # 0change,1back
 
         self.section_count = -1
         self.sign_count = 0
