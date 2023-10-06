@@ -79,9 +79,6 @@ The `change_steer()` function changes the direction in which the car should go (
 It requests the speed of the drive motor (throttle) as argument 1 and the turning direction of the car body (rot) as argument 2. (Argument 3 is basically not used.)
 Change the reference angle to be used in straightening() when the vehicle recognizes the blue or orange line.
 
-The `back_turn()` function turns the car backward after changing the reference angle of the car body.
-Argument 1 requests the speed of the drive motor (throttle), argument 2 requests the turning direction of the body (rot), and argument 3 specifies the amount of straight-line movement of the body (go_distance).
-When the vehicle recognizes the blue or orange line, the reference angle is changed after the vehicle body moves straight ahead by the amount of go_distance.
 
 # Writing and executing programs to SPIKE Hub
 ***
