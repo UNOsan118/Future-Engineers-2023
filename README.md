@@ -16,6 +16,7 @@ Makoto Koshino (Coach)
 * `video` YouTube link to the demonstration video of the trial run.
 * `schemes` Diagrams and descriptions of what electromechanical components are used and how they are connected.
 * `src` source code to control the vehicle
+* `src_japan` source code used in the Japan finals
 
 # `src` Source code description.
 ***
