@@ -11,7 +11,7 @@ The drive mechanism does not simply connect the drive motor and tires, but uses 
 This mechanism is made by assembling LEGO parts and can be easily reproduced.
 This mechanism is made from a combination of LEGO parts and can be easily reproduced. 
 The motor and tires can be assembled in a few simple steps.
-The Sanukitec.net website (https://sanuki-tech.net/micro-bit/lego/tricycledifferential-gear/ ) was used as a reference for the assembly.
+The Sanukitec.net website (https://sanuki-tech.net/micro-bit/lego/tricycle-differential-gear/) was used as a reference for the assembly.
 
 Image of the part where the differential gear is actually used
 
@@ -65,7 +65,7 @@ Motor Specifications:
 | Motor output(Stall)          | Torque: 25 Ncm<br> Speed: 0 RPM +/- 15%<br> Current consumption: 1900 mA +/- 15%      |
 | Sensor input                 | Resolution: 360 counts per revolution <br> Accuracy: Accuracy: ≤+/- 3 degrees <br> Update rate: 100 Hz|
 
-The official specifications for the components of SPIKE Prime can be found [here].
+The official specifications for the components of SPIKE Prime can be found [here](https://github.com/gpdaniels/spike-prime/tree/master/specifications/spike-prime).
 
 A rough explanation of the overall structure of the car:
 The car is based on the contents of the LEGO Education SPIKE Prime set.
