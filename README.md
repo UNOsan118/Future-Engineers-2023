@@ -7,7 +7,7 @@ This repository contains materials for participating in WRO Future Engineers2023
 Shinichi Uno (Born on January 18, 2004)
 Akimasa Hiu (Born on February 16, 2004)
 Kandai Kita (Born on June 18, 2007)
-Makoto Koshino (Coach) (Born on February 11, 1978)
+Takeshi Matsumoto (Coach) (Born on )
 
 ## Contents
 ***
