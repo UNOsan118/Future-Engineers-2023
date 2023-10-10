@@ -4,7 +4,7 @@ This directory contains mobility management corresponding to reference in the di
 
 ### System Configuration Chart
 ***
-<img src="./schemes/ElectricalScheme.png" width="100%">
+<img src="schemes/ElectricalScheme.png" width="100%">
 
 ***
 ### SPIKE Prime Hardware
