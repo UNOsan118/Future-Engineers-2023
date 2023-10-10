@@ -28,3 +28,11 @@ This directory contains mobility management corresponding to reference in the di
 | Ports                 | 6 LPF2 ports = 4 normal speed (115kB), 2 high speed (?kB)<br>Input/Output dual use               |
 
 ## 2. Large Hub Battery
+| part                  | Description                                                             |
+|-----------------------|-------------------------------------------------------------------------|
+| Features | Rechargeable lithium-ion battery for SPIKE Prime Large Hub |
+| Rated capacity | 2100mAH |
+| Rated voltage | 7.3V |
+| At watt-hour Rated capacity | 15.33Wh (calculated from rated capacity and rated voltage) Lifetime: 500 cycles |
+| Charging | Charged via micro USB cable<br>Charging time depends on the capability of the charger used. |
+References are [these](https://afrel.co.jp/product/spike/technology/spec/)
