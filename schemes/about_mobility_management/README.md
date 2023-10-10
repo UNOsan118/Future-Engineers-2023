@@ -1,4 +1,5 @@
 モビリティマネジメントに関する欄
+Japan 決勝大会 でのドキュメントを英訳する感じで足りない部分は足す
 
 Electromechanical diagrams
 ====
