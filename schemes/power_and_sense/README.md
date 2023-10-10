@@ -26,3 +26,5 @@ This directory contains mobility management corresponding to reference in the di
 | Accerometer           | Three-axis accelerometer (IC: LSM6DS3TR) |
 | Gyroscope             | Three-axis gyroscope (IC: LSM6DS3TR)       |
 | Ports                 | 6 LPF2 ports = 4 normal speed (115kB), 2 high speed (?kB)<br>Input/Output dual use               |
+
+## 2. Large Hub Battery
