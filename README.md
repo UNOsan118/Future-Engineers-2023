@@ -4,10 +4,10 @@ This repository contains materials for participating in WRO Future Engineers2023
 
 ## Team members.
 ***
-Shinichi Uno
-Akimasa Hiu
-Kandai Kita
-Makoto Koshino (Coach)
+Shinichi Uno (Born on January 18, 2004)
+Akimasa Hiu (Born on February 16, 2004)
+Kandai Kita (Born on June 18, 2007)
+Makoto Koshino (Coach) (Born on February 11, 1978)
 
 ## Contents
 ***
@@ -16,6 +16,10 @@ Makoto Koshino (Coach)
 * `video` YouTube link to the demonstration video of the trial run.
 * `schemes` Diagrams and descriptions of what electromechanical components are used and how they are connected.
 * `src` source code to control the vehicle
+
+# `schemes` The car description.
+***
+In the `schemes` directory, there are two subdirectories, `mobility` and `power_and_sense`. The `mobility` directory contains mobility management corresponding to reference in the discussion sections 1, and the `power_and_sense` directory contains power and sense management corresponding to reference in the discussion sections 2.
 
 # `src` Source code description.
 ***
