@@ -55,7 +55,17 @@ SPIKE Prime L Angular Motor * 2 (for drive and steering control)
 Motor Specifications:
 モーターの仕様：
 
-Afrel - SPIKE Prime L Angular Motor Specifications
+| part                         | Description                                                                           |
+|------------------------------|---------------------------------------------------------------------------------------|
+| Connector type               | LEGO® Power Functions 2.0 (LPF2) for connection to LEGO Smarthubs                     |
+| Wire length                  | 250 mm                                                                                |
+| Motor output(Voltage range)  | 5[V] ~ 9[V]                                                                           |
+| Motor output(No load)        | Torque: 0 Ncm<br> Speed: 175 RPM +/- 15%<br> Current consumption: 135 mA +/- 15%      |
+| Motor output(Maximum efficiency) | Torque: 8 Ncm<br> Speed: 135 RPM +/- 15%<br> Current consumption: 430 mA +/- 15%      |
+| Motor output(Stall)          | Torque: 25 Ncm<br> Speed: 0 RPM +/- 15%<br> Current consumption: 1900 mA +/- 15%      |
+| Sensor input                 | Resolution: 360 counts per revolution <br> Accuracy: Accuracy: ≤+/- 3 degrees <br> Update rate: 100 Hz|
+
+The official specifications for the components of SPIKE Prime can be found [here].
 
 A rough explanation of the overall structure of the car:
 The car is based on the contents of the LEGO Education SPIKE Prime set.
