@@ -3,12 +3,13 @@ Power and sense management
 This directory contains mobility management corresponding to reference in the discussion sections 1.
 
 ## System Configuration Chart
-***
+
 <img src="./images/ElectricalScheme.png" width="100%">
 
 ***
 # SPIKE Prime Hardware
 
+====
 ## 1. Large Hub 
 
 <img src="./images/Spike_L_hub.png" width="25%">
@@ -30,6 +31,14 @@ This directory contains mobility management corresponding to reference in the di
 | Gyroscope             | Three-axis gyroscope (IC: LSM6DS3TR)       |
 | Ports                 | 6 LPF2 ports = 4 normal speed (115kB), 2 high speed (?kB)<br>Input/Output dual use               |
 
+### Reasons for selecting this part
+* Easy integration with Raspberry Pi.
+* Easy and accurate control of motor mechanisms using Python.
+* I have handled it since middle school and have experience and knowledge.
+
+Reference is [here](https://github.com/gpdaniels/spike-prime/blob/master/specifications/spike-prime/large-hub.pdf)
+
+***
 ## 2. Large Hub Battery
 
 <img src="./images/Spike_L_hub_battery.png" width="25%">
@@ -43,11 +52,15 @@ This directory contains mobility management corresponding to reference in the di
 | At watt-hour Rated capacity | 15.33Wh (calculated from rated capacity and rated voltage) Lifetime: 500 cycles |
 | Charging | Charged via micro USB cable<br>Charging time depends on the capability of the charger used. |
 
-References are [here](https://afrel.co.jp/product/spike/technology/spec/)
+### Reasons for selecting this part
+* The battery is compatible with Spike large hubs.
 
+Reference is [here](https://github.com/gpdaniels/spike-prime/blob/master/specifications/spike-prime/large-hub-rechargeable-battery.pdf)
 
+***
 # Raspberry pi and other Hardware
 
+====
 ## 1. RaspberryPi 4 modelB
 
 <img src="./images/Raspberrypi4.png" width="50%">
@@ -65,6 +78,15 @@ References are [here](https://afrel.co.jp/product/spike/technology/spec/)
 | Input power              | 5V DC via USB-C connector (minimum 3A1)<br>5V DC via GPIO header (minimum 3A1)<br>Power over Ethernet (PoE)–enabled(requires separate PoE HAT)                                                                                                                                                            |
 | Environment                         | Operating temperature 0–50ºC                                                                                                                                                                                                                                                    |
 
+### Reasons for selecting this part
+* It is lightweight, fast, and the easiest-to-use single-board computer we can handle.
+* Compatible with SPIKE.
+* It is highly flexible and can use a variety of sensors.
+* It is relatively inexpensive and can handle breakdowns and problems.
+
+Reference is [here](https://www.iodata.jp/product/pc/raspberrypi/ud-rp4b/spec.htm)
+
+***
 ## 2. Lithium Battery
 
 <img src="./images/Battery.png" width="50%">
@@ -78,19 +100,24 @@ References are [here](https://afrel.co.jp/product/spike/technology/spec/)
 | size       | 13.2 * 6.8 * 1.2 [cm] |
 | weight     | 198 [g]               |
 
-### Feature
+### Reasons for selecting this part
 * The power supply does not turn off by itself.
 * Automatic switching between external power supply and battery power supply.
+* A stable power supply to the Raspberry Pi.
 
+Reference is [here](https://www.iodata.jp/product/pc/raspberrypi/ud-rp4b/spec.htm)
+
+***
 ## 3. Connector
 <img src="./images/Connector.png" width="30%">
 Used for serial communication between SPIKE and Raspberry Pi.
 
+### Reasons for selecting this part
+* Enables simple wired connection between RaspberryPi4 and Spike.
+
+***
 ## 4. Camera module
 <img src="./images/Camera.png" width="25%">
-
-### Product Name
-SignSmart Wide Angle Fisheye Lens Camera Module Camera Module for Raspberry Pi, RoHS certified
 
 ### Product Information
 | part           | Description                                                                                            |
@@ -102,15 +129,18 @@ SignSmart Wide Angle Fisheye Lens Camera Module Camera Module for Raspberry Pi, 
 | Video          | 1080 p @ 30 fps<br/>720 p @ 60 fps<br/>640 x 480 p 60/90                                               |
 | size           | 25×24×9[mm] <br/>0.99×0.95×0.36 [inch]                                                                 |
 
-For more information about the product [here](https://jp.sainsmart.com/products/wide-angle-fov160-5-megapixel-camera-module-for-raspberry-pi)
-
 ### Reasons for selecting this part
 * Raspberry Pi is supported.
 * With a 160-degree viewing angle, it is possible to see a wide area at a time.
+* high resolution (of an image).
 
+Reference is [here](https://jp.sainsmart.com/products/wide-angle-fov160-5-megapixel-camera-module-for-raspberry-pi)
+
+***
 # Explanation of how power is supplied
 When you run a Raspberry Pi on a typical mobile battery,
 * The power feed drops out on its own.
 * USB power supply and battery power supply do not switch.
 As described above, this is not a suitable power supply for the Raspberry Pi because of its intelligent features for smartphones.The Lithium-ion Battery Expansion Board for Raspberry Pi is used to solve the problem of power loss and the problem of not switching between USB power and battery power. The Lithium-ion Battery Expansion Board for Raspberry Pi is powered by the mobile battery and relays power to the Spike Hub.
-References are [here](https://voltechno.com/blog/raspberrypi-battery/)
+
+Reference is [here](https://voltechno.com/blog/raspberrypi-battery/)
