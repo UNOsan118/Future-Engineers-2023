@@ -15,6 +15,9 @@ The Sanukitec.net website (https://sanuki-tech.net/micro-bit/lego/tricycle-diffe
 
 Image of the part where the differential gear is actually used
 
+<img src="./images/differential_gear1.png" width="100%">
+<img src="./images/differential_gear2.png" width="100%">
+
 The role of this gear is to absorb the difference in speed between the inside and outside of a curve while transmitting power from the engine to both the left and right axles.
 
 The gear absorbs the difference in speed between the inside and outside of the curve and allows the car to go around the curve better.
@@ -37,10 +40,14 @@ The steering mechanism is a simple mechanism that controls the position and angl
 Therefore, a gear is used to slow down the movement.
 The motor rotation is controlled by the size of the motor's bolt and the position of the tires.
 
+<img src="./images/front_wheel1.png" width="100%">
+<img src="./images/front_wheel2.png" width="100%">
+
 Image of the realized steering mechanism
-実現したステアリング機構の画像
 
 The gear parts are actually held in place by separate parts to prevent them from falling.
+
+<img src="./images/front_wheel3.png" width="100%">
 
 It's holding down the gears.
 
