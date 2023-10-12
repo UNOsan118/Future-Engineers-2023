@@ -4,10 +4,10 @@ This repository contains materials for participating in WRO Future Engineers2023
 
 ## Team members.
 ***
-Shinichi Uno (Born on January 18, 2004)
-Akimasa Hiu (Born on February 16, 2004)
-Kandai Kita (Born on June 18, 2007)
-Takeshi Matsumoto (Coach) (Born on )
+Shinichi Uno (Born on January 18, 2004)<br>
+Akimasa Hiu (Born on February 16, 2004)<br>
+Kandai Kita (Born on June 18, 2007)<br>
+Takeshi Matsumoto (Coach)
 
 ## Contents
 ***

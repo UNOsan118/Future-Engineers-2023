@@ -11,6 +11,8 @@ This directory contains mobility management corresponding to reference in the di
 
 ## 1. Large Hub 
 
+<img src="./images/Spike_L_hub.png" width="100%">
+
 | part                  | Description                                                             |
 |-----------------------|-------------------------------------------------------------------------|
 | CPU                   | STM32F413 (Architecture: ARM Cortex M4, ROM: 1M, RAM: 320k, Clock: 100MHz) |
@@ -29,6 +31,8 @@ This directory contains mobility management corresponding to reference in the di
 
 ## 2. Large Hub Battery
 
+<img src="./images/Spike_L_hub_battery.png" width="100%">
+
 | part                  | Description                                                             |
 |-----------------------|-------------------------------------------------------------------------|
 | Features | Rechargeable lithium-ion battery for SPIKE Prime Large Hub |
@@ -44,6 +48,8 @@ References are [these](https://afrel.co.jp/product/spike/technology/spec/)
 
 ## 1. RaspberryPi 4 modelB
 
+<img src="./images/Raspberrypi4.png" width="100%">
+
 | part          | Description                                                                                                                                                 |
 |---------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Processor     | Broadcom BCM2711 quad-core Cortex-A72 (ARM v8) 64-bit SoC @ 1.5GHz                                                                                          |
@@ -56,7 +62,10 @@ References are [these](https://afrel.co.jp/product/spike/technology/spec/)
 | Input power              | 5V DC via USB-C connector (minimum 3A1)<br>5V DC via GPIO header (minimum 3A1)<br>Power over Ethernet (PoE)–enabled(requires separate PoE HAT)                                                                                                                                                            |
 | Environment                         | Operating temperature 0–50ºC                                                                                                                                                                                                                                                    |
 
-## 2. Lithium-ion Battery Expansion Board for Raspberry Pi
+## 2. Lithium Battery
+
+<img src="./images/Battery.png" width="100%">
+
 | part       | Description           |
 |------------|-----------------------|
 | capability | 10000mAh/37Wh         |
@@ -70,8 +79,11 @@ References are [these](https://afrel.co.jp/product/spike/technology/spec/)
 * Automatic switching between external power supply and battery power supply.
 
 ## 3. Connector
+<img src="./images/Connector.png" width="100%">
+Used for serial communication between SPIKE and Raspberry Pi.
 
-
+## 3. Camera module
+<img src="./images/Camera.png" width="100%">
 
 
 ### Explanation of how power is supplied
