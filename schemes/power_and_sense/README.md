@@ -140,6 +140,5 @@ Reference is [here](https://jp.sainsmart.com/products/wide-angle-fov160-5-megapi
 When you run a Raspberry Pi on a typical mobile battery,
 * The power feed drops out on its own.
 * USB power supply and battery power supply do not switch.
-As described above, this is not a suitable power supply for the Raspberry Pi because of its intelligent features for smartphones.The Lithium-ion Battery Expansion Board for Raspberry Pi is used to solve the problem of power loss and the problem of not switching between USB power and battery power. The Lithium-ion Battery Expansion Board for Raspberry Pi is powered by the mobile battery and relays power to the Spike Hub.
 
-Reference is [here](https://voltechno.com/blog/raspberrypi-battery/)
+As described above, this is not a suitable power supply for the Raspberry Pi because of its intelligent features for smartphones.The Lithium-ion Battery Expansion Board for Raspberry Pi is used to solve the problem of power loss and the problem of not switching between USB power and battery power. The Lithium-ion Battery Expansion Board for Raspberry Pi is powered by the mobile battery and relays power to the Spike Hub.
