@@ -14,7 +14,8 @@ The motor and tires can be assembled in a few simple steps.
 The Sanukitec.net website (https://sanuki-tech.net/micro-bit/lego/tricycle-differential-gear/) was used as a reference for the assembly.
 
 <img src="./images/differential_gear1.png" width="45%">    <img src="./images/differential_gear2.png" width="45%">
-                Image of the part where the differential gear is actually used
+
+        Image of the part where the differential gear is actually used
 
 The role of this gear is to absorb the difference in speed between the inside and outside of a curve while transmitting power from the engine to both the left and right axles.
 
@@ -26,7 +27,6 @@ This is a perfect mechanism for this competition where there is a lot of turning
 
 This mechanism is perfect for this competition where there are many turns to be made, such as when changing direction according to a sign, or when taking a corner of a course. 
 
-This mechanism is
 This mechanism can be officially used in the Q&A on the web page of WRO (not WRO Japan, but the world standard site).
 
 This mechanism has been officially approved for use in the Q&A on the web page of WRO (not WRO Japan, but the world standard website).
@@ -38,14 +38,16 @@ If the motor rotation is transmitted directly to the tires, it is difficult to c
 Therefore, a gear is used to slow down the movement.
 The motor rotation is controlled by the size of the motor's bolt and the position of the tires.
 
-<img src="./images/front_wheel1.png" width="55%">    <img src="./images/front_wheel2.png" width="45%">
-Image of the realized steering mechanism
+<img src="./images/front_wheel1.png" width="50%">    <img src="./images/front_wheel2.png" width="45%">
+
+    Image of the realized steering mechanism
 
 The gear parts are actually held in place by separate parts to prevent them from falling.
 
 
 <img src="./images/front_wheel3.png" width="50%">
-        It's holding down the gears.
+
+ It's holding down the gears.
 
 
 Here, the gear directly connected to the motor has 9 gears, (second one has 20 gears,) third one has 28 gears, so the rotation of the motor is 9/28 ≈ 0.32 times the tire's position.
