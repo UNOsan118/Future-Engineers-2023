@@ -1,4 +1,4 @@
-## Mobility management
+# Mobility management
 
 ## Explanation of a simple method of transportation
 
@@ -11,7 +11,7 @@ The two motors are connected to a SPIKE L hub and controlled using the Python la
 The drive mechanism does not simply connect the drive motor and tires, but uses differential gears. 
 This mechanism is made from a combination of LEGO parts and can be easily reproduced. 
 The motor and tires can be assembled in a few simple steps.
-The Sanukitec.net website (https://sanuki-tech.net/micro-bit/lego/tricycle-differential-gear/) was used as a reference for the assembly.
+We used Sanuki Tech Net's [website](https://sanuki-tech.net/micro-bit/lego/tricycle-differential-gear/ )as a reference for assembly.
 
 <img src="./images/differential_gear1.png" width="45%">    <img src="./images/differential_gear2.png" width="45%">
 
@@ -23,7 +23,6 @@ The gear absorbs the difference in speed between the inside and outside of the c
 The gear is used to change the direction of travel when following a sign, or to change the direction of a turn. 
 This is a perfect mechanism for this competition where there is a lot of turning, such as when changing direction according to a sign, or when turning a corner on a track.
 This mechanism is perfect for this competition where there are many turns to be made, such as when changing direction according to a sign, or when taking a corner of a course. 
-This mechanism has been officially approved for use in the Q&A on the web page of WRO (not WRO Japan, but the world standard website).
 ***
 ## Implementation of the steering mechanism
 
@@ -47,11 +46,13 @@ Here, the gear directly connected to the motor has 9 gears, (second one has 20 g
 This means that if the motor is moved 30 degrees, the tire will move approximately 10 degrees.
 The motor is designed to move about 10 degrees when the motor is moved 30 degrees.
 ***
-## Selected motor
+## About Motors
+
+### Selected motor
 
 SPIKE Prime L Angular Motor * 2 (for drive and steering control)
-***
-## Motor Specifications
+
+### Motor Specifications
 
 | part                         | Description                                                                           |
 |------------------------------|---------------------------------------------------------------------------------------|
