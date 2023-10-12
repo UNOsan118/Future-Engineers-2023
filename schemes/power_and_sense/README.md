@@ -1,5 +1,5 @@
 Power and sense management
-====
+
 This directory contains mobility management corresponding to reference in the discussion sections 1.
 
 ## System Configuration Chart
@@ -9,7 +9,6 @@ This directory contains mobility management corresponding to reference in the di
 ***
 # SPIKE Prime Hardware
 
-====
 ## 1. Large Hub 
 
 <img src="./images/Spike_L_hub.png" width="25%">
@@ -60,7 +59,6 @@ Reference is [here](https://github.com/gpdaniels/spike-prime/blob/master/specifi
 ***
 # Raspberry pi and other Hardware
 
-====
 ## 1. RaspberryPi 4 modelB
 
 <img src="./images/Raspberrypi4.png" width="50%">
