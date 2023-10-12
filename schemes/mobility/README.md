@@ -15,7 +15,7 @@ The Sanukitec.net website (https://sanuki-tech.net/micro-bit/lego/tricycle-diffe
 
 <img src="./images/differential_gear1.png" width="45%">    <img src="./images/differential_gear2.png" width="45%">
 
-        Image of the part where the differential gear is actually used
+Image of the part where the differential gear is actually used
 
 The role of this gear is to absorb the difference in speed between the inside and outside of a curve while transmitting power from the engine to both the left and right axles.
 
@@ -38,16 +38,16 @@ If the motor rotation is transmitted directly to the tires, it is difficult to c
 Therefore, a gear is used to slow down the movement.
 The motor rotation is controlled by the size of the motor's bolt and the position of the tires.
 
-<img src="./images/front_wheel1.png" width="50%">    <img src="./images/front_wheel2.png" width="45%">
+<img src="./images/front_wheel1.png" width="47.5%">    <img src="./images/front_wheel2.png" width="45%">
 
-    Image of the realized steering mechanism
+Image of the realized steering mechanism
 
 The gear parts are actually held in place by separate parts to prevent them from falling.
 
 
 <img src="./images/front_wheel3.png" width="50%">
 
- It's holding down the gears.
+It's holding down the gears.
 
 
 Here, the gear directly connected to the motor has 9 gears, (second one has 20 gears,) third one has 28 gears, so the rotation of the motor is 9/28 ≈ 0.32 times the tire's position.
