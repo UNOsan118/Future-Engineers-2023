@@ -11,7 +11,7 @@ The two motors are connected to a SPIKE L hub and controlled using the Python la
 The drive mechanism does not simply connect the drive motor and tires, but uses differential gears. 
 This mechanism is made from a combination of LEGO parts and can be easily reproduced. 
 The motor and tires can be assembled in a few simple steps.
-We used Sanuki Tech Net's [website](https://sanuki-tech.net/micro-bit/lego/tricycle-differential-gear/ )as a reference for assembly.
+We used Sanuki Tech Net's [website](https://sanuki-tech.net/micro-bit/lego/tricycle-differential-gear/ ) as a reference for assembly.
 
 <img src="./images/differential_gear1.png" width="45%">    <img src="./images/differential_gear2.png" width="45%">
 
