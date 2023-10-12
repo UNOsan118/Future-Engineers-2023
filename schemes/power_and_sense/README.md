@@ -11,7 +11,7 @@ This directory contains mobility management corresponding to reference in the di
 
 ## 1. Large Hub 
 
-<img src="./images/Spike_L_hub.png" width="100%">
+<img src="./images/Spike_L_hub.png" width="25%">
 
 # Product Information
 | part                  | Description                                                             |
@@ -32,7 +32,7 @@ This directory contains mobility management corresponding to reference in the di
 
 ## 2. Large Hub Battery
 
-<img src="./images/Spike_L_hub_battery.png" width="100%">
+<img src="./images/Spike_L_hub_battery.png" width="25%">
 
 # Product Information
 | part                  | Description                                                             |
@@ -50,7 +50,7 @@ References are [here](https://afrel.co.jp/product/spike/technology/spec/)
 
 ## 1. RaspberryPi 4 modelB
 
-<img src="./images/Raspberrypi4.png" width="100%">
+<img src="./images/Raspberrypi4.png" width="50%">
 
 # Product Information
 | part          | Description                                                                                                                                                 |
@@ -67,7 +67,7 @@ References are [here](https://afrel.co.jp/product/spike/technology/spec/)
 
 ## 2. Lithium Battery
 
-<img src="./images/Battery.png" width="100%">
+<img src="./images/Battery.png" width="50%">
 
 # Product Information
 | part       | Description           |
@@ -83,11 +83,11 @@ References are [here](https://afrel.co.jp/product/spike/technology/spec/)
 * Automatic switching between external power supply and battery power supply.
 
 ## 3. Connector
-<img src="./images/Connector.png" width="100%">
+<img src="./images/Connector.png" width="30%">
 Used for serial communication between SPIKE and Raspberry Pi.
 
 ## 4. Camera module
-<img src="./images/Camera.png" width="100%">
+<img src="./images/Camera.png" width="25%">
 
 # Product Name
 SignSmart Wide Angle Fisheye Lens Camera Module Camera Module for Raspberry Pi, RoHS certified
