@@ -13,6 +13,7 @@ This directory contains mobility management corresponding to reference in the di
 
 <img src="./images/Spike_L_hub.png" width="100%">
 
+# Product Information
 | part                  | Description                                                             |
 |-----------------------|-------------------------------------------------------------------------|
 | CPU                   | STM32F413 (Architecture: ARM Cortex M4, ROM: 1M, RAM: 320k, Clock: 100MHz) |
@@ -33,6 +34,7 @@ This directory contains mobility management corresponding to reference in the di
 
 <img src="./images/Spike_L_hub_battery.png" width="100%">
 
+# Product Information
 | part                  | Description                                                             |
 |-----------------------|-------------------------------------------------------------------------|
 | Features | Rechargeable lithium-ion battery for SPIKE Prime Large Hub |
@@ -41,7 +43,7 @@ This directory contains mobility management corresponding to reference in the di
 | At watt-hour Rated capacity | 15.33Wh (calculated from rated capacity and rated voltage) Lifetime: 500 cycles |
 | Charging | Charged via micro USB cable<br>Charging time depends on the capability of the charger used. |
 
-References are [these](https://afrel.co.jp/product/spike/technology/spec/)
+References are [here](https://afrel.co.jp/product/spike/technology/spec/)
 
 
 ### Raspberry pi and other Hardware
@@ -50,6 +52,7 @@ References are [these](https://afrel.co.jp/product/spike/technology/spec/)
 
 <img src="./images/Raspberrypi4.png" width="100%">
 
+# Product Information
 | part          | Description                                                                                                                                                 |
 |---------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Processor     | Broadcom BCM2711 quad-core Cortex-A72 (ARM v8) 64-bit SoC @ 1.5GHz                                                                                          |
@@ -66,6 +69,7 @@ References are [these](https://afrel.co.jp/product/spike/technology/spec/)
 
 <img src="./images/Battery.png" width="100%">
 
+# Product Information
 | part       | Description           |
 |------------|-----------------------|
 | capability | 10000mAh/37Wh         |
@@ -82,9 +86,27 @@ References are [these](https://afrel.co.jp/product/spike/technology/spec/)
 <img src="./images/Connector.png" width="100%">
 Used for serial communication between SPIKE and Raspberry Pi.
 
-## 3. Camera module
+## 4. Camera module
 <img src="./images/Camera.png" width="100%">
 
+# Product Name
+SignSmart Wide Angle Fisheye Lens Camera Module Camera Module for Raspberry Pi, RoHS certified
+
+# Product Information
+| part           | Description                                                                                            |
+|----------------|--------------------------------------------------------------------------------------------------------|
+| Compatibility  | Raspberry Pi model A/B                                                                                 |
+| Powered by     | 5 MP Omnivision 5647 camera module                                                                     |
+| Resolution     | 2592 * 1944                                                                                            |
+| FOV            | 160 [degree]                                                                                           |
+| Video          | 1080 p @ 30 fps<br/>720 p @ 60 fps<br/>640 x 480 p 60/90                                               |
+| size           | 25×24×9[mm] <br/>0.99×0.95×0.36 [inch]                                                                 |
+
+For more information about the product [here](https://jp.sainsmart.com/products/wide-angle-fov160-5-megapixel-camera-module-for-raspberry-pi)
+
+# Reasons for selecting this part
+* Raspberry Pi is supported.
+* With a 160-degree viewing angle, it is possible to see a wide area at a time.
 
 ### Explanation of how power is supplied
 When you run a Raspberry Pi on a typical mobile battery,
