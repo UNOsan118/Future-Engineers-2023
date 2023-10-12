@@ -3,7 +3,7 @@ Power and sense management
 
 This directory contains mobility management corresponding to reference in the discussion sections 1.
 
-## System Configuration Chart
+# System Configuration Chart
 
 <img src="./images/ElectricalScheme.png" width="100%">
 
