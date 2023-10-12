@@ -2,18 +2,18 @@ Power and sense management
 ====
 This directory contains mobility management corresponding to reference in the discussion sections 1.
 
-### System Configuration Chart
+## System Configuration Chart
 ***
 <img src="./images/ElectricalScheme.png" width="100%">
 
 ***
-### SPIKE Prime Hardware
+# SPIKE Prime Hardware
 
 ## 1. Large Hub 
 
 <img src="./images/Spike_L_hub.png" width="25%">
 
-# Product Information
+### Product Information
 | part                  | Description                                                             |
 |-----------------------|-------------------------------------------------------------------------|
 | CPU                   | STM32F413 (Architecture: ARM Cortex M4, ROM: 1M, RAM: 320k, Clock: 100MHz) |
@@ -34,7 +34,7 @@ This directory contains mobility management corresponding to reference in the di
 
 <img src="./images/Spike_L_hub_battery.png" width="25%">
 
-# Product Information
+### Product Information
 | part                  | Description                                                             |
 |-----------------------|-------------------------------------------------------------------------|
 | Features | Rechargeable lithium-ion battery for SPIKE Prime Large Hub |
@@ -46,13 +46,13 @@ This directory contains mobility management corresponding to reference in the di
 References are [here](https://afrel.co.jp/product/spike/technology/spec/)
 
 
-### Raspberry pi and other Hardware
+# Raspberry pi and other Hardware
 
 ## 1. RaspberryPi 4 modelB
 
 <img src="./images/Raspberrypi4.png" width="50%">
 
-# Product Information
+### Product Information
 | part          | Description                                                                                                                                                 |
 |---------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Processor     | Broadcom BCM2711 quad-core Cortex-A72 (ARM v8) 64-bit SoC @ 1.5GHz                                                                                          |
@@ -69,7 +69,7 @@ References are [here](https://afrel.co.jp/product/spike/technology/spec/)
 
 <img src="./images/Battery.png" width="50%">
 
-# Product Information
+### Product Information
 | part       | Description           |
 |------------|-----------------------|
 | capability | 10000mAh/37Wh         |
@@ -78,7 +78,7 @@ References are [here](https://afrel.co.jp/product/spike/technology/spec/)
 | size       | 13.2 * 6.8 * 1.2 [cm] |
 | weight     | 198 [g]               |
 
-# Feature
+### Feature
 * The power supply does not turn off by itself.
 * Automatic switching between external power supply and battery power supply.
 
@@ -89,10 +89,10 @@ Used for serial communication between SPIKE and Raspberry Pi.
 ## 4. Camera module
 <img src="./images/Camera.png" width="25%">
 
-# Product Name
+### Product Name
 SignSmart Wide Angle Fisheye Lens Camera Module Camera Module for Raspberry Pi, RoHS certified
 
-# Product Information
+### Product Information
 | part           | Description                                                                                            |
 |----------------|--------------------------------------------------------------------------------------------------------|
 | Compatibility  | Raspberry Pi model A/B                                                                                 |
@@ -104,11 +104,11 @@ SignSmart Wide Angle Fisheye Lens Camera Module Camera Module for Raspberry Pi, 
 
 For more information about the product [here](https://jp.sainsmart.com/products/wide-angle-fov160-5-megapixel-camera-module-for-raspberry-pi)
 
-# Reasons for selecting this part
+### Reasons for selecting this part
 * Raspberry Pi is supported.
 * With a 160-degree viewing angle, it is possible to see a wide area at a time.
 
-### Explanation of how power is supplied
+# Explanation of how power is supplied
 When you run a Raspberry Pi on a typical mobile battery,
 * The power feed drops out on its own.
 * USB power supply and battery power supply do not switch.
