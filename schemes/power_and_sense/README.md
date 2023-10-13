@@ -1,7 +1,7 @@
 Power and sense management
 ====
 
-This directory contains mobility management corresponding to reference in the discussion sections 1.
+This directory primarily contains the Mobility Management content referenced in Discussion Section 1.
 
 # System Configuration Chart
 
@@ -36,6 +36,9 @@ This directory contains mobility management corresponding to reference in the di
 * Easy and accurate control of motor mechanisms using Python.
 * I have handled it since middle school and have experience and knowledge.
 
+### How this is used
+The Spike Large Hub (hereafter Hub) is a programmable control unit that can be used to control a variety of sensors and motors. The sensor on the Spike side is a gyro sensor built into the Hub. Based on the value of this sensor and the control amount sent from the Raspberry Pi via serial communication, the final control amount of the motor is determined and the actual control is performed. The language used is Python (Lego MicroPython to be precise).
+
 Reference is [here](https://github.com/gpdaniels/spike-prime/blob/master/specifications/spike-prime/large-hub.pdf)
 
 ***
@@ -54,6 +57,9 @@ Reference is [here](https://github.com/gpdaniels/spike-prime/blob/master/specifi
 
 ### Reasons for selecting this part
 * The battery is compatible with Spike large hubs.
+
+### How this is used
+This battery is used to power the Hub.
 
 Reference is [here](https://github.com/gpdaniels/spike-prime/blob/master/specifications/spike-prime/large-hub-rechargeable-battery.pdf)
 
@@ -85,6 +91,9 @@ Reference is [here](https://github.com/gpdaniels/spike-prime/blob/master/specifi
 
 Reference is [here](https://www.iodata.jp/product/pc/raspberrypi/ud-rp4b/spec.htm)
 
+### How this is used
+The Raspberry Pi 4 is a small single-board computer. It is responsible for processing and analyzing images obtained from the camera in real-time. The language used is Python and the cv2 library is used for image processing. The image analysis determines the amount of control for the motors based on the view captured from the camera. The calculation results are sent to the Hub using serial communication.
+
 ***
 ## 2. Lithium Battery
 
@@ -103,6 +112,9 @@ Reference is [here](https://www.iodata.jp/product/pc/raspberrypi/ud-rp4b/spec.ht
 * The power supply does not turn off by itself.
 * Automatic switching between external power supply and battery power supply.
 * A stable power supply to the Raspberry Pi.
+
+### How this is used
+It is used to supply power to the Raspberry Pi4. This power is further supplied to the Hub via a cable.
 
 Reference is [here](https://www.iodata.jp/product/pc/raspberrypi/ud-rp4b/spec.htm)
 
@@ -132,6 +144,9 @@ Used for serial communication between SPIKE and Raspberry Pi.
 * Raspberry Pi is supported.
 * With a 160-degree viewing angle, it is possible to see a wide area at a time.
 * high resolution (of an image).
+
+### How this is used
+The camera is used in this vehicle to assess the surroundings. No other sensors, such as distance sensors, are used, and this camera is the only way to understand the surroundings. In other words, the camera recognizes not only the signs but also the walls on both sides. The resulting images are processed on a Raspberry Pi using the Python language.
 
 Reference is [here](https://jp.sainsmart.com/products/wide-angle-fov160-5-megapixel-camera-module-for-raspberry-pi)
 
