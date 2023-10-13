@@ -38,9 +38,8 @@ The gear parts are held in place by separate parts to prevent them from falling.
 <img src="./images/front_wheel3.png" width="50%">
 It's holding down the gears.
 
-Here, the gear directly connected to the motor has 9 gears, (the second one has 20 gears, and) the third one has 28 gears, so the rotation of the motor is 9/28 ≈ 0.32 times the tire's position.
-(second) is 20 teeth (third) is 28 teeth (third) is 28 teeth (third) is 28 teeth. 
-This means that if the motor is moved 30 degrees, the tire will move approximately 10 degrees.
+Here, the gear directly connected to the motor has 9 teeth, the second has 20 teeth, and the third has 28 teeth.
+In other words, the rotation of the motor x 9/28 ≈ 0.32 is transmitted as the angle of the tire. In other words, the design is such that when the motor is moved 30 degrees, the tire moves approximately 10 degrees.
 ***
 ## About Motors
 
