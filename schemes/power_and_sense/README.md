@@ -145,7 +145,7 @@ Reference is [here](https://jp.sainsmart.com/products/wide-angle-fov160-5-megapi
 # Cables
 
 ## 1. GPIO - Spike Hub Port Connector
-<img src="./images/Connector.png" width="30%">
+<img src="./images/Conn1.png" width="30%">
 
 ### Reasons for selecting this part
 * Enables simple wired connection between RaspberryPi4 and Spike.
@@ -153,8 +153,12 @@ Reference is [here](https://jp.sainsmart.com/products/wide-angle-fov160-5-megapi
 ### How this is used
 Used for serial communication between SPIKE and Raspberry Pi.The GPIO side is plugged into the GPIO pins of the Raspberry Pi, and the Spike Hub Port side is connected to the Spike Hub. Please refer to the [System Configuration Chart](#system-configuration-chart) for the connection method.
 
+### Connection part
+<img src="./images/Conn1_GPIO_serial.png" width="30%">          <img src="./images/Conn1_Spike_serial.png" width="30%">
+
 ***
 ## 2. USB Type A - USB Type C Connector
+<img src="./images/Conn2.png" width="30%">
 
 ### Reasons for selecting this part
 * Able to provide a stable power supply.
@@ -162,8 +166,12 @@ Used for serial communication between SPIKE and Raspberry Pi.The GPIO side is pl
 ### How this is used
 It is connected between the mobile battery and the Raspberry Pi and supplies power from the battery to the Raspberry Pi.The USB Type A side plugs into the mobile battery's output port, and the USB Type C side plugs into the Raspberry Pi's power supply port.
 
+### Connection part
+<img src="./images/Conn2_Battery_A_power1.png" width="30%">          <img src="./images/Conn2_Raspi_C_power1.png" width="30%">
+
 ***
 ## 3. USB Type A - Micro USB Type B Connector
+<img src="./images/Conn3.png" width="30%">
 
 ### Reasons for selecting this part
 * Able to provide a stable power supply.
@@ -171,17 +179,28 @@ It is connected between the mobile battery and the Raspberry Pi and supplies pow
 ### How this is used
 The USB Type A side is connected to a USB 2.0 Standard A port and the Micro USB Type B side is connected to the Spike Hub's Micro USB Type B port.
 
+### Connection part
+<img src="./images/Conn3_Raspi_A_power2.png" width="30%">          <img src="./images/Conn3_Spike_micro_power2.png" width="30%">
+
 ***
 ## 4. Spike L Motor - Spike Hub Port Connector
+<img src="./images/Conn4.png" width="30%">
 
 ### How this is used
 This cable is a non-removable wire that is an integral part of the SPIKE Prime L angular motor; it connects to the Spike hub port and provides the connection between the Spike Hub and the motor.
 
+### Connection part
+<img src="./images/Conn4_motor.png" width="30%">          <img src="./images/Conn4_Spike_motor.png" width="30%">
+
 ***
-## Flexible flat cable 15-pin
+## 5. Flexible flat cable 15-pin
+<img src="./images/Conn5.png" width="30%">
 
 ### How this is used
 This cable is integrated with the camera module and is used to connect the Raspberry Pi. The cable is plugged into the connection on the Raspberry Pi side for connection. I used [this site](https://tora-k.com/2020/11/15/raspberrypi4-cammoj/) as a reference for how to plug it in.
+
+### Connection part
+<img src="./images/Conn5_Camera.jpg" width="30%">          <img src="./images/Conn5_Raspi_camera.jpg" width="30%">
 
 
 ***
