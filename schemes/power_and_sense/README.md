@@ -64,7 +64,7 @@ This battery is used to power the Hub.
 Reference is [here](https://github.com/gpdaniels/spike-prime/blob/master/specifications/spike-prime/large-hub-rechargeable-battery.pdf)
 
 ***
-# Raspberry pi and other Hardware
+# Raspberry pi Hardware
 
 ## 1. RaspberryPi 4 modelB
 
@@ -119,15 +119,7 @@ It is used to supply power to the Raspberry Pi4. This power is further supplied 
 Reference is [here](https://www.iodata.jp/product/pc/raspberrypi/ud-rp4b/spec.htm)
 
 ***
-## 3. Connector
-<img src="./images/Connector.png" width="30%">
-Used for serial communication between SPIKE and Raspberry Pi.
-
-### Reasons for selecting this part
-* Enables simple wired connection between RaspberryPi4 and Spike.
-
-***
-## 4. Camera module
+## 3. Camera module
 <img src="./images/Camera.png" width="25%">
 
 ### Product Information
@@ -149,6 +141,48 @@ Used for serial communication between SPIKE and Raspberry Pi.
 The camera is used in this vehicle to assess the surroundings. No other sensors, such as distance sensors, are used, and this camera is the only way to understand the surroundings. In other words, the camera recognizes not only the signs but also the walls on both sides. The resulting images are processed on a Raspberry Pi using the Python language.
 
 Reference is [here](https://jp.sainsmart.com/products/wide-angle-fov160-5-megapixel-camera-module-for-raspberry-pi)
+
+# Cables
+
+## 1. GPIO - Spike Hub Port Connector
+<img src="./images/Connector.png" width="30%">
+
+### Reasons for selecting this part
+* Enables simple wired connection between RaspberryPi4 and Spike.
+
+### How this is used
+Used for serial communication between SPIKE and Raspberry Pi.The GPIO side is plugged into the GPIO pins of the Raspberry Pi, and the Spike Hub Port side is connected to the Spike Hub. Please refer to the [System Configuration Chart](#system-configuration-chart) for the connection method.
+
+***
+## 2. USB Type A - USB Type C Connector
+
+### Reasons for selecting this part
+* Able to provide a stable power supply.
+
+### How this is used
+It is connected between the mobile battery and the Raspberry Pi and supplies power from the battery to the Raspberry Pi.The USB Type A side plugs into the mobile battery's output port, and the USB Type C side plugs into the Raspberry Pi's power supply port.
+
+***
+## 3. USB Type A - Micro USB Type B Connector
+
+### Reasons for selecting this part
+* Able to provide a stable power supply.
+
+### How this is used
+The USB Type A side is connected to a USB 2.0 Standard A port and the Micro USB Type B side is connected to the Spike Hub's Micro USB Type B port.
+
+***
+## 4. Spike L Motor - Spike Hub Port Connector
+
+### How this is used
+This cable is a non-removable wire that is an integral part of the SPIKE Prime L angular motor; it connects to the Spike hub port and provides the connection between the Spike Hub and the motor.
+
+***
+## Flexible flat cable 15-pin
+
+### How this is used
+This cable is integrated with the camera module and is used to connect the Raspberry Pi. The cable is plugged into the connection on the Raspberry Pi side for connection. I used [this site](https://tora-k.com/2020/11/15/raspberrypi4-cammoj/) as a reference for how to plug it in.
+
 
 ***
 # Explanation of how power is supplied
