@@ -145,7 +145,7 @@ Reference is [here](https://jp.sainsmart.com/products/wide-angle-fov160-5-megapi
 # Cables
 
 ## 1. GPIO - Spike Hub Port Connector
-<img src="./images/Conn1.png" width="30%">
+<img src="./images/Conn1.png" width="55%">
 
 ### Reasons for selecting this part
 * Enables simple wired connection between RaspberryPi4 and Spike.
@@ -184,7 +184,7 @@ The USB Type A side is connected to a USB 2.0 Standard A port and the Micro USB 
 
 ***
 ## 4. Spike L Motor - Spike Hub Port Connector
-<img src="./images/Conn4.png" width="30%">
+<img src="./images/Conn4.png" width="55%">
 
 ### How this is used
 This cable is a non-removable wire that is an integral part of the SPIKE Prime L angular motor; it connects to the Spike hub port and provides the connection between the Spike Hub and the motor.
@@ -194,14 +194,13 @@ This cable is a non-removable wire that is an integral part of the SPIKE Prime L
 
 ***
 ## 5. Flexible flat cable 15-pin
-<img src="./images/Conn5.png" width="30%">
+<img src="./images/Conn5.png" width="55%">
 
 ### How this is used
 This cable is integrated with the camera module and is used to connect the Raspberry Pi. The cable is plugged into the connection on the Raspberry Pi side for connection. I used [this site](https://tora-k.com/2020/11/15/raspberrypi4-cammoj/) as a reference for how to plug it in.
 
 ### Connection part
-<img src="./images/Conn5_Camera.jpg" width="30%">          <img src="./images/Conn5_Raspi_camera.jpg" width="30%">
-
+<img src="./images/Conn5_Camera.png" width="30%">          <img src="./images/Conn5_Raspi_camera.png" width="30%">
 
 ***
 # Explanation of how power is supplied
