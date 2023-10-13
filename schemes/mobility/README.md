@@ -10,17 +10,13 @@ The two motors are connected to a SPIKE L hub and controlled using the Python la
 
 The drive mechanism does not simply connect the drive motor and tires but uses differential gears. 
 This mechanism is made from a combination of LEGO parts and can be easily reproduced. 
-The motor and tires can be assembled in a few simple steps.
 We used Sanuki Tech Net's [website](https://sanuki-tech.net/micro-bit/lego/tricycle-differential-gear/ ) as a reference for assembly.
 
 <img src="./images/differential_gear1.png" width="45%">    <img src="./images/differential_gear2.png" width="45%">
 
 Image of the part where the differential gear is used
 
-The role of this gear is to absorb the difference in speed between the inside and outside of a curve while transmitting power from the engine to both the left and right axles.
-The gear absorbs the difference in speed between the inside and outside of the curve and allows the car to go around the curve better.
-The gear is used to change the direction of travel when following a sign or to change the direction of a turn.
-This mechanism is perfect for this competition where there are many turns to be made, such as when changing direction according to a sign, or when taking a corner of a course.
+The steering mechanism is a simple mechanism that controls the angle of the tires by the magnitude of the angle at which the motor rotates. If the rotation of the motor is transmitted directly to the tires, fine control is difficult, so gears are used to slow down the movement of the tires.
 ***
 ## Implementation of the steering mechanism
 
@@ -39,7 +35,7 @@ The gear parts are held in place by separate parts to prevent them from falling.
 It's holding down the gears.
 
 Here, the gear directly connected to the motor has 9 teeth, the second has 20 teeth, and the third has 28 teeth.
-In other words, the rotation of the motor x 9/28 ≈ 0.32 is transmitted as the angle of the tire. In other words, the design is such that when the motor is moved 30 degrees, the tire moves approximately 10 degrees.
+In other words, the rotation of the motor is multiplied by 9/28≒0.32 and transmitted as the angle of the tire. In other words, the design is such that when the motor is moved 30 degrees, the tire moves approximately 10 degrees.
 ***
 ## About Motors
 
@@ -65,7 +61,6 @@ The official specifications for the components of SPIKE Prime can be found [here
 
 The car is based on the contents of the LEGO Education SPIKE Prime set.
 The car body is designed and built based on the contents of the LEGO Education SPIKE Prime set, combined with LEGO parts such as Raspberry Pi, a camera module, and a mobile battery.
-Raspberry Pi, camera module, and mobile battery are not LEGO parts.
 Raspberry Pi, camera module, and mobile battery are not LEGO parts, so the framework was designed and built with LEGO parts to create a space to install them.
 And space to install them. In particular, the camera module can be installed without disturbing the camera image, the camera is installed slightly downward and there is no impact on driving.
 Furthermore, care was taken to ensure that the weight of the wires would not be so heavy as to affect driving.
