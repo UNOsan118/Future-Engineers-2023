@@ -89,10 +89,10 @@ Reference is [here](https://github.com/gpdaniels/spike-prime/blob/master/specifi
 * It is highly flexible and can use a variety of sensors.
 * It is relatively inexpensive and can handle breakdowns and problems.
 
-Reference is [here](https://www.iodata.jp/product/pc/raspberrypi/ud-rp4b/spec.htm)
-
 ### How this is used
 The Raspberry Pi 4 is a small single-board computer. It is responsible for processing and analyzing images obtained from the camera in real-time. The language used is Python and the cv2 library is used for image processing. The image analysis determines the amount of control for the motors based on the view captured from the camera. The calculation results are sent to the Hub using serial communication.
+
+Reference is [here](https://www.iodata.jp/product/pc/raspberrypi/ud-rp4b/spec.htm)
 
 ***
 ## 2. Lithium Battery
@@ -100,13 +100,15 @@ The Raspberry Pi 4 is a small single-board computer. It is responsible for proce
 <img src="./images/Battery.png" width="50%">
 
 ### Product Information
-| part       | Description           |
-|------------|-----------------------|
-| capability | 10000mAh/37Wh         |
-| input      | 5V/3A(maximum)        |
-| output     | 5V/3A(maximum)        |
-| size       | 13.2 * 6.8 * 1.2 [cm] |
-| weight     | 198 [g]               |
+| part              | Description           |
+|-------------------|-----------------------|
+| capability        | 10000mAh/37Wh         |
+| Manufacturer      | INIU                  |
+| Item model number | BI-B3                 |
+| input             | 5V/3A(maximum)        |
+| output            | 5V/3A(maximum)        |
+| size              | 13.2 * 6.8 * 1.2 [cm] |
+| weight            | 198 [g]               |
 
 ### Reasons for selecting this part
 * The power supply does not turn off by itself.
@@ -116,7 +118,8 @@ The Raspberry Pi 4 is a small single-board computer. It is responsible for proce
 ### How this is used
 It is used to supply power to the Raspberry Pi4. This power is further supplied to the Hub via a cable.
 
-Reference is [here](https://www.iodata.jp/product/pc/raspberrypi/ud-rp4b/spec.htm)
+Product Page is [here](https://www.amazon.com/INIU-Portable-External-Powerbank-Compatible/dp/B07H6LB4J4)
+(Reference is to the instructions that come with the product.)
 
 ***
 ## 3. Camera module
