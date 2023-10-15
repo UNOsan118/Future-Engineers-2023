@@ -118,8 +118,9 @@ Reference is [here](https://www.iodata.jp/product/pc/raspberrypi/ud-rp4b/spec.ht
 ### How this is used
 It is used to supply power to the Raspberry Pi4. This power is further supplied to the Hub via a cable.
 
-Product Page is [here](https://www.amazon.com/INIU-Portable-External-Powerbank-Compatible/dp/B07H6LB4J4)
-(Reference is to the instructions that come with the product.)
+Reference is to the instructions that come with the product.<br>
+Product Page is [here](https://www.amazon.com/INIU-Portable-External-Powerbank-Compatible/dp/B07H6LB4J4).<br>
+This battery came with the [FaBo JetBot Kit](https://fabo.store/products/jetbot-kit). <br>
 
 ***
 ## 3. Camera module
