@@ -246,24 +246,22 @@ Notes:
 
    Thus, if the Raspberry Pi 4 runs continuously at maximum load, it will consume up to about 8 W of power.
 
-2.**Spike Large Hub power consumption**:<br>
+2. **Spike Large Hub power consumption**:<br>
    The power consumption of the LEGO Spike Large Hub is generally low. It typically consumes less than 0.5 W. 
 
-3.**Mobile battery capability**:<br>
+3. **Mobile battery capability**:<br>
    The capacity of the mobile battery provided is 10000 mAh (milliamp-hours) and 3.7 Wh (watt-hours). The power capacity of the mobile battery should be converted from ampere-hours (mAh) to watt-hours (Wh). Power (Wh) is the product of current (A) and voltage (V).
 
-   Mobile battery capacity (Wh) = capacity (mAh) x voltage (V) / 1000
-
+   Mobile battery capacity (Wh) = capacity (mAh) x voltage (V) / 1000<br>
    Thus, a 10000mAh battery can provide approximately 37Wh of power.
 
-4.**Estimate power consumption**:<br>
+4. **Estimate power consumption**:<br>
    To estimate the total power consumption of the Raspberry Pi 4 and Spike Large Hub, sum the power consumption of each and compare it to the capacity of the mobile battery.
 
    - Raspberry Pi 4: 8 W
    - Spike Large Hub: 0.5 W
 
-   Total power consumption: 8 W + 0.5 W = 8.5 W
-
+   Total power consumption: 8 W + 0.5 W = 8.5 W<br>
    Mobile battery capacity: 37 Wh
 
 Thus, the mobile battery can operate for approximately 4.35 hours (37 Wh / 8.5 W) with a total power consumption of 8.5 W. 
