@@ -1,4 +1,5 @@
-# Color detection and control amount calculation and control # For main race # For testing # 2023
+# Color detection and control amount calculation and control 
+# For obstacle 2023
 import serial
 import time
 import color_tracking_remake
@@ -404,9 +405,9 @@ while True:
     if green_ratio < 0.001 and red_ratio < 0.001: # don't see any signs.
         if black_left_ratio >= 0.1 or black_right_ratio >= 0.1:  # Whether the wall is close or not
             if black_left_ratio > black_right_ratio:
-                over_sign = over_sign + 10 #　The left wall is close.
+                over_sign = over_sign + 10 # The left wall is close.
             else:
-                over_sign = over_sign + 20 #　The right wall is close.
+                over_sign = over_sign + 20 # The right wall is close.
         else:
             pass
 
@@ -450,8 +451,8 @@ while True:
                 pass
     """
     Explanation of over_sign value determination
-    What can be seen in the back... Expressed as a digit 0: nothing visible 1: red in the back 2: green in the back
-    How close to the wall... 0: No wall nearby 1: Wall is close to the left 2: Wall is close to the right
+    What you see at the back: The first place is... 0: Nothing is visible 1: The back is red 2: The back is green
+    Distance to the wall:The tenth place is...  0: No wall nearby 1: Wall is on the left side 2: Wall is on the right side
     """
 
     # print("r_ratio", red_ratio)

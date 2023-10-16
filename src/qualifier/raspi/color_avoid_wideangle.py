@@ -1,5 +1,5 @@
-# 2023 open
-# カラー検出及び制御量の算出と制御 テスト用
+# Color detection and control amount calculation and control 
+# For open 2023
 import serial
 import time
 import color_tracking_remake
@@ -19,7 +19,7 @@ WIDTH = 160 * 2
 HEIGHT = 120 * 2
 
 cap = cv2.VideoCapture(0)
-assert cap.isOpened(), "カメラを認識していません！"
+assert cap.isOpened(), "Camera not recognized!"
 cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, WIDTH)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, HEIGHT)
@@ -96,9 +96,8 @@ while True:
         _id += 1
         elapsed_time = 0
 
-    # 周回の向き決定
+    # Determining the direction of laps
     if rotation_mode == "":
-        #if 1:
         if ok_blue and ok_orange:
             if orange_center_y > blue_center_y:
                 rotation_mode = "orange"
@@ -117,7 +116,7 @@ while True:
     rmode = 0
     force_sign = -1
 
-    # 黒色の比の大きさでどこの壁なのかを特定
+    # Identify where the wall is by the size of the black ratio
     if black_right_ratio > 0.65 and black_left_ratio > 0.65:
         wall_right = True
         wall_left = True
@@ -127,6 +126,7 @@ while True:
         else:
             wall_left = True
 
+    # Runs slightly outside
     if rotation_mode == "blue":
         if black_right_ratio > 0.7:
             sign_flag = 4
@@ -142,11 +142,6 @@ while True:
         elif black_right_ratio > 0.5:
             sign_flag = 4
             steer = -20
-        """
-        elif black_right_ratio < 0.05:
-            sign_flag = 7
-            steer = 20
-        """
 
     elif rotation_mode == "orange":
         if black_left_ratio > 0.7:
@@ -163,88 +158,22 @@ while True:
         elif black_left_ratio > 0.5:
             sign_flag = 4
             steer = 20
-        """
-        elif black_left_ratio < 0.05:
-            sign_flag = 7
-            steer = -20
-        """
 
     else:
-        if wall_right:
+        if wall_right:     # The right wall is close.
             sign_flag = 4
             steer = -50
             speed = 40
 
-        # 左壁が近い時の処理
-        elif wall_left:
+        elif wall_left:    # The left wall is close.
             sign_flag = 4
             steer = 70
             speed = 40
-    """
-    # 正面に壁がある時の処理
-    if wall_right and wall_left:
-        sign_flag = 5
 
-    if sign_flag == 0:
-        speed = 50
-    """
-    if ok_blue and rotation_mode == "blue":  # 青色認識 ok_blue or ok_orange
-        # 壁に近くなくても少し右に曲がる処理
+    if ok_blue and rotation_mode == "blue": # Recognize the blue line
         rmode = 1
-        """
-        if (
-            blue_center_y < 0.75
-            and sign_flag == 2
-            and center_ratio_green < 0.7
-            and green_ratio < 0.005
-        ):
-            sign_flag = 6
-            rmode = 1
-            #steer = 50
-        if (
-            black_left_ratio > 0.3
-            or (sign_flag == 2 and center_ratio_green > 0.7 and green_ratio < 0.012)
-        ) and blue_center_y < 1:
-            rmode = 1
-            sign_flag = 6
-            #steer = 90 # 120
-            speed = speed #- 20
-        elif sign_flag == 2 and center_ratio_green <= 0.65:
-            rmode = 1
-        else:
-            rmode = 1
-        """
-
-    elif ok_orange and rotation_mode == "orange":
+    elif ok_orange and rotation_mode == "orange": # Recognize the orange line
         rmode = 2
-        """
-        if (
-            orange_center_y < 0.75
-            and sign_flag == 1
-            and center_red_x / width > 0.3
-            and red_ratio < 0.005 #0.012
-        ):
-            sign_flag = 6
-            rmode = 2
-            #steer = -50
-        if (
-            black_right_ratio > 0.3
-            or (sign_flag == 1 and center_red_x / width < 0.4 and red_ratio < 0.012)
-        ) and orange_center_y < 1:
-            rmode = 2
-            sign_flag = 6
-            #steer = -90 # 120
-            speed = speed #- 20
-        elif sign_flag == 1 and center_red_x / width >= 0.35:
-            rmode = 2
-        else:
-            rmode = 2
-        """
-
-    # print("r_ratio", black_right_ratio)
-    # print("l_ratio", black_left_ratio)
-    # spikeで正負の処理を行う.
-    # 右壁が近い時の処理
 
     steer = steer * 0.8
     if abs(steer) < 1 and steer != 0:
@@ -262,20 +191,19 @@ while True:
     if force_sign != -1:
         sign_flag = force_sign
 
-
     # 線をまたいでいる標識が何色かを判定
     over_sign = 0
-    if black_left_ratio >= 0.1 or black_right_ratio >= 0.1:  # 壁が近いかどうか
+    if black_left_ratio >= 0.1 or black_right_ratio >= 0.1:  # Whether the wall is close or not
         if black_left_ratio > black_right_ratio:
-            over_sign = over_sign + 10 #左の壁が近い
+            over_sign = over_sign + 10 # The left wall is close.
         else:
-            over_sign = over_sign + 20 #右の壁が近い
+            over_sign = over_sign + 20 # The right wall is close.
     else:
         pass
 
     """
-    over_sign値決定の説明
-    壁に近いか...十の位で表現 0:近くに壁なし 1:左に壁が近い 2:右に壁が近い
+    Explanation of over_sign value determination
+    Distance to the wall:The tenth place is...  0: No wall nearby 1: Wall is on the left side 2: Wall is on the right side
     """
 
     # print("r_ratio", red_ratio)
@@ -297,12 +225,11 @@ while True:
     # print("rmode", rmode)
     # time.sleep(0.3)
 
+    # Serial communication (transmission) processing
     cmd = "{:4d},{:3d},{},{},{:3d}@".format(steer_int, speed, sign_flag, rmode, over_sign)
-    # print(cmd)
     ser.write(cmd.encode("utf-8"))
-    # print(cmd.encode("utf-8"))
 
-    for i in range(1):  # 読み飛ばす処理（遅延して昔の値を取っている場合があるため）
+    for i in range(1):  # Process of skipping readings (because they may be delayed and take old values)
         img = cap.read()
 
     end = time.perf_counter()
