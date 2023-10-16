@@ -19,7 +19,7 @@ Takeshi Matsumoto (Coach)
 
 # `schemes` The car description.
 ***
-In the `schemes` directory, there are two subdirectories, `mobility` and `power_and_sense`. The `mobility` directory contains mobility management corresponding to reference in the discussion sections 1, and the `power_and_sense` directory contains power and sense management corresponding to reference in the discussion sections 2.
+In the `schemes` directory, there are two subdirectories, `mobility` and `power_and_sense`. The `mobility` directory contains mobility management corresponding to reference in the Discussion Section 1, and the `power_and_sense` directory contains power and sense management corresponding to reference in the Discussion Section 2.
 
 # `src` Source code description.
 ***
