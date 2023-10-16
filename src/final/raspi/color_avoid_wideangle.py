@@ -1,4 +1,4 @@
-# カラー検出及び制御量の算出と制御 # 本戦用 # テスト用 # 2023
+# Color detection and control amount calculation and control # For main race # For testing # 2023
 import serial
 import time
 import color_tracking_remake
@@ -18,7 +18,7 @@ WIDTH = 160 * 2
 HEIGHT = 120 * 2
 
 cap = cv2.VideoCapture(0)
-assert cap.isOpened(), "カメラを認識していません！"
+assert cap.isOpened(), "Camera not recognized!"
 cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, WIDTH)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, HEIGHT)
@@ -95,25 +95,19 @@ while True:
         _id += 1
         elapsed_time = 0
 
-    # 周回の向き決定
+    # Determining the direction of laps
     if rotation_mode == "":
-        #if 1:
         if ok_blue and ok_orange:
             if orange_center_y > blue_center_y:
                 rotation_mode = "orange"
-                # print("orange1")
             else:
                 rotation_mode = "blue"
-                ## print("blue1")
         elif ok_blue:
             rotation_mode = "blue"
-            # print("blue2")
         elif ok_orange:
             rotation_mode = "orange"
-            # print("orange2")
         else:
             rotation_mode = ""
-            # print("None")
 
     steer = 0
     max_area = 0.4
@@ -127,11 +121,11 @@ while True:
         if red_ratio > green_ratio:
             if red_ratio < 0.4:
                 sign_flag = 1
-                distance = red_ratio / max_area  # 最大面積との比で標識までの距離を概算
-                center_ratio_red = center_red_x / width # 0(一番左)~1(一番右)の範囲で赤の中心x座標を表現
-                wide = center_ratio_red - 0.5 + 0.2 # 避けたい方向のx座標を示す
+                distance = red_ratio / max_area  # Approximate distance to sign by ratio to maximum area
+                center_ratio_red = center_red_x / width # Expresses the x-coordinate of the center of red in the range 0(left-most)~1(right-most).
+                wide = center_ratio_red - 0.5 + 0.2 # Indicates the x-coordinate of the direction to be avoided
 
-                if (  # 角で右回りしたい時に手前に緑があった時のフラグ
+                if (  # When the car wants to turn right at the corner and there is green in front of the car
                     rotation_mode == "orange"
                     and ok_orange
                     and green_ratio > 0.001
@@ -143,13 +137,13 @@ while True:
                 if wide > 1:
                     wide = 1
 
-                steer = (  # 三つのパラメータからステアリング値を計算 この辺の式をいじってよくする
-                    (20*3) #20*4 changed
+                steer = (  # Calculate steering values from three parameters
+                    (20*3) 
                     / max_area
                     * (90-(np.arccos(wide*distance)*180)/np.pi)
                 )
-                # 赤色の標識が接近してきた時の処理
-                if center_ratio_red < 0.15: #0.15
+                # Processing when a red sign is approaching
+                if center_ratio_red < 0.15:
                     if red_ratio > 0.05:
                         steer = (red_ratio / 0.05) * 110
                     elif red_ratio > 0.008:
@@ -179,13 +173,8 @@ while True:
                         steer = steer * 4
                     else:
                         steer = steer
-                        # steer = steer * 3.5
-                        # print("CRR",center_ratio_red)
-                        # print("RR",red_ratio)
-                        # print(steer)
-                        # print("YABAI")
 
-                # 右に曲がりたい時に内壁が近くなってきた場合左に少し避ける処理
+                # If the car wants to turn to the right and the inside wall is getting close, avoid it a little to the left.
                 if black_right_ratio > 0.15 and (rotation_mode == "orange"):
                     if (
                         red_ratio < 0.02
@@ -194,8 +183,8 @@ while True:
                         and center_ratio_red < 0.5
                         and center_ratio_red > 0.2
                     ):
-                        steer = -40 # -50
-                        speed = 40 # 50
+                        steer = -40 
+                        speed = 40 
                     elif (
                         red_ratio < 0.02
                         and orange_center_y >= 0.8
@@ -206,22 +195,22 @@ while True:
                         steer = -40
                         speed = 40
 
-                if red_ratio > 0.15:  # avoid
-                    steer = 100 # 100
+                if red_ratio > 0.15:  
+                    steer = 100 
                     speed = 30
 
-                # 0にするとstraighteningになるので、1を送る
+                # Set to 0 for straitening, send 1
                 if int(steer) == 0:
                     steer = 1
 
         else:
             if green_ratio < 0.4:
                 sign_flag = 2
-                distance = green_ratio / max_area  # 最大面積との比で標識までの距離を概算
-                center_ratio_green = center_green_x / width # 0(一番左)~1(一番右)の範囲で緑の中心x座標を表現
-                wide = center_ratio_green - 0.5 - 0.2 # 避けたい方向のx座標を示す
+                distance = green_ratio / max_area  # Approximate distance to sign by ratio to maximum area.
+                center_ratio_green = center_green_x / width  # Expresses the x-coordinate of the center of green in the range 0(left-most)~1(right-most).
+                wide = center_ratio_green - 0.5 - 0.2  # Indicates the x-coordinate of the direction to be avoided.
 
-                if (  # 角で左回りしたい時に手前に赤があった時のフラグ
+                if (  # When the car wants to turn left at the corner green there is green in front of the car.
                     rotation_mode == "blue"
                     and ok_blue
                     and red_ratio > 0.001
@@ -233,13 +222,13 @@ while True:
                 if wide < -1:
                     wide = -1
 
-                steer = (  # 三つのパラメータからステアリング値を計算 この辺の式をいじってよくする
-                    (20*3) #20*4 changed
+                steer = (  # Calculate steering values from three parameters
+                    (20*3)
                     / max_area
                     * (90 - (np.arccos(wide * distance) * 180) / np.pi)
                 )
 
-                # 緑色の標識が接近してきた時の処理
+                # Processing when a red sign is approaching
                 if center_ratio_green > 0.85:
                     if green_ratio > 0.05:
                         steer = -(green_ratio / 0.05) * 110
@@ -273,10 +262,8 @@ while True:
                         steer = steer * 4
                     else:
                         steer = steer
-                        # steer = steer * 3.5
 
-
-                # 左に曲がりたい時に左壁が近くなってきた場合右に少し避ける処理
+                # If the car wants to turn left and the left wall is getting close, avoid a little to the right.
                 if black_left_ratio > 0.15 and (rotation_mode == "blue"):
                     if (
                         green_ratio < 0.02
@@ -297,62 +284,54 @@ while True:
                         steer = 40
                         speed = 40
 
-                if green_ratio > 0.15:  # avoid
-                    steer = -100 # -120
+                if green_ratio > 0.15:  
+                    steer = -100 
                     speed = 30
 
                 if int(steer) == 0:
                     steer = -1
 
-    if (ok_blue or ok_orange) and rotation_mode == "blue":  # 青色認識 ok_blue or ok_orange
-        # 壁に近くなくても少し右に曲がる処理
+    if (ok_blue or ok_orange) and rotation_mode == "blue":  # Recognize the blue line
+        # Process a slight right turn without being close to the wall.
         if (
             blue_center_y < 0.75
             and sign_flag == 2
             and center_ratio_green < 0.7
             and green_ratio < 0.005
         ):
-            # sign_flag = 6
             rmode = 1
-            #steer = 50
         if (
             black_left_ratio > 0.3
             or (sign_flag == 2 and center_ratio_green > 0.7 and green_ratio < 0.012)
         ) and blue_center_y < 1:
             rmode = 1
-            # sign_flag = 6
-            #steer = 90 # 120
-            speed = speed #- 20
+            speed = speed
         elif sign_flag == 2 and center_ratio_green <= 0.65:
             rmode = 1
         else:
             rmode = 1
 
-    elif (ok_orange or ok_blue) and rotation_mode == "orange":  # 橙色認識 ok_orange """or ok_blue"""
-        # 壁に近くなくても少し左に曲がる処理
+    elif (ok_orange or ok_blue) and rotation_mode == "orange":  # Recognize the orange line
+        # Process a slight left turn without being close to the wall.
         if (
             orange_center_y < 0.75
             and sign_flag == 1
             and center_red_x / width > 0.3
-            and red_ratio < 0.005 #0.012
+            and red_ratio < 0.005 
         ):
-            # sign_flag = 6
             rmode = 2
-            #steer = -50
         if (
             black_right_ratio > 0.3
             or (sign_flag == 1 and center_red_x / width < 0.4 and red_ratio < 0.012)
         ) and orange_center_y < 1:
             rmode = 2
-            # sign_flag = 6
-            #steer = -90 # 120
-            speed = speed #- 20
+            speed = speed 
         elif sign_flag == 1 and center_red_x / width >= 0.35:
             rmode = 2
         else:
             rmode = 2
 
-    # 黒色の比の大きさでどこの壁なのかを特定
+    # Identify where the wall is by the size of the black ratio
     if black_right_ratio > 0.75 and black_left_ratio > 0.75:
         wall_right = True
         wall_left = True
@@ -362,10 +341,7 @@ while True:
         else:
             wall_left = True
 
-    # print("r_ratio", black_right_ratio)
-    # print("l_ratio", black_left_ratio)
-    # spikeで正負の処理を行う.
-    # 右壁が近い時の処理
+    # Processing when close to the right wall
     if wall_right:
         if sign_flag == 1:
             sign_flag = 7
@@ -382,7 +358,7 @@ while True:
             steer = -50
             speed = 30
 
-    # 左壁が近い時の処理
+    # Processing when close to the left wall
     elif wall_left:
         if sign_flag == 2:
             sign_flag = 8
@@ -399,7 +375,7 @@ while True:
             steer = 50
             speed = 30
 
-    # 正面に壁がある時の処理
+    # Processing when approaching the front
     if wall_right and wall_left:
         sign_flag = 5
 
@@ -423,59 +399,59 @@ while True:
         sign_flag = force_sign
 
 
-    # 線をまたいでいる標識が何色かを判定
+    # Determine what color the sign over there is at the turn.
     over_sign = 0
-    if green_ratio < 0.001 and red_ratio < 0.001: # 何も標識が見えていない
-        if black_left_ratio >= 0.1 or black_right_ratio >= 0.1:  # 壁が近いかどうか
+    if green_ratio < 0.001 and red_ratio < 0.001: # don't see any signs.
+        if black_left_ratio >= 0.1 or black_right_ratio >= 0.1:  # Whether the wall is close or not
             if black_left_ratio > black_right_ratio:
-                over_sign = over_sign + 10 #左の壁が近い
+                over_sign = over_sign + 10 #　The left wall is close.
             else:
-                over_sign = over_sign + 20 #右の壁が近い
+                over_sign = over_sign + 20 #　The right wall is close.
         else:
             pass
 
-    else: # 何かしら標識がみえる
-        if red_ratio > green_ratio: # 赤の占める面積が大きい
+    else: # see some kind of sign.
+        if red_ratio > green_ratio: # Red occupies a large area.
             if green_ratio > 0.0015:
                 if center_green_y > 0.65:
                     over_sign = 1
                 else:
                     over_sign = 2
-            elif center_red_y < 0.65: # 赤がすぐ近くにない（＝奥にある）or近くのを通り過ぎていて見えない
+            elif center_red_y < 0.65: # Red is not immediately nearby (i.e., in the back) OR you are passing close by and can't see it.
                 over_sign = 1
             else:
                 over_sign = 0
 
             if black_left_ratio >= 0.1 or black_right_ratio >= 0.1:  # 壁が近いかどうか
                 if black_left_ratio > black_right_ratio:
-                    over_sign = over_sign + 10 #左の壁が近い
+                    over_sign = over_sign + 10 # The left wall is close.
                 else:
-                    over_sign = over_sign + 20 #右の壁が近い
+                    over_sign = over_sign + 20 # The right wall is close.
             else:
                 pass
 
-        else: # 緑の占める面積が大きい
-            if red_ratio > 0.0015: # 緑のほうが近いのに赤の標識を認識する
+        else: # Green occupies a large area.
+            if red_ratio > 0.0015: # Recognize red signs when green is closer.
                 if center_red_y > 0.65:
                     over_sign = 2
                 else:
                     over_sign = 1
-            elif center_green_y < 0.65: # 緑がすぐ近くにない（＝奥にある）or近くのを通り過ぎていて見えない
+            elif center_green_y < 0.65: # Green is not in the immediate vicinity (i.e., in the back) OR you are passing by a nearby one and can't see it.
                 over_sign = 2
             else:
                 over_sign = 0
 
             if black_left_ratio >= 0.1 or black_right_ratio >= 0.1:  # 壁が近いかどうか
                 if black_left_ratio > black_right_ratio:
-                    over_sign = over_sign + 10 #左の壁が近い
+                    over_sign = over_sign + 10 # The left wall is close.
                 else:
-                    over_sign = over_sign + 20 #右の壁が近い
+                    over_sign = over_sign + 20 # The right wall is close.
             else:
                 pass
     """
-    over_sign値決定の説明
-    奥に何が見えるか...一の位で表現 0:何も見えない 1:奥に赤 2:奥に緑
-    壁に近いか...十の位で表現 0:近くに壁なし 1:左に壁が近い 2:右に壁が近い
+    Explanation of over_sign value determination
+    What can be seen in the back... Expressed as a digit 0: nothing visible 1: red in the back 2: green in the back
+    How close to the wall... 0: No wall nearby 1: Wall is close to the left 2: Wall is close to the right
     """
 
     # print("r_ratio", red_ratio)
@@ -497,12 +473,11 @@ while True:
     # print("rmode", rmode)
     # time.sleep(0.3)
 
+    # Serial communication (transmission) processing
     cmd = "{:4d},{:3d},{},{},{:3d}@".format(steer_int, speed, sign_flag, rmode, over_sign)
-    # print(cmd)
-    ser.write(cmd.encode("utf-8")) #シリアル
-    # print(cmd.encode("utf-8"))
+    ser.write(cmd.encode("utf-8")) 
 
-    for i in range(1):  # 読み飛ばす処理（遅延して昔の値を取っている場合があるため）
+    for i in range(1):  # Process of skipping readings (because they may be delayed and take old values)
         img = cap.read()
 
     end = time.perf_counter()
