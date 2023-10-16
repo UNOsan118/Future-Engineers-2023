@@ -37,6 +37,7 @@ This directory primarily contains the Mobility Management content referenced in 
 * I have handled it since middle school and have experience and knowledge.
 
 **How this is used**
+
 The Spike Large Hub (hereafter Hub) is a programmable control unit that can be used to control a variety of sensors and motors. The sensor on the Spike side is a gyro sensor built into the Hub. Based on the value of this sensor and the control amount sent from the Raspberry Pi via serial communication, the final control amount of the motor is determined and the actual control is performed. The language used is Python (Lego MicroPython to be precise).
 
 Reference is [here](https://github.com/gpdaniels/spike-prime/blob/master/specifications/spike-prime/large-hub.pdf)
@@ -59,6 +60,7 @@ Reference is [here](https://github.com/gpdaniels/spike-prime/blob/master/specifi
 * The battery is compatible with Spike large hubs.
 
 **How this is used**
+
 This battery is used to power the Hub.
 
 Reference is [here](https://github.com/gpdaniels/spike-prime/blob/master/specifications/spike-prime/large-hub-rechargeable-battery.pdf)
@@ -90,6 +92,7 @@ Reference is [here](https://github.com/gpdaniels/spike-prime/blob/master/specifi
 * It is relatively inexpensive and can handle breakdowns and problems.
 
 **How this is used**
+
 The Raspberry Pi 4 is a small single-board computer. It is responsible for processing and analyzing images obtained from the camera in real-time. The language used is Python and the cv2 library is used for image processing. The image analysis determines the amount of control for the motors based on the view captured from the camera. The calculation results are sent to the Hub using serial communication.
 
 Reference is [here](https://www.iodata.jp/product/pc/raspberrypi/ud-rp4b/spec.htm)
@@ -116,6 +119,7 @@ Reference is [here](https://www.iodata.jp/product/pc/raspberrypi/ud-rp4b/spec.ht
 * A stable power supply to the Raspberry Pi.
 
 **How this is used**
+
 It is used to supply power to the Raspberry Pi4. This power is further supplied to the Hub via a cable.
 
 Reference is to the instructions that come with the product.<br>
@@ -142,6 +146,7 @@ This battery came with the [FaBo JetBot Kit](https://fabo.store/products/jetbot-
 * high resolution (of an image).
 
 **How this is used**
+
 The camera is used in this vehicle to assess the surroundings. No other sensors, such as distance sensors, are used, and this camera is the only way to understand the surroundings. In other words, the camera recognizes not only the signs but also the walls on both sides. The resulting images are processed on a Raspberry Pi using the Python language.
 
 Reference is [here](https://jp.sainsmart.com/products/wide-angle-fov160-5-megapixel-camera-module-for-raspberry-pi)
@@ -155,6 +160,7 @@ Reference is [here](https://jp.sainsmart.com/products/wide-angle-fov160-5-megapi
 * Enables simple wired connection between RaspberryPi4 and Spike.
 
 **How this is used**
+
 Used for serial communication between SPIKE and Raspberry Pi.The GPIO side is plugged into the GPIO pins of the Raspberry Pi, and the Spike Hub Port side is connected to the Spike Hub. Please refer to the [System Configuration Chart](#system-configuration-chart) for the connection method.
 
 **Connection part**
@@ -168,6 +174,7 @@ Used for serial communication between SPIKE and Raspberry Pi.The GPIO side is pl
 * Able to provide a stable power supply.
 
 **How this is used**
+
 It is connected between the mobile battery and the Raspberry Pi and supplies power from the battery to the Raspberry Pi.The USB Type A side plugs into the mobile battery's output port, and the USB Type C side plugs into the Raspberry Pi's power supply port.
 
 **Connection part**
@@ -181,6 +188,7 @@ It is connected between the mobile battery and the Raspberry Pi and supplies pow
 * Able to provide a stable power supply.
 
 **How this is used**
+
 The USB Type A side is connected to a USB 2.0 Standard A port and the Micro USB Type B side is connected to the Spike Hub's Micro USB Type B port.
 
 **Connection part**
@@ -191,6 +199,7 @@ The USB Type A side is connected to a USB 2.0 Standard A port and the Micro USB 
 <img src="./images/Conn4.png" width="55%">
 
 **How this is used**
+
 This cable is a non-removable wire that is an integral part of the SPIKE Prime L angular motor; it connects to the Spike hub port and provides the connection between the Spike Hub and the motor.
 
 **Connection part**
@@ -201,6 +210,7 @@ This cable is a non-removable wire that is an integral part of the SPIKE Prime L
 <img src="./images/Conn5.png" width="55%">
 
 **How this is used**
+
 This cable is integrated with the camera module and is used to connect the Raspberry Pi. The cable is plugged into the connection on the Raspberry Pi side for connection. I used [this site](https://tora-k.com/2020/11/15/raspberrypi4-cammoj/) as a reference for how to plug it in.
 
 **Connection part**
@@ -212,7 +222,7 @@ This cable is integrated with the camera module and is used to connect the Raspb
 Using a Raspberry Pi 4, the procedure for powering the Raspberry Pi 4 from the mobile battery and then powering the Spike Large Hub from the Raspberry Pi 4 is as follows
 
 1. **Prepare the mobile battery**:
-   - First, prepare a mobile battery with sufficient capacity. Choose the capacity of the battery based on the power requirements of the device you are using. 2.
+   First, prepare a mobile battery with sufficient capacity. Choose the capacity of the battery based on the power requirements of the device you are using. 2.
 
 2. **Connecting the mobile battery to the Raspberry Pi 4**:
    - Connect the USB cable to the power supply port on the Raspberry Pi 4 using the mobile battery's output port (usually the USB port).
