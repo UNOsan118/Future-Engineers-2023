@@ -7,7 +7,7 @@ from basic_motion_testUNO import Basic_motion
 
 print("--device init--")
 
-# デバイスの取得
+# Device Acquisition
 while True:
     motor = hub.port.C.motor
     motor_steer = hub.port.E.motor
@@ -28,7 +28,7 @@ while True:
 gyro_testUNO = Gyro_remake(motor_steer, motor)
 basic = Basic_motion(motor_steer, motor)
 
-# シリアルバッファの中を空にする
+# Empty the serial buffer
 def resetSerialBuffer():
     while True:
         reply = ser.read(10000)
@@ -61,7 +61,7 @@ if True:
 
     count = 0
     bias_roll = 0
-    last_run = 1000000  # 最後の切り返しからどれだけ進んだのか記録
+    last_run = 1000000  # Record how far you have progressed since the last turnaround.
 
     info_yaw = 0
 
@@ -73,7 +73,7 @@ if True:
     count_check_red = 0
     count_check_green = 0
 
-    new_rot = 0 #変数名かえよう
+    new_rot = 0 
 
     memory_sign = [[0, 0], [0, 0], [0, 0], [0, 0]]
 
@@ -83,14 +83,14 @@ if True:
     finish_go = 2100
     last_over_sign = 0
 
-    # ボタンが押されるまで始まらない
+    # It doesn't start until a button is pressed.
     while not (center_button.is_pressed()):
         pass
 
     hub.motion.yaw_pitch_roll(0)
     while True:
         cmd = ""
-        # 三周終わった時
+        # At the end of three laps
         if gyro_testUNO.section_count >= 12:
             basic.stop()
             break
@@ -121,7 +121,7 @@ if True:
                 print(finish_go)
                 break
 
-        # シリアル通信でデータを受信
+        # Receive data via serial communication
         while True:
             reply = ser.read(ser_size - len(cmd))
             reply = reply.decode("utf-8")
@@ -139,51 +139,25 @@ if True:
                 rot       = int(cmd_list[0].split(",")[3])
                 over_sign = int(cmd_list[0].split(",")[4])
 
-                if (#int(sign_flag) != int(cmd_list[0].split(",")[2])) and (
+                if (
                     sign_flag == 1 or sign_flag == 2 or sign_flag == 7 or sign_flag == 8
                 ):
                     last_flag = sign_flag
-                    """
-                    section_count = gyro_testUNO.section_count
-                    sign_count = gyro_testUNO.sign_count
-
-                    if (
-                        section_count >= 0
-                        and section_count < 4
-                        and gyro_testUNO.sign_count < 2
-                    ):
-                        memory_sign[section_count][sign_count] = sign_flag
-                        gyro_testUNO.sign_count = gyro_testUNO.sign_count + 1
-                        start = time.ticks_us()
-                        end = time.ticks_us()
-                    """
                 sign_flag = int(cmd_list[0].split(",")[2])
                 break
-        """
-        if gyro_testUNO.section_count == -1:
-            sign_flag = 0
-        """
 
-        # 右回りか左回りかを確定させる
+        # Determine if you are going right or left.
         if rotation_mode == "":
             if rot == 1:
                 rotation_mode = "blue"
             elif rot == 2:
                 rotation_mode = "orange"
 
-        #print(" M-L: ",motor.get()[0] - last_run," sf: ",sign_flag)
-        # 最後の標識の色で逆走するかどうか判断する
-        """
-        if (gyro_testUNO.section_count == 7           #最後の標識があるセクションで、==7
-            and determine_backturn_flag == 0          #まだバックターンをするかの判断をしていなく、
-            and motor.get()[0] - last_run >= 400      #曲がりはじめてからある程度すすんだところで、
-            and (count_check_red >= 3 or count_check_green >= 3)
-        ):
-        """
-        if (gyro_testUNO.section_count == 7           #最後の標識があるセクションで、==7
-            and determine_backturn_flag == 0          #まだバックターンをするかの判断をしていなく、
+        # The color of the last sign determines if you're going the wrong way or not.
+        if (gyro_testUNO.section_count == 7           # At the section with the last sign.
+            and determine_backturn_flag == 0          # haven't yet made a decision on whether to make a back turn.
             and(
-                (motor.get()[0] - last_run >= 400      #曲がりはじめてからある程度すすんだところで、
+                (motor.get()[0] - last_run >= 400      # Start to turn and go a little further.
                 and (count_check_red >= 4 or count_check_green >= 4))
                 or
                 (motor.get()[0] - last_run >= 2800)
@@ -191,14 +165,14 @@ if True:
         ):
             print(count_check_red, count_check_green)
 
-            if(count_check_red >= count_check_green):      #赤なら
-                determine_backturn_flag = 1           #バックターンする必要があるフラグ
+            if(count_check_red >= count_check_green):  # If it's red
+                determine_backturn_flag = 1            # Flags that need to be backturned
                 print("red -> backturn")
-            else:                                     #緑なら
-                determine_backturn_flag = 2           #もう判断済みのフラグ
+            else:                                      # If it's green
+                determine_backturn_flag = 2            # Flag already judged
                 print("green -> not backturn")
 
-        #逆走させる
+        # make someone run backwards
         if(
             gyro_testUNO.section_count == 8
             and determine_backturn_flag == 1
@@ -230,71 +204,65 @@ if True:
             gyro_testUNO.section_count = 7
             running_backturn_flag = 2
 
-        # 標識を何も認識していない時は0で、認識している時は0以外を返すようにしている
+        # When the sign is not recognized as anything, it returns 0, and when it is recognized, it returns a non-zero value.
         if sign_flag == 0 or sign_flag == 3:
             if bias_roll >= 600:
                 bias_roll = 0
             st_roll = motor.get()[0]
-            # print(motor.get()[0] - gyro_testUNO.straight_rotation)
             if (
                 motor.get()[0] - gyro_testUNO.straight_rotation >= 1000 # <= 360 * 0.8
                 and motor.get()[0] - gyro_testUNO.straight_rotation <= 2500
                 and gyro_testUNO.past_change == 0
             ):
                 if rotation_mode == "blue" and (last_flag == 2 or last_flag == 8):
-                    # basic.move(30, 30)
                     gyro_testUNO.straightening(throttle, -10)
                     print("last_flag = ",last_flag," move1")
 
                 elif rotation_mode == "blue" and (last_flag == 1 or last_flag == 7):
-                    # basic.move(30, -20)
                     gyro_testUNO.straightening(throttle, 10)
                     print("last_flag = ",last_flag," move2")
 
                 elif rotation_mode == "orange" and (last_flag == 1 or last_flag == 7):
-                    # basic.move(30, -30)
                     gyro_testUNO.straightening(throttle, 10)
                     print("last_flag = ",last_flag," move3")
 
                 elif rotation_mode == "orange" and (last_flag == 2 or last_flag == 8):
-                    # basic.move(30, 20)
                     gyro_testUNO.straightening(throttle, -5)
                     print("last_flag = ",last_flag," move4")
 
                 else:
                     gyro_testUNO.straightening(throttle, 0)
-                # gyro_testUNO.straightening(throttle, 0)
             else:
                 gyro_testUNO.straightening(throttle, 0)
 
             en_roll = motor.get()[0]
             bias_roll += en_roll - st_roll
 
-        # sign_flag == 4,7,8は壁が近いsign_flag == 5は正面に壁がある
+        # sign_flag == 4,7,8 are close to the wall sign_flag == 5 has a wall in front
         else:
             yaw = hub.motion.yaw_pitch_roll()[0]
             straight_flag = False
             if sign_flag == 4 or sign_flag == 7 or sign_flag == 8:
                 if (
-                    abs(yaw) > 50 # 70
+                    abs(yaw) > 50 
                     and motor.get()[0] - gyro_testUNO.straight_rotation <= 1500
                 ):
                     if yaw > 0:
                         throttle = throttle - 10
-                        steer = -70 # -120
+                        steer = -70 
                     elif yaw < 0:
                         throttle = throttle
-                        steer = 70 # 120
+                        steer = 70 
 
-                if (gyro_testUNO.section_count == 7        #最後の標識があるセクションで
-                    and determine_backturn_flag == 0
-                    and sign_flag == 7 #赤が見えていて壁が近い
+                if (gyro_testUNO.section_count == 7       # At the section with the last sign.
+                    and determine_backturn_flag == 0      # haven't made the decision to backturn yet.
+                    and sign_flag == 7                    # Red is visible and the wall is close.
                 ):
                     count_check_red = count_check_red + 1
 
-                elif (gyro_testUNO.section_count == 7        #最後の標識があるセクションで
-                    and determine_backturn_flag == 0
-                    and sign_flag == 8 #緑が見えていて壁が近い
+                elif (gyro_testUNO.section_count == 7      # At the section with the last sign.
+                    and determine_backturn_flag == 0       # haven't made the decision to backturn yet.
+                    and sign_flag == 8                     # Green is visible and the wall is close.
                 ):
                     count_check_green = count_check_green + 1
 
@@ -307,7 +275,7 @@ if True:
                         steer = 120
                 else:
                     steer = -1200
-                if abs(yaw) < 20:  # おそらく、このパターンは内側だけ
+                if abs(yaw) < 20:  # Perhaps this pattern is only inside
                     if rotation_mode == "orange":
                         steer = -120
                         throttle = throttle - 10
@@ -322,8 +290,8 @@ if True:
                 bias_roll = 0
                 info_yaw = yaw / 5
 
-                if (gyro_testUNO.section_count == 7        #最後の標識があるセクションで、== 7
-                    and determine_backturn_flag == 0
+                if (gyro_testUNO.section_count == 7        # At the section with the last sign.
+                    and determine_backturn_flag == 0       # haven't made the decision to backturn yet.
                 ):
                     count_check_red = count_check_red + 1
 
@@ -345,7 +313,7 @@ if True:
                     and gyro_testUNO.past_change == 0
                 ):
                     print("paturn 2")
-                    if yaw > 85:  # 反時計周りで赤を読んだときヨウ角が85度以上(=曲がる直前で先に赤が見えている状況)
+                    if yaw > 85:  # Yaw angle is more than 85 degrees when reading red in a counterclockwise direction (= situation where red is visible ahead just before the turn).
                         throttle = throttle + 10
                         steer = steer + 10
                     else:
@@ -359,7 +327,6 @@ if True:
                     and gyro_testUNO.past_change == 0
                 ):
                     print("paturn 3")
-                    throttle = throttle #-20
                     steer = steer - 30
                     if steer < 10:
                         steer = 10
@@ -375,8 +342,8 @@ if True:
                     steer = 30
 
             elif sign_flag == 2:  # green
-                if (gyro_testUNO.section_count == 7        #最後の標識があるセクションで、== 7
-                    and determine_backturn_flag == 0
+                if (gyro_testUNO.section_count == 7        # At the section with the last sign.
+                    and determine_backturn_flag == 0       # haven't made the decision to backturn yet.
                 ):
                     count_check_green = count_check_green + 1
 
@@ -413,8 +380,8 @@ if True:
                     and gyro_testUNO.past_change == 0
                 ):
                     print("paturn 3")
-                    throttle = throttle # -20
-                    steer = steer + 30  # +30
+                    throttle = throttle 
+                    steer = steer + 30  
                     if steer > -10:
                         steer = -10
                     pass
@@ -451,12 +418,12 @@ if True:
             orange_camera = rot == 2
             new_rot = rot
 
-        # 角を曲がるときに奥に何が見えているかで操作量を決めている
+        # The amount of manipulation is determined by what you see in the back when you turn the corner.
         if determine_backturn_flag != 1:
-            if blue_camera:  # 左回り
-                if (over_sign % 10) == 0:  # 奥に
+            if blue_camera:  # counterclockwise rotation
+                if (over_sign % 10) == 0:  # can't see anything in the back.
                     if(over_sign >= 20):
-                        go_angle = 100 # 0
+                        go_angle = 100 
                     elif(over_sign >= 10):
                         go_angle = 600
                     else:
@@ -469,13 +436,13 @@ if True:
                         last_flag = 0
                         print("section_count:", gyro_testUNO.section_count)
 
-                elif (over_sign % 10) == 1:  # 奥に赤が見えている
+                elif (over_sign % 10) == 1:  # can see red in the back.
                     if(over_sign >= 20):
-                        go_angle = 300 # 0
+                        go_angle = 300
                     elif(over_sign >= 10):
                         go_angle = 1400
                     else:
-                        go_angle = 800 #500 #1100
+                        go_angle = 800
                     if gyro_testUNO.change_steer(30, new_rot, go_angle, steer, running_backturn_flag):
                         print("red get1", over_sign)
                         last_run = motor.get()[0]
@@ -484,13 +451,13 @@ if True:
                         last_flag = 0
                         print("section_count:", gyro_testUNO.section_count)
 
-                elif (over_sign % 10) == 2:  # 奥に緑が見えている
+                elif (over_sign % 10) == 2:  # can see green in the back.
                     if(over_sign >= 20):
                         go_angle = 0
                     elif(over_sign >= 10):
-                        go_angle = 500 # 550 300
+                        go_angle = 500
                     else:
-                        go_angle = 330 # 0
+                        go_angle = 330
                     if gyro_testUNO.change_steer(30, new_rot, go_angle, steer, running_backturn_flag):
                         print("green get1", over_sign)
                         last_run = motor.get()[0]
@@ -499,14 +466,14 @@ if True:
                         last_flag = 0
                         print("section_count:", gyro_testUNO.section_count)
 
-            elif orange_camera:  # 右回り
-                if (over_sign % 10) == 0:  # 奥に
+            elif orange_camera:  # clockwise rotation
+                if (over_sign % 10) == 0:  # can't see anything in the back.
                     if(over_sign >= 20):
                         go_angle = 600
                     elif(over_sign >= 10):
-                        go_angle = 100 # 200
+                        go_angle = 100 
                     else:
-                        go_angle = 300 # 300
+                        go_angle = 300 
                     if gyro_testUNO.change_steer(30, new_rot, go_angle, steer, running_backturn_flag):
                         print("none2", over_sign)
                         last_run = motor.get()[0]
@@ -515,7 +482,7 @@ if True:
                         last_flag = 0
                         print("lookred_section_count:", gyro_testUNO.section_count)
 
-                elif (over_sign % 10) == 1:  # 奥に赤が見えている
+                elif (over_sign % 10) == 1:  # can see red in the back.
                     if(over_sign >= 20):
                         go_angle = 500
                     elif(over_sign >= 10):
@@ -530,13 +497,13 @@ if True:
                         last_flag = 0
                         print("lookred_section_count:", gyro_testUNO.section_count)
 
-                elif (over_sign % 10) == 2:  # 奥に緑が見えている
+                elif (over_sign % 10) == 2:  # can see green in the back.
                     if(over_sign >= 20):
                         go_angle = 1430
                     elif(over_sign >= 10):
-                        go_angle = 300 # 0
+                        go_angle = 300 
                     else:
-                        go_angle = 500 # 1100
+                        go_angle = 500 
                     if gyro_testUNO.change_steer(30, new_rot, go_angle, steer, running_backturn_flag):
                         print("green get2", over_sign)
                         last_run = motor.get()[0]
@@ -557,16 +524,9 @@ if True:
                 last_flag = 0
                 print("section_count:", gyro_testUNO.section_count)
 
-        # print("M-L",motor.get()[0] - last_run)
-        #yaw = hub.motion.yaw_pitch_roll()[0]
-        # print(count_check_red, count_check_green)
-        # print(gyro_testUNO.section_count,motor.get()[0] - last_run)
-        # print("sign_flag:",sign_flag)
-        # print("steer:",steer)
-
         resetSerialBuffer()
         p_steer = steer
 
-    #絶対角度で0度になるように motor_steer を動かす
+    # After stopping, move motor_steer so that it reaches 0 degrees in absolute angle
     motor_steer.run_to_position(0,5)
 
