@@ -211,26 +211,61 @@ This cable is integrated with the camera module and is used to connect the Raspb
 
 Using a Raspberry Pi 4, the procedure for powering the Raspberry Pi 4 from the mobile battery and then powering the Spike Large Hub from the Raspberry Pi 4 is as follows
 
-1. **Prepare the mobile battery**:
-   - First, prepare a mobile battery with sufficient capacity. Choose the capacity of the battery based on the power requirements of the device you are using. 2.
+1. **Prepare the mobile battery**:<br>
+   First, prepare a mobile battery with sufficient capacity. Choose the capacity of the battery based on the power requirements of the device you are using. 2.
 
-2. **Connecting the mobile battery to the Raspberry Pi 4**:
-   - Connect the USB cable to the power supply port on the Raspberry Pi 4 using the mobile battery's output port (usually the USB port).
+2. **Connecting the mobile battery to the Raspberry Pi 4**:<br>
+   Connect the USB cable to the power supply port on the Raspberry Pi 4 using the mobile battery's output port (usually the USB port).
 
-3. **Powering the Raspberry Pi 4**:
-   - To power the Raspberry Pi 4, start the mobile battery. This will start powering the Raspberry Pi 4.
+3. **Powering the Raspberry Pi 4**:<br>
+   To power the Raspberry Pi 4, start the mobile battery. This will start powering the Raspberry Pi 4.
 
-4. **Powering the Raspberry Pi 4 to the Spike Large Hub**:
-   - The Raspberry Pi 4 can power other USB devices via its USB port; to power the Spike Large Hub, connect the Spike Large Hub to the USB port on the Raspberry Pi 4.
+4. **Powering the Raspberry Pi 4 to the Spike Large Hub**:<br>
+   The Raspberry Pi 4 can power other USB devices via its USB port; to power the Spike Large Hub, connect the Spike Large Hub to the USB port on the Raspberry Pi 4.
 
-5. **Powering the Spike Large Hub**:
-   - The Raspberry Pi 4 will power the Spike Large Hub and the Spike Large Hub will boot up. 6.
+5. **Powering the Spike Large Hub**:<br>
+   The Raspberry Pi 4 will power the Spike Large Hub and the Spike Large Hub will boot up. 6.
 
-6. **Using the device**:
-   - Now, starting with the mobile battery, the Spike Large Hub is powered via the Raspberry Pi 4 and each device should be up and running. the Raspberry Pi 4 controls the Spike Large Hub and can communicate data and perform other tasks.
+6. **Using the device**:<br>
+   Now, starting with the mobile battery, the Spike Large Hub is powered via the Raspberry Pi 4 and each device should be up and running. the Raspberry Pi 4 controls the Spike Large Hub and can communicate data and perform other tasks.
 
 Notes:
 - Keep in mind the capacity of the mobile battery and the power consumption of the Raspberry Pi 4 and make sure that the battery can supply the appropriate amount of time.
 - Use the proper standard and quality of USB cables and ports. Poor quality cables and ports can cause power supply problems.
 - Take appropriate measures to ensure security and safety concerns related to power supply.
 - Pay attention to the thermal management of the device as well and take necessary measures to prevent overheating.
+
+***
+# Power Consumption
+
+1. **Power consumption of Raspberry Pi 4**:<br>
+   The power consumption of the Raspberry Pi 4 will vary depending on usage conditions, but approximate estimates are as follows
+   - Idle state: approx. 2.7 W
+   - Light load (e.g. web browsing): 3-4 W
+   - Full load (CPU/GPU heavy work): 7-8 W
+
+   Thus, if the Raspberry Pi 4 runs continuously at maximum load, it will consume up to about 8 W of power.
+
+2.**Spike Large Hub power consumption**:<br>
+   The power consumption of the LEGO Spike Large Hub is generally low. It typically consumes less than 0.5 W. 
+
+3.**Mobile battery capability**:<br>
+   The capacity of the mobile battery provided is 10000 mAh (milliamp-hours) and 3.7 Wh (watt-hours). The power capacity of the mobile battery should be converted from ampere-hours (mAh) to watt-hours (Wh). Power (Wh) is the product of current (A) and voltage (V).
+
+   Mobile battery capacity (Wh) = capacity (mAh) x voltage (V) / 1000
+
+   Thus, a 10000mAh battery can provide approximately 37Wh of power.
+
+4.**Estimate power consumption**:<br>
+   To estimate the total power consumption of the Raspberry Pi 4 and Spike Large Hub, sum the power consumption of each and compare it to the capacity of the mobile battery.
+
+   - Raspberry Pi 4: 8 W
+   - Spike Large Hub: 0.5 W
+
+   Total power consumption: 8 W + 0.5 W = 8.5 W
+
+   Mobile battery capacity: 37 Wh
+
+Thus, the mobile battery can operate for approximately 4.35 hours (37 Wh / 8.5 W) with a total power consumption of 8.5 W. 
+
+This calculation is based on the assumption that the Raspberry Pi4 continues to operate at maximum power consumption, so it will actually run longer. However, as the battery power decreases, so does the output power, so we change the batteries every couple of hours or so.
