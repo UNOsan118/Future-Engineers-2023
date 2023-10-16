@@ -10,32 +10,33 @@ class Gyro_remake(Basic_motion):
         self.difference_steer = 0
         self.direction = 1
         self.destination = 0
-        self.straight_rotation = -10000  # 曲がってから次のturnゾーンに行くまでに他の線を読まないようにする
+        self.straight_rotation = -10000  # Avoid reading other lines from the turn to the next TURN zone.
 
         self.motor_steer = motor_steer
         self.motor = motor
-        self.past_change = 0  # 0change 1back
+        self.past_change = 0  # 0change,1back
 
         self.section_count = -1
         self.sign_count = 0
         self.turn = 84
         self.turn2 = 87
 
-    # 真っ直ぐ走るためのメソッド
+
+    # Methods for running straight
     def straightening(self, throttle, bias):
         st_roll = self.motor.get()[0]
         repair_yaw = hub.motion.yaw_pitch_roll()[0]
 
         if abs(repair_yaw) <= 30:
             self.difference_steer = int(-2 * (repair_yaw + bias))
-            if self.difference_steer < -30: #55
+            if self.difference_steer < -30:
                 self.difference_steer = -30
             elif self.difference_steer > 30:
                 self.difference_steer = 30
         else:
             self.difference_steer = int(-1 * (repair_yaw + bias))
 
-        if self.difference_steer < -55: #55
+        if self.difference_steer < -55:
             self.difference_steer = -55
         elif self.difference_steer > 55:
             self.difference_steer = 55
@@ -44,7 +45,8 @@ class Gyro_remake(Basic_motion):
 
         return 0
 
-    # 角でヨウ角を更新するメソッド
+
+    # Method to update yaw angle at the corner
     def change_steer(self, throttle, rot, go_angle, steer ,running_backturn_flag):
         check_line = False
 
@@ -52,7 +54,6 @@ class Gyro_remake(Basic_motion):
         orange_camera = (rot == 2)
 
         current_dist = self.motor.get()[0]
-        #print("CD-SR",current_dist - self.straight_rotation)
         if (current_dist - self.straight_rotation >= 2100) and (running_backturn_flag!=1):
             if blue_camera:
                 print("blue_get")
@@ -64,7 +65,7 @@ class Gyro_remake(Basic_motion):
                     self.straightening(throttle, 0)
                     this_angle = self.motor.get()[0]
 
-                # go_angle分すすんだらプリントされる
+                # Printed when go_angle amount is advanced.
                 print("finish go_angle")
                 rel_pos = self.motor.get()[0]
 

@@ -7,7 +7,7 @@ from basic_motion_testUNO import Basic_motion
 
 print("--device init--")
 
-# デバイスの取得
+# Device Acquisition
 while True:
     motor = hub.port.C.motor
     motor_steer = hub.port.E.motor
@@ -28,7 +28,7 @@ while True:
 gyro_testUNO = Gyro_remake(motor_steer, motor)
 basic = Basic_motion(motor_steer, motor)
 
-# シリアルバッファの中を空にする
+# Empty the serial buffer
 def resetSerialBuffer():
     while True:
         reply = ser.read(10000)
@@ -61,7 +61,7 @@ if True:
 
     count = 0
     bias_roll = 0
-    last_run = 1000000  # 最後の切り返しからどれだけ進んだのか記録
+    last_run = 1000000  # Record how far you have progressed since the last turnaround.
 
     sign_flag = 0
     last_flag = 0
@@ -71,7 +71,7 @@ if True:
     count_check_red = 0
     count_check_green = 0
 
-    new_rot = 0 #変数名かえよう
+    new_rot = 0 
 
     memory_sign = [[0, 0], [0, 0], [0, 0], [0, 0]]
 
@@ -81,14 +81,14 @@ if True:
     finish_go = 2100
     last_over_sign = 0
 
-    # ボタンが押されるまで始まらない
+    # It doesn't start until a button is pressed.
     while not (center_button.is_pressed()):
         pass
 
     hub.motion.yaw_pitch_roll(0)
     while True:
         cmd = ""
-        # 三周終わった時
+        # At the end of three laps
         if gyro_testUNO.section_count >= 12:
             basic.stop()
             break
@@ -98,7 +98,7 @@ if True:
                 basic.stop()
                 break
 
-        # シリアル通信でデータを受信
+        # Receive data via serial communication
         while True:
             reply = ser.read(ser_size - len(cmd))
             reply = reply.decode("utf-8")
@@ -135,14 +135,14 @@ if True:
 
                 break
 
-        # 右回りか左回りかを確定させる
+        # Determine if you are going right or left.
         if rotation_mode == "":
             if rot == 1:
                 rotation_mode = "blue"
             elif rot == 2:
                 rotation_mode = "orange"
 
-        # 標識を何も認識していない時は0で、認識している時は0以外を返すようにしている
+        # When the sign is not recognized as anything, it returns 0, and when it is recognized, it returns a non-zero value.
         if sign_flag == 0 or sign_flag == 3:
             if bias_roll >= 600:
                 bias_roll = 0
@@ -158,7 +158,7 @@ if True:
             en_roll = motor.get()[0]
             bias_roll += en_roll - st_roll
 
-        # sign_flag == 4,7,8は壁が近いsign_flag == 5は正面に壁がある
+        # sign_flag == 4,7,8 are close to the wall sign_flag == 5 has a wall in front
         else:
             yaw = hub.motion.yaw_pitch_roll()[0]
             straight_flag = False
@@ -189,7 +189,7 @@ if True:
                         steer = 120
                 else:
                     steer = -1200
-                if abs(yaw) < 20:  # おそらく、このパターンは内側だけ
+                if abs(yaw) < 20:
                     if rotation_mode == "orange":
                         steer = -120
                         throttle = throttle - 10
@@ -212,23 +212,8 @@ if True:
         orange_camera = rot == 2
         new_rot = rot
 
-        # 角を曲がるときに奥に何が見えているかで操作量を決めている
-        if blue_camera:  # 左回り
-            """
-            if gyro_testUNO.section_count == -1:
-                if(over_sign >= 20):
-                    go_angle = 600
-                elif(over_sign >= 10):
-                    go_angle = 800
-                else:
-                    go_angle = 700
-            else:
-                if(over_sign >= 10):
-                    go_angle = 900
-                else:
-                    go_angle = 800
-            """
-
+        # The amount of manipulation is determined by what you see in the back when you turn the corner.
+        if blue_camera:  # counterclockwise rotation
             if(over_sign >= 20):
                 go_angle = 620
             elif(over_sign >= 10):
@@ -243,22 +228,7 @@ if True:
                 gyro_testUNO.sign_count = 0
                 print("section_count:", gyro_testUNO.section_count)
 
-        elif orange_camera:  # 右回り
-            """
-            if gyro_testUNO.section_count == -1:
-                if(over_sign >= 20):
-                    go_angle = 800
-                elif(over_sign >= 10):
-                    go_angle = 600
-                else:
-                    go_angle = 700
-            else:
-                if(over_sign >= 20):
-                    go_angle = 900
-                else:
-                    go_angle = 800
-            """
-
+        elif orange_camera:  # clockwise rotation
             if(over_sign >= 20):
                 go_angle = 920
             elif(over_sign >= 10):
@@ -273,16 +243,9 @@ if True:
                 gyro_testUNO.sign_count = 0
                 print("lookred_section_count:", gyro_testUNO.section_count)
 
-        # print("M-L",motor.get()[0] - last_run)
-        #yaw = hub.motion.yaw_pitch_roll()[0]
-        # print(count_check_red, count_check_green)
-        # print(gyro_testUNO.section_count,motor.get()[0] - last_run)
-        # print("sign_flag:",sign_flag)
-        # print(hub.motion.yaw_pitch_roll()[0])
-        # print("steer:",steer)
-
         resetSerialBuffer()
         p_steer = steer
 
+    # After stopping, move motor_steer so that it reaches 0 degrees in absolute angle
     motor_steer.run_to_position(0,5)
 

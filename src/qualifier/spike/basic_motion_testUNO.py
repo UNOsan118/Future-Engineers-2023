@@ -5,6 +5,7 @@ class Basic_motion:
         self.motor_steer = motor_steer
         self.motor = motor
 
+
     def move(self,throttle, steer):
         self.motor.run_at_speed(throttle)
         once = False
@@ -15,7 +16,7 @@ class Basic_motion:
         elif steer < -90:
             steer = -90
 
-        elif steer > 70: #60
+        elif steer > 70:
             steer = 70
         elif steer < -70:
             steer = -70
@@ -23,7 +24,6 @@ class Basic_motion:
         while True:
 
             if(self.motor_steer.busy(type=1)): #if motor_steer is moving
-                #print("motor_steer:",self.motor_steer.get(2)[0])
                 count = count + 1
                 continue
             elif once:
@@ -31,6 +31,7 @@ class Basic_motion:
             else:
                 self.motor_steer.run_to_position(steer)
                 once = True
+
 
     def stop(self):
         self.motor.brake()
