@@ -5,7 +5,11 @@ This directory primarily contains the Mobility Management content referenced in 
 
 # System Configuration Chart
 
+We have attempted to create a wiring diagram for the vehicle that includes specialized information. Currently, however, LEGO does not provide electrical schematics for Spike products. We therefore created a wiring diagram that could reproduce the wiring of the car as closely as possible.
+
 <img src="./images/ElectricalScheme.png" width="100%">
+
+See below for a description of all sensors and connectors used.
 
 ***
 # SPIKE Prime Hardware
