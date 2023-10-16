@@ -1,18 +1,19 @@
-import cv2 # 本戦用 # テスト用
+# 2023 Obstacle
+import cv2 
 import numpy as np
 import time
 
 
 def red_detect(img):
-    # HSV色空間に変換
+    # Converted to HSV color space
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
-    # 赤色のHSVの値域1
+    # Red HSV value range 1
     hsv_min = np.array([0, 80, 60])
     hsv_max = np.array([2, 255, 255])
     mask1 = cv2.inRange(hsv, hsv_min, hsv_max)
 
-    # 赤色のHSVの値域2
+    # Red HSV value range 2
     hsv_min = np.array([150, 80, 60])
     hsv_max = np.array([180, 255, 255])
     mask2 = cv2.inRange(hsv, hsv_min, hsv_max)
@@ -20,12 +21,13 @@ def red_detect(img):
     mask = mask1 + mask2
     return mask
 
+
 def green_detect(img):
-    # HSV色空間に変換
+    # Converted to HSV color space
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
-    # 緑色のHSVの値域
-    hsv_min = np.array([30, 100, 90])
+    # Green HSV value range
+    hsv_min = np.array([30, 80, 60])
     hsv_max = np.array([90, 255, 255])
 
     mask = cv2.inRange(hsv, hsv_min, hsv_max)
@@ -33,54 +35,55 @@ def green_detect(img):
 
 
 def orange_detect(img):
-    # HSV色空間に変換
+    # Converted to HSV color space
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
-    # 橙色のHSVの値域
-    hsv_min = np.array([5, 40, 80]) # 5, 10, 10
-    hsv_max = np.array([17, 250, 255]) # 17, 250, 255
+    # Orange HSV value range
+    hsv_min = np.array([5, 40, 80])
+    hsv_max = np.array([17, 250, 255])
 
     mask = cv2.inRange(hsv, hsv_min, hsv_max)
     return mask
 
+
 def blue_detect(img):
-    # HSV色空間に変換
+    # Converted to HSV color space
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
-    # 青色のHSVの値域
-    hsv_min = np.array([100, 40, 80]) # 85, 40, 40
-    hsv_max = np.array([130, 255, 255]) # 115, 255, 255
+    # Blue HSV value range
+    hsv_min = np.array([100, 40, 80]) 
+    hsv_max = np.array([130, 255, 255]) 
 
     mask = cv2.inRange(hsv, hsv_min, hsv_max)
     return mask
 
 
 def black_detect(img):
-    # HSV色空間に変換
+    # Converted to HSV color space
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
-    # 黒色のHSVの値域
+    # Black HSV value range
     hsv_min = np.array([0, 0, 0])
-    hsv_max = np.array([180, 210, 100]) # [180, 210, 80]
+    hsv_max = np.array([180, 210, 80])
 
     mask = cv2.inRange(hsv, hsv_min, hsv_max)
     return mask
 
 
-def analysis_blob(binary_img):  # 主に標識をブロブ解析するメソッド
+def analysis_blob(binary_img):  # Methods that primarily analyze blobs of labels
     max_blob = {}
 
-    # connectedComponentsWithStatsはオブジェクト（連結領域）を検出するメソッド
+    # connectedComponentsWithStats is a method to detect objects (connected areas)
     data = cv2.connectedComponentsWithStats(binary_img)
 
-    # ラベルの数（背景もラベリングされるので、オブジェクトの数はdata[0] - 1となる
+    # Number of labels (the background is also labeled, so the number of objects is data[0] - 1)
     n_labels = data[0] - 1
 
-    # 起動時やオブジェクトが完全にない場合に、背景しか抽出されない場合がある
+    # Only the background may be extracted at startup or when objects are completely absent
     if n_labels == 0:
-        # 例外の時、max_blobに値を突っ込んでおいた方が都合がいい
-        # areaが0なので何も起こらない
-        max_blob["upper_left"] = (0, 0)  # 左上座標
+        # It is more convenient to shove the value into max_blob at the time of exception
+        # area is 0, so nothing happens.
+        max_blob["upper_left"] = (0, 0)  # left upper coordinate
         max_blob["width"] = 0
         max_blob["height"] = 0
         max_blob["area"] = 0
@@ -88,105 +91,107 @@ def analysis_blob(binary_img):  # 主に標識をブロブ解析するメソッ�
 
         return max_blob
 
-    # 背景は0とラベリングされるので、最初の行を削除して格納する
-    # statsにはそのラベルの {左上のx座標、左上のy座標、幅、高さ、面積}の情報が格納されている
+    # Background is labeled 0, so delete and store the first row
+    # stats contains the label's {x-coordinate at top left, y-coordinate at top left, width, height, area} information.
     stats = np.delete(data[2], 0, axis=0)
 
-    # オブジェクトの重心
+    # center of gravity of an object
     centroids = np.delete(data[3], 0, axis=0)
 
-    # 面積が最大値のラベルのインデックス
+    # Index of the label with the largest area
     max_area_index = np.argmax(stats[:, 4])
 
-    # 一番大きいオブジェクトの情報を抽出
-    # 面積（1280×720のうちのピクセル数、環境によって違うかも）
+    # Extract information on the largest object
+    # Area (number of pixels out of 1280 x 720, may vary depending on the environment.)
     max_blob["area"] = stats[:, 4][max_area_index]
-    max_blob["center"] = centroids[max_area_index]  # 中心座標
+    max_blob["center"] = centroids[max_area_index]  # center coordinates
 
     return max_blob
 
 
-def analysis_blob_line(binary_img):  # 線をブロブ解析するメソッド
+def analysis_blob_line(binary_img):  # Methods to analyze lines for blobs
     max_blob = {}
 
-    # connectedComponentsWithStatsはオブジェクト（連結領域）を検出するメソッド
+    # connectedComponentsWithStats is a method to detect objects (connected areas)
     data = cv2.connectedComponentsWithStats(binary_img)
 
-    # ラベルの数（背景もラベリングされるので、オブジェクトの数はdata[0]-1となる
+    # Number of labels (the background is also labeled, so the number of objects is data[0]-1)
     n_labels = data[0] - 1
 
-    # 起動時やオブジェクトが完全にない場合に、背景しか抽出されない場合がある
+    # Only the background may be extracted at startup or when objects are completely absent
     if n_labels == 0:
-        # 例外の時、max_blobに値を突っ込んでおいた方が都合がいい
-        # areaが0なので何も起こらない
-        max_blob["upper_left"] = (0, 0)  # 左上座標
+        # It is more convenient to shove the value into max_blob at the time of exception
+        # area is 0, so nothing happens.
+        max_blob["upper_left"] = (0, 0)  # left upper coordinate
         max_blob["width"] = 0
         max_blob["height"] = 0
         max_blob["area"] = 0
         max_blob["center"] = (0, 0)
         return max_blob
 
-    # 背景は0とラベリングされるので、最初の行を削除して格納する
-    # statsにはそのラベルの {左上のx座標、左上のy座標、幅、高さ、面積}の情報が格納されている
+    # Background is labeled 0, so delete the first line and store it
+    # stats stores the label's {x-coordinate at top left, y-coordinate at top left, width, height, area} information
     stats = np.delete(data[2], 0, axis=0)
 
-    # オブジェクトの重心
+    # center of gravity of an object
     centroids = np.delete(data[3], 0, axis=0)
 
-    # 面積が最大値のラベルのインデックス
+    # Index of the label with the largest area
     max_area_index = np.argmax(stats[:, 4])
 
-    # 横幅が最大値のインデックス
+    # Index with maximum width
     max_width_index = np.argmax(stats[:, 2])
     height, width = binary_img.shape[:3]
 
-    # 一番大きいオブジェクトの情報を抽出
+    # Extract information on the largest object
     max_blob["upper_left"] = (
-        stats[:, 0][max_area_index], stats[:, 1][max_area_index])  # 左上座標
-    max_blob["width"] = stats[:, 2][max_area_index]  # 幅
-    max_blob["height"] = stats[:, 3][max_area_index]  # 高さ
-    # 面積（1280×720のうちのピクセル数、環境によって違うかも）
+        stats[:, 0][max_area_index], stats[:, 1][max_area_index])  # left upper coordinate
+    max_blob["width"] = stats[:, 2][max_area_index]  # width
+    max_blob["height"] = stats[:, 3][max_area_index]  # height
+    # Area (number of pixels out of 1280 x 720, may vary depending on environment.)
     max_blob["area"] = stats[:, 4][max_area_index]
-    max_blob["center"] = centroids[max_area_index]  # 中心座標
+    max_blob["center"] = centroids[max_area_index]  # center coordinates
     area = stats[:, 4][max_area_index]
 
     return max_blob
 
 
 def main():
-    # カメラのキャプチャ
+    # Camera Capture
     cap = cv2.VideoCapture(0)
     while (cap.isOpened()):
         _, frame = cap.read()
-        # frame = cv2.rotate(f, cv2.ROTATE_180)
 
-        # 赤色検出
+        # Red detection
         mask_red = red_detect(frame)
 
-        # 緑色検出
+        # Green detection
         mask_green = green_detect(frame)
 
-        # 橙色検出
+        # Orange detection
         mask_orange = orange_detect(frame)
 
-        # 青色検出
+        # Blue detection
         mask_blue = blue_detect(frame)
 
+        # Black detection
         mask_black1 = black_detect(frame)
 
-        # マスク画像をブロブ解析（標識と判定されたブロブ情報を取得）
+        # Blob analysis of mask image (obtain blob information determined to be labeling)
         max_blob_red = analysis_blob(mask_red)
         max_blob_green = analysis_blob(mask_green)
 
-        # 結果表示
-        # cv2.imshow("Frame", frame)
-        # cv2.imshow("Mask red", mask_red)
-        # cv2.imshow("Mask green", mask_green)
-        # cv2.imshow("Mask orange", mask_orange)
-        # cv2.imshow("Mask blue", mask_blue)
-        # cv2.imshow("Mask black",mask_black1)
+        # Result display
+        """
+        cv2.imshow("Frame", frame)
+        cv2.imshow("Mask red", mask_red)
+        cv2.imshow("Mask green", mask_green)
+        cv2.imshow("Mask orange", mask_orange)
+        cv2.imshow("Mask blue", mask_blue)
+        cv2.imshow("Mask black",mask_black1)
+        """
 
-        # qキーが押されたら途中終了
+        # Ends midway when the q key is pressed.
         if cv2.waitKey(25) & 0xFF == ord('q'):
             break
 
@@ -194,31 +199,31 @@ def main():
     cv2.destroyAllWindows()
 
 
-def detect_sign_area(cap, mode=""):  # 標識の面積を返すdetect_sign（面積によって動作を変えたいため）
+def detect_sign_area(cap, mode=""):  # DETECT_SIGN to return the area of the sign (because we want to change the behavior depending on the area)
     is_red = False
     is_green = False
 
     ok_blue = False
     ok_orange = False
 
-    clip_ratio = 0.55 #final 0.475 qualifier 0.6 # clip in the top of image for the specific ratio
+    clip_ratio = 0.55 
     img_shape = (320, 320, 3)
     mask_arr = np.ones(img_shape, dtype=np.uint8)
     mask_arr[:int(clip_ratio*320), :, :] = 0
 
-    assert cap.isOpened(), "カメラを認識していません！"
+    assert cap.isOpened(), "The camera is not recognized!"
     _, frame = cap.read()
 
     cut_frame = cv2.resize(frame, dsize=(320, 320))
     cut_frame = cut_frame * mask_arr
-    # cv2.imshow("cut_frame", cut_frame)
+    cv2.imshow("cut_frame", cut_frame)
 
     frame = cv2.resize(frame, dsize=(160, 120))
 
     frame_hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     frame = cv2.cvtColor(frame_hsv, cv2.COLOR_HSV2BGR)
 
-    # 色検出
+    # Color detection
     mask_red = red_detect(frame)
     mask_green = green_detect(frame)
     mask_orange = orange_detect(frame)
@@ -233,7 +238,7 @@ def detect_sign_area(cap, mode=""):  # 標識の面積を返すdetect_sign（面
 
     height, width, channels = frame.shape[:3]
 
-    # 色毎のカットする範囲を設定
+    # Set the area to be cut for each color
     mask_red[0:int(4.5 * height/10), :] = 0
     mask_green[0:int(4.5 * height/10), :] = 0
     mask_blue[0:int(3 * height/5), :] = 0
@@ -257,7 +262,7 @@ def detect_sign_area(cap, mode=""):  # 標識の面積を返すdetect_sign（面
     mask_black_core[int(3 * height/5):int(5 * height/5), 0:int(width/5)] = 0
     mask_black_core[int(3 * height/5):int(5 * height/5), int(4 * width/5):int(width)] = 0
 
-    # ブロブ解析
+    # blob analysis
     blob_red = analysis_blob(mask_red)
     blob_green = analysis_blob(mask_green)
     blob_orange = analysis_blob_line(mask_orange)
@@ -274,7 +279,7 @@ def detect_sign_area(cap, mode=""):  # 標識の面積を返すdetect_sign（面
     black_right_middle_area = blob_black_right_middle["area"]
     black_core_area = blob_black_core["area"]
 
-    # どの黒色が画面の何割を占めているかの比
+    # Ratio of which black color occupies what percentage of the screen
     black_right_ratio = black_right_area * 6 / (width * height)
     black_left_ratio = black_left_area * 6/ (width * height)
     black_left_middle_ratio = black_left_middle_area * 6 / (width * height)
@@ -302,14 +307,14 @@ def detect_sign_area(cap, mode=""):  # 標識の面積を返すdetect_sign（面
     gcy = blob_green["center"][1]
 
 
-    #赤の物体と緑の物体の大きい方の面積がthreshold以上ならフラグを立てる
+    # Flag if the area of the larger of the red object and the green object is greater than THRESHOLD.
     area_red = blob_red["area"]
     area_green = blob_green["area"]
 
     blue_center_y = 0
     orange_center_y = 0
 
-    # 青線を読んでフラグを立てる条件
+    # Conditions for flagging by reading the blue line
     if blob_blue != 0:
         blue_center = blob_blue["center"]
         blue_area = blob_blue["area"]
@@ -318,7 +323,7 @@ def detect_sign_area(cap, mode=""):  # 標識の面積を返すdetect_sign（面
                 ok_blue = True
             blue_center_y = blue_center[1]/height
 
-    # 橙線を読んでフラグを立てる条件
+    # Conditions for flagging by reading the orange line
     if blob_orange != 0:
         orange_center = blob_orange["center"]
         orange_area = blob_orange["area"]
@@ -334,18 +339,18 @@ def detect_sign_area(cap, mode=""):  # 標識の面積を返すdetect_sign（面
     blue_center_x = blue_center[0]/width
     blue_center_y = blue_center[1]/height
 
-    # 各画像の出力
-    # ここから
-    # cv2.imshow("Frame", frame)
-    # cv2.imshow("Mask red", mask_red)
-    # cv2.imshow("Mask green", mask_green)
-    # cv2.imshow("Mask orange", mask_orange)
-    # cv2.imshow("Mask blue", mask_blue)
-    # cv2.imshow("Mask black", mask_black)
-    # cv2.imshow("Mask black left", mask_black_left)
-    # cv2.imshow("Mask black right", mask_black_right)
-    # cv2.imshow("Mask black core", mask_black_core)
-    # ここまで
+    # Output of each image
+    """
+    cv2.imshow("Frame", frame)
+    cv2.imshow("Mask red", mask_red)
+    cv2.imshow("Mask green", mask_green)
+    cv2.imshow("Mask orange", mask_orange)
+    cv2.imshow("Mask blue", mask_blue)
+    cv2.imshow("Mask black", mask_black)
+    cv2.imshow("Mask black left", mask_black_left)
+    cv2.imshow("Mask black right", mask_black_right)
+    cv2.imshow("Mask black core", mask_black_core)
+    """
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         cv2.destroyAllWindows()
