@@ -26,6 +26,7 @@ In the `schemes` directory, there are two subdirectories, `mobility` and `power_
 The `src` directory contains three subdirectories: `final`, `qualifier`, and `raspi`.
 The `final` and `qualifier` directories contain the code used in the Obstacle and Open competitions. Each directory also contains two subdirectories, `raspi` and `spike`, which contain the code for the RaspberryPi and Spike sides separately.
 The `raspi` directory contains the program that is executed when the RaspberryPi is started. In the Obstacle competition, the contents of this directory are exactly the same as the `final` - `raspi` directory.
+Scattered throughout each directory, the `results` directory contains the video footage of the scenery captured by the camera after the car has actually driven.
 
 Both folders contain a large number of python files, but
 
@@ -71,12 +72,12 @@ It is automatically executed when the Hub is started, and waits for the Home but
 `basic_motion.py`
 
 BasicMotion is a class for controlling basic body motions.
-The `move()` function takes a speed of the drive motor (throttle) as argument 1 and a rotation angle of the steering motor (steer) as argument 2, and moves the two motors based on the argument values.
+The `move()` function takes a speed of the drive motor (throttle) as argument 1 and a rotation angle of the steering motor (steer) as argument 2, and moves the two motors based on the argument values. The file is now renamed and used as `basic_motion_testUNO.py`.
 <br>
 
 `gyro.py`
 
-Gyro is a class required for the operation of adjusting the angle of the car body.
+Gyro is a class required for the operation of adjusting the angle of the car body. The file is now renamed and used as `gyro_testUNO.py`.
 
 The `straightening()` function controls the car body to be at a reference angle.
 It requests the speed (throttle) of the drive motor in argument 1 and runs at that speed
