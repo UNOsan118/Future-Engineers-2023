@@ -23,7 +23,9 @@ In the `schemes` directory, there are two subdirectories, `mobility` and `power_
 
 # `src` Source code description.
 ***
-In the `src` directory, there are two subdirectories, `raspi` and `spike`. The `raspi` directory contains programs to run on the RaspberryPi, and the `spike` directory contains programs to run on the SPIKE Hub.
+The `src` directory contains three subdirectories: `final`, `qualifier`, and `raspi`.
+The `final` and `qualifier` directories contain the code used in the Obstacle and Open competitions. Each directory also contains two subdirectories, `raspi` and `spike`, which contain the code for the RaspberryPi and Spike sides separately.
+The `raspi` directory contains the program that is executed when the RaspberryPi is started. In the Obstacle competition, the contents of this directory are exactly the same as the `final` - `raspi` directory.
 
 Both folders contain a large number of python files, but
 
