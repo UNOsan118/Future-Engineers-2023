@@ -208,8 +208,29 @@ This cable is integrated with the camera module and is used to connect the Raspb
 
 ***
 # Explanation of how power is supplied
-When you run a Raspberry Pi on a typical mobile battery,
-* The power feed drops out on its own.
-* USB power supply and battery power supply do not switch.
 
-As described above, this is not a suitable power supply for the Raspberry Pi because of its intelligent features for smartphones.The Lithium-ion Battery Expansion Board for Raspberry Pi is used to solve the problem of power loss and the problem of not switching between USB power and battery power. The Lithium-ion Battery Expansion Board for Raspberry Pi is powered by the mobile battery and relays power to the Spike Hub.
+Using a Raspberry Pi 4, the procedure for powering the Raspberry Pi 4 from the mobile battery and then powering the Spike Large Hub from the Raspberry Pi 4 is as follows
+
+1. **Prepare the mobile battery**:
+   - First, prepare a mobile battery with sufficient capacity. Choose the capacity of the battery based on the power requirements of the device you are using. 2.
+
+2. **Connecting the mobile battery to the Raspberry Pi 4**:
+   - Connect the USB cable to the power supply port on the Raspberry Pi 4 using the mobile battery's output port (usually the USB port).
+
+3. **Powering the Raspberry Pi 4**:
+   - To power the Raspberry Pi 4, start the mobile battery. This will start powering the Raspberry Pi 4.
+
+4. **Powering the Raspberry Pi 4 to the Spike Large Hub**:
+   - The Raspberry Pi 4 can power other USB devices via its USB port; to power the Spike Large Hub, connect the Spike Large Hub to the USB port on the Raspberry Pi 4.
+
+5. **Powering the Spike Large Hub**:
+   - The Raspberry Pi 4 will power the Spike Large Hub and the Spike Large Hub will boot up. 6.
+
+6. **Using the device**:
+   - Now, starting with the mobile battery, the Spike Large Hub is powered via the Raspberry Pi 4 and each device should be up and running. the Raspberry Pi 4 controls the Spike Large Hub and can communicate data and perform other tasks.
+
+Notes:
+- Keep in mind the capacity of the mobile battery and the power consumption of the Raspberry Pi 4 and make sure that the battery can supply the appropriate amount of time.
+- Use the proper standard and quality of USB cables and ports. Poor quality cables and ports can cause power supply problems.
+- Take appropriate measures to ensure security and safety concerns related to power supply.
+- Pay attention to the thermal management of the device as well and take necessary measures to prevent overheating.
