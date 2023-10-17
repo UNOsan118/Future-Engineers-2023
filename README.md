@@ -58,6 +58,8 @@ When turning a corner, it is difficult to avoid a sign ahead of the turn. Theref
 
 **`color_tracking.py`**
 
+* Basic Processing
+
 This module includes the following functions to recognize signs, walls, etc. from image information.
 
 * `red_detect()`
@@ -84,32 +86,55 @@ Also, information from outside the course, such as the reflection of surrounding
 ## Programs to run on the SPIKE Hub
 ***
 
-`main.py`
+**`main.py`**
 
-This program is executed on the Hub during the competition. It imports the module for motor control described below, and controls the car body during the competition based on the external information sent from the RaspberryPi.
-It is automatically executed when the Hub is started, and waits for the Home button of the Hub to be pressed. When the home button is pressed, it starts running and controls the vehicle while communicating serially with RaspberryPi.
+* Basic Processing
+
+This program is executed on the Hub during the competition. The module for motor control, described below, is imported and controls the car body during the competition based on external information such as signs and walls sent from the Raspberry Pi and the calculated motor control amount.
+It is automatically executed when the Hub is started and waits for the Home button of the Hub to be pressed. When the home button is pressed, it starts running and controls the vehicle while communicating serially with Raspberry Pi.
+
+* Cornering control devices
+
+The car changes the way it turns a corner depending on what sign it sees ahead of it as it turns. For example, if the car is turning clockwise and it sees a red sign at the corner, it turns immediately, but if it sees a green sign, it goes a little further before turning. This reduces sudden changes of direction and increases stability.
+
+* Handling of running in the opposite direction on the third lap
+
+If the color of the sign at the end of the second lap is red, the driver must change direction and run the third lap in the opposite direction. For this purpose, the following rules are established: the decision to run in reverse or not, the movement at the corner in case of running in reverse, and the movement after running in reverse.
 
 ### Module for motor control
-`basic_motion.py`
+**`basic_motion.py`**
 
-BasicMotion is a class for controlling basic body motions.
-The `move()` function takes a speed of the drive motor (throttle) as argument 1 and a rotation angle of the steering motor (steer) as argument 2, and moves the two motors based on the argument values. The file is now renamed and used as `basic_motion_testUNO.py`.
-<br>
+* Basic Processing
 
-`gyro.py`
+Here we define a function to set the steering motor to a specified angle and a function to stop the robot. BasicMotion is a class for controlling basic body motions. The file is now renamed and used as `basic_motion_testUNO.py`.
+
+* `move()`
+
+This function sets the steering motor to a specified angle. This function takes the speed of the drive motor (throttle) as argument 1 and the rotation angle of the steering motor (steer) as argument 2, and moves the two motors based on the argument values.
+
+The Python code does have an instruction statement that sets the motor to a specified angle (the run_to_position instruction). However, if this is used as is, the steering angle specification is updated sequentially and the next instruction comes before it moves, and each time it does, the motor keeps trying to make the angle specified by the instruction, resulting in nothing moving. Therefore, we used the "busy" function to command the motor to move "only when the motor is not moving". By combining these actions into a single function, it is possible to easily describe the operation to "set the steering motor to a specified angle.
+
+* `stop()`
+
+This function stops the robot's motors. It is used at the end of three laps.
+
+**`gyro.py`**
 
 Gyro is a class required for the operation of adjusting the angle of the car body. The file is now renamed and used as `gyro_testUNO.py`.
 
-The `straightening()` function controls the car body to be at a reference angle.
-It requests the speed (throttle) of the drive motor in argument 1 and runs at that speed
+* `straightening()`
 
-The `change_steer()` function changes the direction in which the car should go (reference angle).
-It requests the speed of the drive motor (throttle) as argument 1 and the turning direction of the car body (rot) as argument 2. (Argument 3 is basically not used.)
-Change the reference angle to be used in straightening() when the vehicle recognizes the blue or orange line.
+This function controls the car body to be at a reference angle. It requests the speed (throttle) of the drive motor in argument 1 and runs at that speed. For this process, the yaw angle sensor in the SPIKE Hub is referenced.
 
+<img src="./other/Spike_Hub_yaw1.png" width="50%"> <img src="./other/Spike_Hub_yaw2.png" width="35%">
+
+The angle at the start is set to 0°. If the yaw angle of the SPIKE hub is tilted, e.g., after avoiding all signs, and you want to run with a 0° orientation, determine the steering value so that the yaw angle tries to return to 0°.
+
+* `change_steer()` 
+
+This function changes the direction in which the car should go (reference angle) in the corner. It requests the speed of the drive motor (throttle) as argument 1 and the turning direction of the car body (rot) as argument 2. (Argument 3 is basically not used.)When the blue or orange line is recognized, a change of direction is required. Again, the yaw angle of the SPIKE hub is used. For example, if you want to turn clockwise, i.e., 90° to the right at the corner, update the yaw angle to ( current yaw angle - 90° ). In this way, the SPIKE hub will know that the right side is the direction to go straight. After that, it will follow the `straightening()` to go back to 0° and turn 90° on its own.
 
 # Writing and executing programs to SPIKE Hub
-***
 
 ### Launching the Mu Editor
     
