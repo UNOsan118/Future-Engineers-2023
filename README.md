@@ -35,29 +35,51 @@ Other files are imported as modules from the tuning program and the main program
 
 ## Program to run on RaspberryPi.
 ***
-On RasbperryPi, it acquires images from a wide-angle camera, detects signs and walls, and calculates the amount of operation.
+On RasbperryPi, it acquires images from a wide-angle camera, detects signs and walls, and calculates the amount of operation. The camera images are mainly analyzed for the red, green, blue, orange, and black colors on the course, respectively. For this analysis, we use cv2, a Python module for image processing.
 
-`color_avoid_wideangle.py`.
+**`color_avoid_wideangle.py`**
 
-During competition, this program is executed. It executes `detect_sign_area()` in `color_tracking.py` described below to obtain information on signs, walls, and ground lines.
-Then, using those information, it calculates the values given to the steering motor and drive motor of the vehicle body, and
-Sends them to the Hub via serial communication.
+* Basic Processing
 
-`color_tracking.py`.
+During the competition, this program is executed. It executes `detect_sign_area()` in `color_tracking.py` described below to obtain information on signs, walls, and ground lines.
+Then, using that information, it calculates the values given to the steering motor and drive motor of the vehicle body, and sends them to the Hub via serial communication.
+
+* Determining the direction of the lap
+
+At the first corner, the driver decides whether to turn right or left. SPIKE handles the process of going in the opposite direction on the third lap.
+
+* Avoiding Signs
+
+When red or green is visible over a certain area, a sign is determined to be present and the steering value is updated. Here, not only the area of each color but also the x-coordinate is referenced. For example, if a red sign is visible on the left side, the car will pass on the right side if it continues on its path, so the steering value does not need to be increased much. Conversely, if the red sign is on the right, the car will be on the left and the steering value should be increased.
+
+* When turning, recognize the sign ahead and the nearby wall.
+
+When turning a corner, it is difficult to avoid a sign ahead of the turn. Therefore, we use the visible area and y-coordinate of red and green to determine whether there is a sign or not. We also determine if the turn is close to a wall on the right or left side, or not close to a wall at all.This process dramatically increases the sense of stability when turning corners.
+
+**`color_tracking.py`**
 
 This module includes the following functions to recognize signs, walls, etc. from image information.
 
 * `red_detect()`
 
 This function detects and binarizes only the red portion of the image acquired by the camera.
-There are also functions that work in the same way for green, blue, orange, and black.
+There are also functions that work in the same way for green, blue, orange, and black. 
+The following image shows the recognition of a red sign on the course.
+<img src="./other/red_block_raw.png" width="45%"> <img src="./other/red_block_fil.png" width="45%">
+
 * `analysis_blob_line()`, `analysis_blob()`
 
-This function finds connected objects in a binarized image and returns information about the object with the largest area among the objects. It takes a binarized image as argument.
+This function finds connected objects in a binarized image and returns information about the object with the largest area among the objects. It takes a binarized image as an argument.
+
 * `detect_sign_area()`
 
-This function takes a camera image as its argument.
-Using that image and `analysis_blob_line()`, `analysis_blob()`, and the respective color detect functions, detailed information about the objects on the course is obtained.
+This function takes a camera image as its argument. Using that image and `analysis_blob_line()`, `analysis_blob()`, and the respective color detects functions, detailed information about the objects on the course is obtained. 
+
+Specifically, the area, coordinates, height, width, center, and other values are calculated for the areas that fall within the thresholds. For walls, the process is divided into three patterns: walls visible on the right side, walls visible on the left side, and walls visible in front. These data are used in the subsequent calculation of steering values.
+
+Also, information from outside the course, such as the reflection of surrounding chairs and desks, can interfere with the analysis of the information inside the course. Therefore, we exclude the parts of the course that are outside of the course in our analysis.
+
+<img src="./other/red_block_raw.png" width="45%"> <img src="./other/red_block_cut.png" width="35%">
 
 ## Programs to run on the SPIKE Hub
 ***
@@ -66,7 +88,6 @@ Using that image and `analysis_blob_line()`, `analysis_blob()`, and the respecti
 
 This program is executed on the Hub during the competition. It imports the module for motor control described below, and controls the car body during the competition based on the external information sent from the RaspberryPi.
 It is automatically executed when the Hub is started, and waits for the Home button of the Hub to be pressed. When the home button is pressed, it starts running and controls the vehicle while communicating serially with RaspberryPi.
-
 
 ### Module for motor control
 `basic_motion.py`
