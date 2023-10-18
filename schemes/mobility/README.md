@@ -16,12 +16,11 @@ We used Sanuki Tech Net's [website](https://sanuki-tech.net/micro-bit/lego/tricy
 
 Image of the part where the differential gear is used
 
-The steering mechanism is a simple mechanism that controls the angle of the tires by the magnitude of the angle at which the motor rotates. If the rotation of the motor is transmitted directly to the tires, fine control is difficult, so gears are used to slow down the movement of the tires.
+The role of this gear is to absorb the difference in speed between the inside and outside of a curve while transmitting the power from the engine to both the left and right axles so that the car can make the turn successfully. This mechanism is perfect for this competition, in which many turns are required, such as when changing direction according to a sign or a corner of a course.
 ***
 ## Implementation of the steering mechanism
 
-The steering mechanism is a simple mechanism that controls the position and angle of the tires according to the size of the motor's rotation.
-Therefore, a gear is used to slow down the movement.
+The steering mechanism is a simple mechanism that controls the angle of the tires by the magnitude of the angle at which the motor rotates. If the rotation of the motor is transmitted directly to the tires, fine control is difficult, so gears are used to slow down the movement of the tires.
 The motor rotation is controlled by the size of the motor's bolt and the position of the tires.
 
 <img src="./images/front_wheel1.png" width="47.25%">    <img src="./images/front_wheel2.png" width="45%">
