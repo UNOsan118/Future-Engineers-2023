@@ -16,12 +16,11 @@ We used Sanuki Tech Net's [website](https://sanuki-tech.net/micro-bit/lego/tricy
 
 Image of the part where the differential gear is used
 
-The steering mechanism is a simple mechanism that controls the angle of the tires by the magnitude of the angle at which the motor rotates. If the rotation of the motor is transmitted directly to the tires, fine control is difficult, so gears are used to slow down the movement of the tires.
+The role of this gear is to absorb the difference in speed between the inside and outside of a curve while transmitting the power from the engine to both the left and right axles so that the car can make the turn successfully. This mechanism is perfect for this competition, in which many turns are required, such as when changing direction according to a sign or a corner of a course.
 ***
 ## Implementation of the steering mechanism
 
-The steering mechanism is a simple mechanism that controls the position and angle of the tires according to the size of the motor's rotation.
-Therefore, a gear is used to slow down the movement.
+The steering mechanism is a simple mechanism that controls the angle of the tires by the magnitude of the angle at which the motor rotates. If the rotation of the motor is transmitted directly to the tires, fine control is difficult, so gears are used to slow down the movement of the tires.
 The motor rotation is controlled by the size of the motor's bolt and the position of the tires.
 
 <img src="./images/front_wheel1.png" width="47.25%">    <img src="./images/front_wheel2.png" width="45%">
@@ -37,6 +36,7 @@ It's holding down the gears.
 Here, the gear directly connected to the motor has 9 teeth, the second has 20 teeth, and the third has 28 teeth.
 In other words, the rotation of the motor is multiplied by 9/28≒0.32 and transmitted as the angle of the tire. In other words, the design is such that when the motor is moved 30 degrees, the tire moves approximately 10 degrees.
 ***
+
 ## About Motors
 
 ### Selected motor
@@ -56,6 +56,14 @@ SPIKE Prime L Angular Motor * 2 (for drive and steering control)
 | Sensor input                 | Resolution: 360 counts per revolution <br> Accuracy: Accuracy: ≤+/- 3 degrees <br> Update rate: 100 Hz|
 
 The official specifications for the components of SPIKE Prime can be found [here](https://github.com/gpdaniels/spike-prime/tree/master/specifications/spike-prime).
+
+### Reasons for choosing the motor
+
+The LEGO Education SPIKE Prime set is inexpensive, easy to build a robot, and works well with the Raspberry Pi4. Therefore, the motors are from the LEGO Education SPIKE Prime set.
+
+### How it was implemented
+The motors for the front and rear wheels are mounted at the bottom of the vehicle body to lower the center of gravity. They also serve to support the RaspberryPi4, SPIKE hub, mobile battery, etc., which are mounted on top.
+
 ***
 ## A rough explanation of the overall structure of the car
 
