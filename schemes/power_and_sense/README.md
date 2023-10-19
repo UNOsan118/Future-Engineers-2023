@@ -150,6 +150,60 @@ The camera is used in this vehicle to assess the surroundings. No other sensors,
 
 Reference is [here](https://jp.sainsmart.com/products/wide-angle-fov160-5-megapixel-camera-module-for-raspberry-pi)
 
+
+***
+The robot will work without the Raspberry Pi Hardware described below. However, it will be more stable and secure with it.
+***
+## 4. Cooling fan for Raspberry Pi4
+<img src="./images/RaspberryPi4_fan.png" width="25%">
+
+### Product Information
+| part                  | Description           |
+|-----------------------|-----------------------|
+| Manufacturer          | Miuzei                |
+| Rated voltage/current | DC 5[V], 0.16[A]      |
+
+### Reasons for selecting this part
+* To prevent the Raspberry Pi4 from getting excessively hot.
+
+### How this is used
+Used for cooling Raspberry Pi. Attached to Raspberry Pi for use. The power supply is connected to the GPIO pins of the Raspberry Pi. Refer to it manual for the connection method.
+
+***
+## 5. Heat sink for Raspberry Pi4
+<img src="./images/RaspberryPi4_heat_sink.png" width="25%">
+
+### Product Information
+| part                  | Description           |
+|-----------------------|-----------------------|
+| Manufacturer          | Miuzei                |
+
+### Reasons for selecting this part
+* To prevent the Raspberry Pi4 from getting excessively hot.
+
+### How this is used
+Used for cooling Raspberry Pi. Attached to Raspberry Pi for use. No power supply is required.
+
+***
+## 6. The case for Raspberry Pi4
+<img src="./images/RaspberryPi4_case.png" width="35%">
+
+### Product Information
+| part                  | Description           |
+|-----------------------|-----------------------|
+| Manufacturer          | Miuzei                |
+
+### Reasons for selecting this part
+* It can reliably protect Raspberry Pi and is compatible with cooling fans and heat sinks.
+* The square shape makes it easy to load into a vehicle.
+
+### How this is used
+Used to protect the Raspberry Pi.
+
+***
+Parts for items 4 ~ 6 can be purchased together [here](https://www.amazon.co.jp/Miuzei-%E6%9C%80%E6%96%B0Raspberry-Raspberry-B%E5%AF%BE%E5%BF%9C%EF%BC%88Raspberry-%E6%9C%AC%E4%BD%93%E5%90%AB%E3%81%BE%E3%82%8A%E3%81%BE%E3%81%9B%E3%82%93%EF%BC%89/dp/B07VB24K9W/ref=pd_lpo_sccl_2/356-8666249-0520814?pd_rd_w=3FbQG&content-id=amzn1.sym.d769922e-188a-40cc-a180-3315f856e8d6&pf_rd_p=d769922e-188a-40cc-a180-3315f856e8d6&pf_rd_r=472QV3E8M306498J15KX&pd_rd_wg=SoyRf&pd_rd_r=8f839c79-4c5d-4acc-86d7-16290f623915&pd_rd_i=B07VB24K9W&psc=1).
+***
+
 # Cables
 
 ## 1. GPIO - Spike Hub Port Connector
