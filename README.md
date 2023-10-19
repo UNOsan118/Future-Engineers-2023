@@ -67,6 +67,7 @@ This module includes the following functions to recognize signs, walls, etc. fro
 This function detects and binarizes only the red portion of the image acquired by the camera.
 There are also functions that work in the same way for green, blue, orange, and black. 
 The following image shows the recognition of a red sign on the course.
+
 <img src="./other/red_block_raw.png" width="45%"> <img src="./other/red_block_fil.png" width="45%">
 
 * `analysis_blob_line()`, `analysis_blob()`
