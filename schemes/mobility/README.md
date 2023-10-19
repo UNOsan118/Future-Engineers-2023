@@ -36,6 +36,7 @@ It's holding down the gears.
 Here, the gear directly connected to the motor has 9 teeth, the second has 20 teeth, and the third has 28 teeth.
 In other words, the rotation of the motor is multiplied by 9/28≒0.32 and transmitted as the angle of the tire. In other words, the design is such that when the motor is moved 30 degrees, the tire moves approximately 10 degrees.
 ***
+
 ## About Motors
 
 ### Selected motor
@@ -55,6 +56,14 @@ SPIKE Prime L Angular Motor * 2 (for drive and steering control)
 | Sensor input                 | Resolution: 360 counts per revolution <br> Accuracy: Accuracy: ≤+/- 3 degrees <br> Update rate: 100 Hz|
 
 The official specifications for the components of SPIKE Prime can be found [here](https://github.com/gpdaniels/spike-prime/tree/master/specifications/spike-prime).
+
+### Reasons for choosing the motor
+
+The LEGO Education SPIKE Prime set is inexpensive, easy to build a robot, and works well with the Raspberry Pi4. Therefore, the motors are from the LEGO Education SPIKE Prime set.
+
+### How it was implemented
+The motors for the front and rear wheels are mounted at the bottom of the vehicle body to lower the center of gravity. They also serve to support the RaspberryPi4, SPIKE hub, mobile battery, etc., which are mounted on top.
+
 ***
 ## A rough explanation of the overall structure of the car
 
