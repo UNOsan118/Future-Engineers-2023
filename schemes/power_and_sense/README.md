@@ -218,6 +218,10 @@ Used for serial communication between SPIKE and Raspberry Pi.The GPIO side is pl
 ### Connection part
 <img src="./images/Conn1_GPIO_serial.png" width="30%">          <img src="./images/Conn1_Spike_serial.png" width="30%">
 
+<img src="./images/SPIKE_Prime_Cable.png" width="100%">
+
+reference: Afrel Corporation - SPIKE automated robot assembly guide
+
 ***
 ## 2. USB Type A - USB Type C Connector
 <img src="./images/Conn2.png" width="30%">
