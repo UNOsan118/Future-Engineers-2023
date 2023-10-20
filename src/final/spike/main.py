@@ -25,6 +25,7 @@ while True:
     time.sleep(1)
     break
 
+# クラス定義
 gyro_testUNO = Gyro_remake(motor_steer, motor)
 basic = Basic_motion(motor_steer, motor)
 
@@ -38,6 +39,7 @@ def resetSerialBuffer():
 ser_size = 17
 
 if True:
+    # シリアル通信の準備
     time.sleep(1)
     start = time.ticks_us()
 
@@ -50,6 +52,8 @@ if True:
     end = time.ticks_us()
     print("elapse_time: {}[ms]".format((end - start) / 1000))
     print("--waiting RasPi--")
+
+    # 変数の定義
     end_flag = False
     throttle = 0
     steer = 0
@@ -95,7 +99,10 @@ if True:
             basic.stop()
             break
 
+        # 停止するべきセクションで行われる処理
         if gyro_testUNO.section_count >= 11:
+            # 青かオレンジ色の線を認識してから一定回転数進んだところで停止する
+            # 曲がる直前の壁との距離で進む距離を変える
             if rotation_mode == "blue":
                 if(last_over_sign >= 20):
                     finish_go = 2500
@@ -114,6 +121,7 @@ if True:
             else:
                 finish_go = 2100
 
+            # 一定距離進んだら停止する
             if(
                 ( motor.get()[0] - last_run >= finish_go )
             ):
@@ -180,10 +188,11 @@ if True:
             running_backturn_flag = 0
             y = hub.motion.yaw_pitch_roll()[0]
 
+            # Spike Hubのヨー角を更新する処理
             if rotation_mode == "blue":
                 rotation_mode = "orange"
                 backturn_yaw = 93+y
-                if(backturn_yaw > 179): #-180 ~ 179
+                if(backturn_yaw > 179): # Spike Hubのヨー角の定義域は -180 ~ 179 なので調整
                     backturn_yaw = backturn_yaw - 360
                 hub.motion.yaw_pitch_roll(backturn_yaw)
 
@@ -197,6 +206,7 @@ if True:
             determine_backturn_flag = 2
             y = hub.motion.yaw_pitch_roll()[0]
 
+            # ある程度その場で振り返る処理
             while abs(y) > 30:
                 basic.move(30,-120)
                 y = hub.motion.yaw_pitch_roll()[0]
@@ -209,6 +219,7 @@ if True:
             if bias_roll >= 600:
                 bias_roll = 0
             st_roll = motor.get()[0]
+            # 直前に標識を避けていた場合に、少しだけ避けた方向と逆に向きながら走行する
             if (
                 motor.get()[0] - gyro_testUNO.straight_rotation >= 1000 # <= 360 * 0.8
                 and motor.get()[0] - gyro_testUNO.straight_rotation <= 2500
@@ -238,11 +249,13 @@ if True:
             en_roll = motor.get()[0]
             bias_roll += en_roll - st_roll
 
-        # sign_flag == 4,7,8 are close to the wall sign_flag == 5 has a wall in front
+        # sign_flag == 4,7,8 are close to the wall, sign_flag == 5 has a wall in front
         else:
             yaw = hub.motion.yaw_pitch_roll()[0]
             straight_flag = False
+            # 左右のどちらかの壁に近いとき
             if sign_flag == 4 or sign_flag == 7 or sign_flag == 8:
+                # Hubのヨー角が大きければ、ステアリング値を大きくするc
                 if (
                     abs(yaw) > 50 
                     and motor.get()[0] - gyro_testUNO.straight_rotation <= 1500
@@ -251,9 +264,10 @@ if True:
                         throttle = throttle - 10
                         steer = -70 
                     elif yaw < 0:
-                        throttle = throttle
+                        throttle = throttle - 10
                         steer = 70 
 
+                # バックターンのために赤色と緑色の標識が見えている量を把握するための処理
                 if (gyro_testUNO.section_count == 7       # At the section with the last sign.
                     and determine_backturn_flag == 0      # haven't made the decision to backturn yet.
                     and sign_flag == 7                    # Red is visible and the wall is close.
@@ -266,6 +280,7 @@ if True:
                 ):
                     count_check_green = count_check_green + 1
 
+            # 正面に壁が見えている時の処理
             elif sign_flag == 5:
                 throttle = throttle + 10
                 if yaw < 0:
@@ -286,15 +301,18 @@ if True:
             elif sign_flag == 6:
                 pass
 
-            elif sign_flag == 1:  # red
+            # 赤色の標識が見えている時の処理
+            elif sign_flag == 1:
                 bias_roll = 0
                 info_yaw = yaw / 5
 
+                # バックターンのために赤色の標識が見えている量を把握するための処理
                 if (gyro_testUNO.section_count == 7        # At the section with the last sign.
                     and determine_backturn_flag == 0       # haven't made the decision to backturn yet.
                 ):
                     count_check_red = count_check_red + 1
 
+                # Hubのヨー角が一定以上のとき曲がり方を緩やかにする
                 if (
                     yaw > 20
                     and motor.get()[0] - gyro_testUNO.straight_rotation >= 360 * 4
@@ -305,6 +323,7 @@ if True:
                     if steer < -3:
                         steer = -3
 
+                # 半時計周りで曲がり始めたとき曲がり方を急にする
                 elif (
                     yaw >= 30
                     and yaw <= 180
@@ -320,6 +339,7 @@ if True:
                         throttle = throttle + 10
                         steer = steer + 20
 
+                # 時計回りで曲がり始めた時ヨー角が一定以上なら緩やかに曲がる
                 if (
                     yaw > -5
                     and motor.get()[0] - gyro_testUNO.straight_rotation < 360 * 3
@@ -332,6 +352,7 @@ if True:
                         steer = 10
                     pass
 
+                # ヨー角が曲がりたい方向と逆向きのとき一定のステアリング値にする
                 if (
                     yaw < 0
                     and yaw > -60
@@ -341,7 +362,8 @@ if True:
                     print("paturn 4")
                     steer = 30
 
-            elif sign_flag == 2:  # green
+            # 緑色の標識が見えている時の処理(以下は赤色の標識が見えている時と対照的な処理)
+            elif sign_flag == 2:
                 if (gyro_testUNO.section_count == 7        # At the section with the last sign.
                     and determine_backturn_flag == 0       # haven't made the decision to backturn yet.
                 ):
@@ -397,13 +419,17 @@ if True:
 
                 info_yaw = -1 * yaw / 5
 
+            # ロボットの走行が停止するのを防ぐ
             if throttle < 5:
                 throttle = 5
+            # 直進する
             if straight_flag:
                 gyro_testUNO.straightening(throttle, 0)
+            # 任意の方向を向いて走行
             else:
                 basic.move(throttle, steer + info_yaw)
 
+        # 3周目に逆走する必要がある時の処理
         if(running_backturn_flag == 2):
             blue_camera = rot == 2
             orange_camera = rot == 1
@@ -418,16 +444,19 @@ if True:
             orange_camera = rot == 2
             new_rot = rot
 
+        # 角で曲がる処理
         # The amount of manipulation is determined by what you see in the back when you turn the corner.
         if determine_backturn_flag != 1:
             if blue_camera:  # counterclockwise rotation
                 if (over_sign % 10) == 0:  # can't see anything in the back.
-                    if(over_sign >= 20):
+                    if(over_sign >= 20):   # 右側の壁に近いとき
                         go_angle = 100 
-                    elif(over_sign >= 10):
+                    elif(over_sign >= 10): # 左側の壁に近いとき
                         go_angle = 600
-                    else:
+                    else:                  # 両側の壁に近くないとき
                         go_angle = 300
+                    
+                    # Hubのヨー角を更新
                     if gyro_testUNO.change_steer(30, new_rot, go_angle, steer, running_backturn_flag):
                         print("none1", over_sign)
                         last_run = motor.get()[0]
@@ -512,6 +541,7 @@ if True:
                         last_flag = 0
                         print("lookgreen_section_count:", gyro_testUNO.section_count)
 
+        # 逆走が始まるタイミングのとき
         else :
             if rotation_mode == "orange":
                 go_angle = 300

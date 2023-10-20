@@ -24,7 +24,7 @@ In the `schemes` directory, there are two subdirectories, `mobility` and `power_
 # `src` Source code description.
 ***
 The `src` directory contains three subdirectories: `final`, `qualifier`, and `raspi`.
-The `final` and `qualifier` directories contain the code used in the Obstacle and Open competitions. Each directory also contains two subdirectories, `raspi` and `spike`, which contain the code for the RaspberryPi and Spike sides separately.
+The `final` and `qualifier` directories contain the code used in the Obstacle and Open competitions. Each directory also contains two subdirectories, `raspi` and `spike`, which contain the code for the RaspberryPi and Spike sides separately. `spike` is LEGO Spike, an educational programmable robotics kit developed by LEGO Education.
 The `raspi` directory contains the program that is executed when the RaspberryPi is started. In the Obstacle competition, the contents of this directory are exactly the same as the `final` - `raspi` directory.
 Scattered throughout each directory, the `results` directory contains the video footage of the scenery captured by the camera after the car has actually driven.
 
@@ -35,7 +35,7 @@ Other files are imported as modules from the tuning program and the main program
 
 ## Program to run on RaspberryPi.
 ***
-On RasbperryPi, it acquires images from a wide-angle camera, detects signs and walls, and calculates the amount of operation. The camera images are mainly analyzed for the red, green, blue, orange, and black colors on the course, respectively. For this analysis, we use cv2, a Python module for image processing.
+On RasbperryPi, it acquires images from a wide-angle camera, detects signs and walls, and calculates the amount of operation. The camera images are mainly analyzed for the red, green, blue, orange, and black colors on the course, respectively. For this analysis, we use opencv, a Python module for image processing.
 
 **`color_avoid_wideangle.py`**
 
