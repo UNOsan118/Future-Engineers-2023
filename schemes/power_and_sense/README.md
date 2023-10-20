@@ -253,7 +253,7 @@ The USB Type A side is connected to a USB 2.0 Standard A port and the Micro USB 
 <img src="./images/Conn4.png" width="55%">
 
 ### How this is used
-This cable is a non-removable wire that is an integral part of the SPIKE Prime L angular motor; it connects to the Spike hub port and provides the connection between the Spike Hub and the motor.
+This cable is a non-removable wire that is an integral part of the SPIKE Prime L angular motor; it connects to the Spike hub port and provides the connection between the Spike Hub and the motor. The Drive motor connects to port C of the Spike Large Hub, and the Steering motor connects to port E.
 
 ### Connection part
 <img src="./images/Conn4_motor.png" width="30%">          <img src="./images/Conn4_Spike_motor.png" width="30%">
