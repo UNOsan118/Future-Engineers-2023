@@ -4,7 +4,7 @@ import hub
 import time
 
 class Gyro_remake(Basic_motion):
-    def __init__(self, motor_steer, motor): # 初期設定, 使用する変数の定義
+    def __init__(self, motor_steer, motor): # Initial Settings, Definition of variables to be used
         super().__init__(motor_steer, motor) 
         self.difference_steer = 0 
         self.direction = 1 
@@ -17,19 +17,19 @@ class Gyro_remake(Basic_motion):
 
         self.section_count = -1
         self.sign_count = 0
-        self.turn = 85    # 角を曲がる際のSpike Hubジャイロセンサの更新値
-        self.turn2 = 87   # 時計回りと半時計周りで別の値を用いる
+        self.turn = 85    # Spike Hub gyro sensor updated values when turning a corner
+        self.turn2 = 87   # Use different values for clockwise and semi-clockwise
 
 
-    # 任意の方向を向いて走る関数
+    # The function to run in the specified direction
     def straightening(self, throttle, bias):
         st_roll = self.motor.get()[0]
-        repair_yaw = hub.motion.yaw_pitch_roll()[0] # 現在のHubのヨー角を取得
+        repair_yaw = hub.motion.yaw_pitch_roll()[0] # Get current Hub's yaw angle
 
-        # 現在のHubのヨー角と向きたい方向からステアリング値を計算
+        # Calculate the steering value from the current Hub's yaw angle and the direction you want to face
         self.difference_steer = int(-2 * (repair_yaw + bias))  
 
-        # 無理な角度にならないよう値をカット
+        # Cut values to avoid unreasonable angles
         if self.difference_steer < -55:
             self.difference_steer = -55
         elif self.difference_steer > 55:
@@ -49,14 +49,14 @@ class Gyro_remake(Basic_motion):
 
         current_dist = self.motor.get()[0]
         if (current_dist - self.straight_rotation >= 2100) and (running_backturn_flag!=1):
-            # 青色の線を認識 = 半時計周りのとき
+            # Recognize the blue line = When the semi-clockwise rotation
             if blue_camera:
                 print("blue_get")
                 self.section_count = self.section_count + 1
                 rel_pos = self.motor.get()[0]
                 this_angle = rel_pos
 
-                # 直進してから曲がる。曲がる先に見えている標識の色によって直進する量は変わる。
+                # Go straight and then turn. The amount of straight-ahead depends on the color of the sign you see before you turn.
                 while (this_angle-rel_pos) < go_angle:
                     self.straightening(throttle, 0)
                     this_angle = self.motor.get()[0]
@@ -65,7 +65,7 @@ class Gyro_remake(Basic_motion):
                 print("finish go_angle")
                 rel_pos = self.motor.get()[0]
 
-                # Hubの角度更新
+                # Hub's angle update
                 y = hub.motion.yaw_pitch_roll()[0]
                 hub.motion.yaw_pitch_roll(self.turn+y) 
                 self.destination = 0
@@ -74,7 +74,7 @@ class Gyro_remake(Basic_motion):
                 check_line = True
                 self.past_change = 0
 
-            # オレンジ色の線を読んだ = 時計周りのとき (これ以降、青色を認識した時と同様の処理)
+            # The orange line read = clockwise (from this point on, the processing is the same as when blue is recognized)
             elif orange_camera:
                 print("orange_get")
                 self.section_count = self.section_count + 1
