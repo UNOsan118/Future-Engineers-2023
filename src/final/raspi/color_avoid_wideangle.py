@@ -7,6 +7,7 @@ import cv2
 import os
 import numpy as np
 
+# 初期設定
 ser = serial.Serial("/dev/ttyAMA1", 115200)
 throttle = 80
 
@@ -45,6 +46,7 @@ sign_flag = 0
 over_sign = 0
 
 while True:
+    # 値の初期化
     end = time.perf_counter()
     elapsed_time = end - start
     blob_red, blob_green = {}, {}
@@ -55,6 +57,14 @@ while True:
     sign_flag = 0
     wall_right, wall_left = False, False
     black_right_ratio, black_left_ratio = 0, 0
+
+    steer = 0
+    max_area = 0.4
+    speed = 30
+    rmode = 0
+    force_sign = -1
+
+    # 画像情報の取得
     (
         frame,
         cut_frame,
@@ -72,6 +82,7 @@ while True:
         black_left_ratio
     ) = color_tracking_remake.detect_sign_area(cap)
 
+    # 赤色と緑色の要素の area, center, height, width, channels を取得
     area_red = blob_red["area"]
     area_green = blob_green["area"]
 
@@ -80,12 +91,14 @@ while True:
 
     height, width, channels = frame.shape[:3]
 
+    # x座標(中心), y座標(中心)を計算
     center_red_x = center_red[0]
     center_green_x = center_green[0]
 
     center_red_y = center_red[1] / height
     center_green_y = center_green[1] / height
 
+    # 認識した色が画像内を占める割合を計算
     red_ratio = area_red / (width * height)
     green_ratio = area_green / (width * height)
 
@@ -110,15 +123,10 @@ while True:
         else:
             rotation_mode = ""
 
-    steer = 0
-    max_area = 0.4
-    speed = 30
-    rmode = 0
-    force_sign = -1
-
+    # 赤色か緑色の占める割合が一定以上のとき
     if red_ratio >= 0.0025 or green_ratio >= 0.0025:
         center_frame = width / 2
-
+        # 赤色の占める割合の方が大きいとき
         if red_ratio > green_ratio:
             if red_ratio < 0.4:
                 sign_flag = 1
@@ -126,7 +134,8 @@ while True:
                 center_ratio_red = center_red_x / width # Expresses the x-coordinate of the center of red in the range 0(left-most)~1(right-most).
                 wide = center_ratio_red - 0.5 + 0.2 # Indicates the x-coordinate of the direction to be avoided
 
-                if (  # When the car wants to turn right at the corner and there is green in front of the car
+                # When the car wants to turn right at the corner and there is green in front of the car
+                if (  
                     rotation_mode == "orange"
                     and ok_orange
                     and green_ratio > 0.001
@@ -138,12 +147,15 @@ while True:
                 if wide > 1:
                     wide = 1
 
-                steer = (  # Calculate steering values from three parameters
+                # Calculate steering values from three parameters
+                steer = (  
                     (20*3) 
                     / max_area
                     * (90-(np.arccos(wide*distance)*180)/np.pi)
                 )
+
                 # Processing when a red sign is approaching
+                # 認識した赤色の見える割合と見える位置によってステアリング値を決定する。
                 if center_ratio_red < 0.15:
                     if red_ratio > 0.05:
                         steer = (red_ratio / 0.05) * 110
@@ -204,6 +216,7 @@ while True:
                 if int(steer) == 0:
                     steer = 1
 
+        # 緑色の占める割合の方が大きいとき(これ以降の記述は赤色の標識を認識した時の処理とほぼ同じ)
         else:
             if green_ratio < 0.4:
                 sign_flag = 2
@@ -292,7 +305,8 @@ while True:
                 if int(steer) == 0:
                     steer = -1
 
-    if (ok_blue or ok_orange) and rotation_mode == "blue":  # Recognize the blue line
+    # Recognize the blue line
+    if (ok_blue or ok_orange) and rotation_mode == "blue": 
         # Process a slight right turn without being close to the wall.
         if (
             blue_center_y < 0.75
@@ -312,7 +326,8 @@ while True:
         else:
             rmode = 1
 
-    elif (ok_orange or ok_blue) and rotation_mode == "orange":  # Recognize the orange line
+    # Recognize the orange line
+    elif (ok_orange or ok_blue) and rotation_mode == "orange":  
         # Process a slight left turn without being close to the wall.
         if (
             orange_center_y < 0.75
@@ -390,6 +405,7 @@ while True:
         else:
             steer = -1
 
+    # 一定以上のステアリング値はカットする
     steer_int = int(steer)
     if steer_int > 120:
         steer_int = 120
@@ -411,7 +427,8 @@ while True:
         else:
             pass
 
-    else: # see some kind of sign.
+    # see some kind of sign.
+    else: 
         if red_ratio > green_ratio: # Red occupies a large area.
             if green_ratio > 0.0015:
                 if center_green_y > 0.65:
@@ -431,7 +448,8 @@ while True:
             else:
                 pass
 
-        else: # Green occupies a large area.
+        # Green occupies a large area.
+        else: 
             if red_ratio > 0.0015: # Recognize red signs when green is closer.
                 if center_red_y > 0.65:
                     over_sign = 2
@@ -478,7 +496,8 @@ while True:
     cmd = "{:4d},{:3d},{},{},{:3d}@".format(steer_int, speed, sign_flag, rmode, over_sign)
     ser.write(cmd.encode("utf-8")) 
 
-    for i in range(1):  # Process of skipping readings (because they may be delayed and take old values)
+    # Process of skipping readings (because they may be delayed and take old values)
+    for i in range(1):  
         img = cap.read()
 
     end = time.perf_counter()
