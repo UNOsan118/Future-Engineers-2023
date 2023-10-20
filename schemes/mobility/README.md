@@ -74,6 +74,17 @@ And space to install them. In particular, the camera module can be installed wit
 Furthermore, care was taken to ensure that the weight of the wires would not be so heavy as to affect driving.
 
 ***
+## How to assemble the fuselage
+
+We will clarify how to assemble the robot so that anyone in the world can replicate it. You can watch the assembly instruction video [here](https://youtu.be/bXLitQC6sJ0).
+
+This assembly video includes the following elements:
+* What motors are selected.
+* How they are implemented.
+* The vehicle chassis design /selection.
+* The mounting of all components to the vehicle chassis /structure.
+
+***
 ## Development environment
 
 Development is done by displaying the screen of RaspberryPi4 running on RaspberryPi OS to a PC with MacOS using an application called VNC Viewer.
