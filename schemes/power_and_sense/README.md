@@ -94,7 +94,7 @@ Reference is [here](https://github.com/gpdaniels/spike-prime/blob/master/specifi
 * It is relatively inexpensive and can handle breakdowns and problems.
 
 ### How this is used
-The Raspberry Pi 4 is a small single-board computer. It is responsible for processing and analyzing images obtained from the camera in real-time. The language used is Python and the cv2 library is used for image processing. The image analysis determines the amount of control for the motors based on the view captured from the camera. The calculation results are sent to the Hub using serial communication.
+The Raspberry Pi 4 is a small single-board computer. It is responsible for processing and analyzing images obtained from the camera in real-time. The language used is Python and the opencv library is used for image processing. The image analysis determines the amount of control for the motors based on the view captured from the camera. The calculation results are sent to the Hub using serial communication.
 
 Reference is [here](https://www.iodata.jp/product/pc/raspberrypi/ud-rp4b/spec.htm)
 
