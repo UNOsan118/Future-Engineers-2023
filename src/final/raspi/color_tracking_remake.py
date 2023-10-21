@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 import time
 
-# 画像内の赤色の部分について2値化
+# Binarize for the red areas in the image
 def red_detect(img):
     # Converted to HSV color space
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
@@ -21,7 +21,7 @@ def red_detect(img):
     mask = mask1 + mask2
     return mask
 
-# 画像内の緑色の部分について2値化
+# Binarize for the green areas in the image
 def green_detect(img):
     # Converted to HSV color space
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
@@ -33,7 +33,7 @@ def green_detect(img):
     mask = cv2.inRange(hsv, hsv_min, hsv_max)
     return mask
 
-# 画像内のオレンジ色の部分について2値化
+# Binarize for the orange areas in the image
 def orange_detect(img):
     # Converted to HSV color space
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
@@ -45,7 +45,7 @@ def orange_detect(img):
     mask = cv2.inRange(hsv, hsv_min, hsv_max)
     return mask
 
-# 画像内の青色の部分について2値化
+# Binarize for the blue areas in the image
 def blue_detect(img):
     # Converted to HSV color space
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
@@ -57,7 +57,7 @@ def blue_detect(img):
     mask = cv2.inRange(hsv, hsv_min, hsv_max)
     return mask
 
-# 画像内の黒色の部分について2値化
+# Binarize for the black areas in the image
 def black_detect(img):
     # Converted to HSV color space
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
@@ -292,7 +292,7 @@ def detect_sign_area(cap, mode=""):
     if black_right_ratio < black_right_middle_ratio and black_right_middle_ratio > 0.85 and black_right_ratio > 0.55:
         black_right_ratio = black_right_middle_ratio
 
-    # 壁が近いかどうかの判断
+    # Determining if the wall is closed or not
     wall_right,wall_left = False,False
     if black_right_ratio > 0.45:
         wall_right = True
@@ -354,13 +354,13 @@ def detect_sign_area(cap, mode=""):
     cv2.imshow("Mask black core", mask_black_core)
     """
 
-    # Qキーが押されたらカメラ映像のウィンドウを閉じる
+    # Close the window of the camera image when the Q key is pressed
     if cv2.waitKey(1) & 0xFF == ord('q'):
         cv2.destroyAllWindows()
 
     return frame, cut_frame, mask_red, mask_green, blob_red, blob_green, blue_center_x, orange_center_x, blue_center_y, orange_center_y, ok_blue, ok_orange, black_right_ratio, black_left_ratio
 
-# このファイル単体で動作させた時にmain関数が動くようにしている。
-# 主に閾値の調整に使用する
+# The main function is made to work when this file is run by itself.
+# Mainly used for adjustment of threshold
 if __name__ == '__main__':
     main()
