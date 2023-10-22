@@ -1,5 +1,7 @@
-Mobility management
+Mobility Management
 ====
+
+This directory primarily contains the Mobility Management content referenced in Discussion Section 1.
 
 ## Explanation of a simple method of transportation
 
@@ -14,8 +16,6 @@ We used Sanuki Tech Net's [website](https://sanuki-tech.net/micro-bit/lego/tricy
 
 <img src="./images/differential_gear1.png" width="45%">    <img src="./images/differential_gear2.png" width="45%">
 
-Image of the part where the differential gear is used
-
 The role of this gear is to absorb the difference in speed between the inside and outside of a curve while transmitting the power from the engine to both the left and right axles so that the car can make the turn successfully. This mechanism is perfect for this competition, in which many turns are required, such as when changing direction according to a sign or a corner of a course.
 ***
 ## Implementation of the steering mechanism
@@ -25,15 +25,12 @@ The motor rotation is controlled by the size of the motor's bolt and the positio
 
 <img src="./images/front_wheel1.png" width="47.25%">    <img src="./images/front_wheel2.png" width="45%">
 
-Image of the realized steering mechanism
-
 The gear parts are held in place by separate parts to prevent them from falling.
 
 
 <img src="./images/front_wheel3.png" width="50%">
-It's holding down the gears.
 
-Here, the gear directly connected to the motor has 9 teeth, the second has 20 teeth, and the third has 28 teeth.
+Here, the gear directly connected to the motor has 9 teeth, (the second has 20 teeth,) and the third has 28 teeth.
 In other words, the rotation of the motor is multiplied by 9/28≒0.32 and transmitted as the angle of the tire. In other words, the design is such that when the motor is moved 30 degrees, the tire moves approximately 10 degrees.
 ***
 
@@ -42,6 +39,7 @@ In other words, the rotation of the motor is multiplied by 9/28≒0.32 and trans
 ### Selected motor
 
 SPIKE Prime L Angular Motor * 2 (for drive and steering control)
+<img src="./images/motor.png" width="60%">
 
 ### Motor Specifications
 

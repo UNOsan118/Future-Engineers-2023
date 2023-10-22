@@ -1,7 +1,7 @@
-Power and sense management
+Power and Sense Management
 ====
 
-This directory primarily contains the Mobility Management content referenced in Discussion Section 1.
+This directory primarily contains the Power and Sense Management content referenced in Discussion Section 2.
 
 # System Configuration Chart
 
