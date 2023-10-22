@@ -3,26 +3,27 @@ Engineering materials [National Institute of Technology, Ishikawa College]
 This repository contains materials for participating in WRO Future Engineers2023.
 
 ## Team members.
-***
+
 Shinichi Uno (Born on January 18, 2004)<br>
 Akimasa Hiu (Born on February 16, 2004)<br>
 Kandai Kita (Born on June 18, 2007)<br>
 Takeshi Matsumoto (Coach)
 
 ## Contents
-***
+
+* `other` There is an explanatory image used in README.md
+* `schemes` Diagrams and descriptions of what electromechanical components are used and how they are connected.
+* `src` source code to control the vehicle
 * `t-photos` Pictures of team members
 * `v-photos` Images of the car body taken from left, right, front and back, and up and down.
 * `video` YouTube link to the demonstration video of the trial run.
-* `schemes` Diagrams and descriptions of what electromechanical components are used and how they are connected.
-* `src` source code to control the vehicle
 
 # `schemes` The car description.
-***
+
 In the `schemes` directory, there are two subdirectories, `mobility` and `power_and_sense`. The `mobility` directory contains mobility management corresponding to reference in the Discussion Section 1, and the `power_and_sense` directory contains power and sense management corresponding to reference in the Discussion Section 2.
 
 # `src` Source code description.
-***
+
 The `src` directory contains three subdirectories: `final`, `qualifier`, and `raspi`.
 The `final` and `qualifier` directories contain the code used in the Obstacle and Open competitions. Each directory also contains two subdirectories, `raspi` and `spike`, which contain the code for the RaspberryPi and Spike sides separately. `spike` is LEGO Spike, an educational programmable robotics kit developed by LEGO Education.
 The `raspi` directory contains the program that is executed when the RaspberryPi is started. In the Obstacle competition, the contents of this directory are exactly the same as the `final` - `raspi` directory.
@@ -33,10 +34,14 @@ Both folders contain a large number of python files, but
 Only `color_avoid_wideangle.py` in the `raspi` folder and `main.py` in the `spike` folder are executed at the start of the competition
 Other files are imported as modules from the tuning program and the main program.
 
-## Program to run on RaspberryPi.
 ***
+# Obstacle Management
+From this point on, a description of the processing that is done for each implemented program will be provided. Note that this corresponds to Discussion Section 3.
+
+## Program to run on RaspberryPi.
 On RasbperryPi, it acquires images from a wide-angle camera, detects signs and walls, and calculates the amount of operation. The camera images are mainly analyzed for the red, green, blue, orange, and black colors on the course, respectively. For this analysis, we use opencv, a Python module for image processing.
 
+***
 **`color_avoid_wideangle.py`**
 
 * Basic Processing
@@ -56,6 +61,7 @@ When red or green is visible over a certain area, a sign is determined to be pre
 
 When turning a corner, it is difficult to avoid a sign ahead of the turn. Therefore, we use the visible area and y-coordinate of red and green to determine whether there is a sign or not. We also determine if the turn is close to a wall on the right or left side, or not close to a wall at all.This process dramatically increases the sense of stability when turning corners.
 
+***
 **`color_tracking.py`**
 
 * Basic Processing
@@ -85,7 +91,6 @@ Also, information from outside the course, such as the reflection of surrounding
 <img src="./other/red_block_raw.png" width="45%"> <img src="./other/red_block_cut.png" width="35%">
 
 ## Programs to run on the SPIKE Hub
-***
 
 **`main.py`**
 
@@ -102,7 +107,9 @@ The car changes the way it turns a corner depending on what sign it sees ahead o
 
 If the color of the sign at the end of the second lap is red, the driver must change direction and run the third lap in the opposite direction. For this purpose, the following rules are established: the decision to run in reverse or not, the movement at the corner in case of running in reverse, and the movement after running in reverse.
 
+***
 ### Module for motor control
+
 **`basic_motion.py`**
 
 * Basic Processing
@@ -119,6 +126,7 @@ The Python code does have an instruction statement that sets the motor to a spec
 
 This function stops the robot's motors. It is used at the end of three laps.
 
+***
 **`gyro.py`**
 
 Gyro is a class required for the operation of adjusting the angle of the car body. The file is now renamed and used as `gyro_testUNO.py`.
@@ -127,7 +135,8 @@ Gyro is a class required for the operation of adjusting the angle of the car bod
 
 This function controls the car body to be at a reference angle. It requests the speed (throttle) of the drive motor in argument 1 and runs at that speed. For this process, the yaw angle sensor in the SPIKE Hub is referenced.
 
-<img src="./other/Spike_Hub_yaw1.png" width="50%"> <img src="./other/Spike_Hub_yaw2.png" width="35%">
+<img src="./other/Spike_Hub_yaw1.png" width="50%"> <img src="./other/Spike_Hub_yaw2.png" width="35%"> <br>
+The image's reference is [here](https://afrel.co.jp/product/spike/technology-spike/prime/hardware/largehub/45931/).
 
 The angle at the start is set to 0°. If the yaw angle of the SPIKE hub is tilted, e.g., after avoiding all signs, and you want to run with a 0° orientation, determine the steering value so that the yaw angle tries to return to 0°.
 
