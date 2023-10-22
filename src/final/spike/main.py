@@ -199,7 +199,7 @@ if True:
             elif rotation_mode == "orange":
                 rotation_mode = "blue"
                 backturn_yaw = -93+y
-                if(backturn_yaw < -180): #-180 ~ 179
+                if(backturn_yaw < -180):
                     backturn_yaw = backturn_yaw + 360
                 hub.motion.yaw_pitch_roll(backturn_yaw)
 
@@ -221,7 +221,7 @@ if True:
             st_roll = motor.get()[0]
             # If you have avoided a sign immediately before, run while facing slightly in the opposite direction from the direction you avoided it.
             if (
-                motor.get()[0] - gyro_testUNO.straight_rotation >= 1000 # <= 360 * 0.8
+                motor.get()[0] - gyro_testUNO.straight_rotation >= 1000 
                 and motor.get()[0] - gyro_testUNO.straight_rotation <= 2500
                 and gyro_testUNO.past_change == 0
             ):

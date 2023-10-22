@@ -320,7 +320,7 @@ def detect_sign_area(cap, mode=""):
     if blob_blue != 0:
         blue_center = blob_blue["center"]
         blue_area = blob_blue["area"]
-        if blue_area/(height * width) > 0.004 : #0.004
+        if blue_area/(height * width) > 0.004 : 
             if blue_center[1] > 7 * height / 10:
                 ok_blue = True
             blue_center_y = blue_center[1]/height
@@ -329,7 +329,7 @@ def detect_sign_area(cap, mode=""):
     if blob_orange != 0:
         orange_center = blob_orange["center"]
         orange_area = blob_orange["area"]
-        if orange_area/(width * height) > 0.004 : #0.004
+        if orange_area/(width * height) > 0.004 :
             if orange_center[1] > 7 * height / 10:
                 ok_orange = True
             orange_center_y = orange_center[1]/height

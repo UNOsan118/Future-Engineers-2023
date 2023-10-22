@@ -439,7 +439,7 @@ while True:
             else:
                 over_sign = 0
 
-            if black_left_ratio >= 0.1 or black_right_ratio >= 0.1:  # 壁が近いかどうか
+            if black_left_ratio >= 0.1 or black_right_ratio >= 0.1:  # Whether the wall is close or not
                 if black_left_ratio > black_right_ratio:
                     over_sign = over_sign + 10 # The left wall is close.
                 else:

@@ -31,7 +31,7 @@ class Basic_motion:
                 self.motor_steer.run_to_position(steer) # Set the steering motor angle to [steer]
                 once = True
 
-
+    # Function to stop the motor
     def stop(self):
         self.motor.brake()
         self.motor_steer.brake()
