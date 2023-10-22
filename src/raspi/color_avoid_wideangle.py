@@ -7,6 +7,7 @@ import cv2
 import os
 import numpy as np
 
+# Initial Setup
 ser = serial.Serial("/dev/ttyAMA1", 115200)
 throttle = 80
 
@@ -45,6 +46,7 @@ sign_flag = 0
 over_sign = 0
 
 while True:
+    # Value initialization
     end = time.perf_counter()
     elapsed_time = end - start
     blob_red, blob_green = {}, {}
@@ -55,6 +57,14 @@ while True:
     sign_flag = 0
     wall_right, wall_left = False, False
     black_right_ratio, black_left_ratio = 0, 0
+
+    steer = 0
+    max_area = 0.4
+    speed = 30
+    rmode = 0
+    force_sign = -1
+
+    # Acquisition of image information
     (
         frame,
         cut_frame,
@@ -72,6 +82,7 @@ while True:
         black_left_ratio
     ) = color_tracking_remake.detect_sign_area(cap)
 
+    # Get area, center, height, width, channels for red and green elements
     area_red = blob_red["area"]
     area_green = blob_green["area"]
 
@@ -80,12 +91,14 @@ while True:
 
     height, width, channels = frame.shape[:3]
 
+    # Calculate the x-coordinate (center), y-coordinate (center)
     center_red_x = center_red[0]
     center_green_x = center_green[0]
 
     center_red_y = center_red[1] / height
     center_green_y = center_green[1] / height
 
+    # Calculate the percentage of the recognized colors occupying the image
     red_ratio = area_red / (width * height)
     green_ratio = area_green / (width * height)
 
@@ -110,15 +123,10 @@ while True:
         else:
             rotation_mode = ""
 
-    steer = 0
-    max_area = 0.4
-    speed = 30
-    rmode = 0
-    force_sign = -1
-
+    # When the percentage of red or green exceeds a certain level
     if red_ratio >= 0.0025 or green_ratio >= 0.0025:
         center_frame = width / 2
-
+        # When the percentage of red is larger
         if red_ratio > green_ratio:
             if red_ratio < 0.4:
                 sign_flag = 1
@@ -126,7 +134,8 @@ while True:
                 center_ratio_red = center_red_x / width # Expresses the x-coordinate of the center of red in the range 0(left-most)~1(right-most).
                 wide = center_ratio_red - 0.5 + 0.2 # Indicates the x-coordinate of the direction to be avoided
 
-                if (  # When the car wants to turn right at the corner and there is green in front of the car
+                # When the car wants to turn right at the corner and there is green in front of the car
+                if (  
                     rotation_mode == "orange"
                     and ok_orange
                     and green_ratio > 0.001
@@ -138,12 +147,15 @@ while True:
                 if wide > 1:
                     wide = 1
 
-                steer = (  # Calculate steering values from three parameters
+                # Calculate steering values from three parameters
+                steer = (  
                     (20*3) 
                     / max_area
                     * (90-(np.arccos(wide*distance)*180)/np.pi)
                 )
+
                 # Processing when a red sign is approaching
+                # The steering value is determined by the percentage of red visible and the position where red is visible.
                 if center_ratio_red < 0.15:
                     if red_ratio > 0.05:
                         steer = (red_ratio / 0.05) * 110
@@ -204,6 +216,7 @@ while True:
                 if int(steer) == 0:
                     steer = 1
 
+        # When the percentage of green is larger (the description after this is almost the same as the processing when a red sign is recognized)
         else:
             if green_ratio < 0.4:
                 sign_flag = 2
@@ -292,7 +305,8 @@ while True:
                 if int(steer) == 0:
                     steer = -1
 
-    if (ok_blue or ok_orange) and rotation_mode == "blue":  # Recognize the blue line
+    # Recognize the blue line
+    if (ok_blue or ok_orange) and rotation_mode == "blue": 
         # Process a slight right turn without being close to the wall.
         if (
             blue_center_y < 0.75
@@ -312,7 +326,8 @@ while True:
         else:
             rmode = 1
 
-    elif (ok_orange or ok_blue) and rotation_mode == "orange":  # Recognize the orange line
+    # Recognize the orange line
+    elif (ok_orange or ok_blue) and rotation_mode == "orange":  
         # Process a slight left turn without being close to the wall.
         if (
             orange_center_y < 0.75
@@ -390,6 +405,7 @@ while True:
         else:
             steer = -1
 
+    # Steering values above a certain level are cut
     steer_int = int(steer)
     if steer_int > 120:
         steer_int = 120
@@ -398,7 +414,6 @@ while True:
 
     if force_sign != -1:
         sign_flag = force_sign
-
 
     # Determine what color the sign over there is at the turn.
     over_sign = 0
@@ -411,7 +426,8 @@ while True:
         else:
             pass
 
-    else: # see some kind of sign.
+    # see some kind of sign.
+    else: 
         if red_ratio > green_ratio: # Red occupies a large area.
             if green_ratio > 0.0015:
                 if center_green_y > 0.65:
@@ -431,7 +447,8 @@ while True:
             else:
                 pass
 
-        else: # Green occupies a large area.
+        # Green occupies a large area.
+        else: 
             if red_ratio > 0.0015: # Recognize red signs when green is closer.
                 if center_red_y > 0.65:
                     over_sign = 2
@@ -442,7 +459,7 @@ while True:
             else:
                 over_sign = 0
 
-            if black_left_ratio >= 0.1 or black_right_ratio >= 0.1:  # 壁が近いかどうか
+            if black_left_ratio >= 0.1 or black_right_ratio >= 0.1:  # Whether the wall is close or not
                 if black_left_ratio > black_right_ratio:
                     over_sign = over_sign + 10 # The left wall is close.
                 else:
@@ -478,7 +495,8 @@ while True:
     cmd = "{:4d},{:3d},{},{},{:3d}@".format(steer_int, speed, sign_flag, rmode, over_sign)
     ser.write(cmd.encode("utf-8")) 
 
-    for i in range(1):  # Process of skipping readings (because they may be delayed and take old values)
+    # Process of skipping readings (because they may be delayed and take old values)
+    for i in range(1):  
         img = cap.read()
 
     end = time.perf_counter()

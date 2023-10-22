@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 import time
 
-
+# Binarize for the red areas in the image
 def red_detect(img):
     # Converted to HSV color space
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
@@ -21,7 +21,7 @@ def red_detect(img):
     mask = mask1 + mask2
     return mask
 
-
+# Binarize for the green areas in the image
 def green_detect(img):
     # Converted to HSV color space
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
@@ -33,7 +33,7 @@ def green_detect(img):
     mask = cv2.inRange(hsv, hsv_min, hsv_max)
     return mask
 
-
+# Binarize for the orange areas in the image
 def orange_detect(img):
     # Converted to HSV color space
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
@@ -45,7 +45,7 @@ def orange_detect(img):
     mask = cv2.inRange(hsv, hsv_min, hsv_max)
     return mask
 
-
+# Binarize for the blue areas in the image
 def blue_detect(img):
     # Converted to HSV color space
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
@@ -57,7 +57,7 @@ def blue_detect(img):
     mask = cv2.inRange(hsv, hsv_min, hsv_max)
     return mask
 
-
+# Binarize for the black areas in the image
 def black_detect(img):
     # Converted to HSV color space
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
@@ -70,7 +70,8 @@ def black_detect(img):
     return mask
 
 
-def analysis_blob(binary_img):  # Methods that primarily analyze blobs of labels
+# Methods that primarily analyze blobs of labels
+def analysis_blob(binary_img):  
     max_blob = {}
 
     # connectedComponentsWithStats is a method to detect objects (connected areas)
@@ -108,8 +109,8 @@ def analysis_blob(binary_img):  # Methods that primarily analyze blobs of labels
 
     return max_blob
 
-
-def analysis_blob_line(binary_img):  # Methods to analyze lines for blobs
+# Methods to analyze lines for blobs
+def analysis_blob_line(binary_img):  
     max_blob = {}
 
     # connectedComponentsWithStats is a method to detect objects (connected areas)
@@ -198,8 +199,8 @@ def main():
     cap.release()
     cv2.destroyAllWindows()
 
-
-def detect_sign_area(cap, mode=""):  # DETECT_SIGN to return the area of the sign (because we want to change the behavior depending on the area)
+ # DETECT_SIGN to return the area of the sign (because we want to change the behavior depending on the area)
+def detect_sign_area(cap, mode=""): 
     is_red = False
     is_green = False
 
@@ -291,6 +292,7 @@ def detect_sign_area(cap, mode=""):  # DETECT_SIGN to return the area of the sig
     if black_right_ratio < black_right_middle_ratio and black_right_middle_ratio > 0.85 and black_right_ratio > 0.55:
         black_right_ratio = black_right_middle_ratio
 
+    # Determining if the wall is closed or not
     wall_right,wall_left = False,False
     if black_right_ratio > 0.45:
         wall_right = True
@@ -352,10 +354,13 @@ def detect_sign_area(cap, mode=""):  # DETECT_SIGN to return the area of the sig
     cv2.imshow("Mask black core", mask_black_core)
     """
 
+    # Close the window of the camera image when the Q key is pressed
     if cv2.waitKey(1) & 0xFF == ord('q'):
         cv2.destroyAllWindows()
 
     return frame, cut_frame, mask_red, mask_green, blob_red, blob_green, blue_center_x, orange_center_x, blue_center_y, orange_center_y, ok_blue, ok_orange, black_right_ratio, black_left_ratio
 
+# The main function is made to work when this file is run by itself.
+# Mainly used for adjustment of threshold
 if __name__ == '__main__':
     main()
