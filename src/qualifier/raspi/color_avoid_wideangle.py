@@ -7,6 +7,7 @@ import cv2
 import os
 import numpy as np
 
+# Initial Setup
 ser = serial.Serial("/dev/ttyAMA1", 115200)
 throttle = 50
 
@@ -45,6 +46,7 @@ sign_flag = 0
 over_sign = 0
 
 while True:
+    # Value initialization
     end = time.perf_counter()
     elapsed_time = end - start
     blob_red, blob_green = {}, {}
@@ -55,6 +57,8 @@ while True:
     sign_flag = 0
     wall_right, wall_left = False, False
     black_right_ratio, black_left_ratio = 0, 0
+
+    # Acquisition of image information
     (
         frame,
         cut_frame,
@@ -72,6 +76,7 @@ while True:
         black_left_ratio
     ) = color_tracking_remake.detect_sign_area(cap)
 
+    # Get area, center, height, width, channels for red and green elements
     area_red = blob_red["area"]
     area_green = blob_green["area"]
 
@@ -80,12 +85,14 @@ while True:
 
     height, width, channels = frame.shape[:3]
 
+    # Calculate the x-coordinate (center), y-coordinate (center)
     center_red_x = center_red[0]
     center_green_x = center_green[0]
 
     center_red_y = center_red[1] / height
     center_green_y = center_green[1] / height
 
+    # Calculate the percentage of the recognized colors occupying the image
     red_ratio = area_red / (width * height)
     green_ratio = area_green / (width * height)
 
@@ -182,6 +189,7 @@ while True:
         else:
             steer = -1
 
+    # Steering values above a certain level are cut
     steer_int = int(steer)
     if steer_int > 120:
         steer_int = 120
@@ -191,7 +199,7 @@ while True:
     if force_sign != -1:
         sign_flag = force_sign
 
-    # 線をまたいでいる標識が何色かを判定
+    # Judging a nearby wall just before turning
     over_sign = 0
     if black_left_ratio >= 0.1 or black_right_ratio >= 0.1:  # Whether the wall is close or not
         if black_left_ratio > black_right_ratio:
@@ -229,7 +237,8 @@ while True:
     cmd = "{:4d},{:3d},{},{},{:3d}@".format(steer_int, speed, sign_flag, rmode, over_sign)
     ser.write(cmd.encode("utf-8"))
 
-    for i in range(1):  # Process of skipping readings (because they may be delayed and take old values)
+    # Process of skipping readings (because they may be delayed and take old values)
+    for i in range(1):
         img = cap.read()
 
     end = time.perf_counter()

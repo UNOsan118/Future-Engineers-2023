@@ -415,7 +415,6 @@ while True:
     if force_sign != -1:
         sign_flag = force_sign
 
-
     # Determine what color the sign over there is at the turn.
     over_sign = 0
     if green_ratio < 0.001 and red_ratio < 0.001: # don't see any signs.
@@ -460,7 +459,7 @@ while True:
             else:
                 over_sign = 0
 
-            if black_left_ratio >= 0.1 or black_right_ratio >= 0.1:  # 壁が近いかどうか
+            if black_left_ratio >= 0.1 or black_right_ratio >= 0.1:  # Whether the wall is close or not
                 if black_left_ratio > black_right_ratio:
                     over_sign = over_sign + 10 # The left wall is close.
                 else:
