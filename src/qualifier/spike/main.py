@@ -25,6 +25,7 @@ while True:
     time.sleep(1)
     break
 
+# class definition
 gyro_testUNO = Gyro_remake(motor_steer, motor)
 basic = Basic_motion(motor_steer, motor)
 
@@ -38,6 +39,7 @@ def resetSerialBuffer():
 ser_size = 17
 
 if True:
+    # Preparation for serial communication
     time.sleep(1)
     start = time.ticks_us()
 
@@ -50,6 +52,8 @@ if True:
     end = time.ticks_us()
     print("elapse_time: {}[ms]".format((end - start) / 1000))
     print("--waiting RasPi--")
+
+    # Variable Definitions
     end_flag = False
     throttle = 0
     steer = 0
@@ -93,6 +97,7 @@ if True:
             basic.stop()
             break
 
+        # Processing to be done in the section to be stopped
         if gyro_testUNO.section_count >= 11:
             if  motor.get()[0] - last_run >= 2450:
                 basic.stop()
@@ -162,7 +167,9 @@ if True:
         else:
             yaw = hub.motion.yaw_pitch_roll()[0]
             straight_flag = False
+             # When close to either left or right wall
             if sign_flag == 4:
+                # If the yaw angle of the hub is large, increase the steering value.
                 if abs(yaw) > 30 and motor.get()[0] - last_run <= 2100:
                     if yaw > 0:
                         throttle = throttle
@@ -180,6 +187,7 @@ if True:
                         throttle = throttle
                         steer = 60
 
+            # Processing when a wall is visible in front
             elif sign_flag == 5:
                 throttle = throttle + 10
                 if yaw < 0:
@@ -189,7 +197,7 @@ if True:
                         steer = 120
                 else:
                     steer = -1200
-                if abs(yaw) < 20:
+                if abs(yaw) < 20:  # Perhaps this pattern is only inside
                     if rotation_mode == "orange":
                         steer = -120
                         throttle = throttle - 10
@@ -221,6 +229,7 @@ if True:
             else:
                 go_angle = 1070
 
+            # Update Hub's yaw angle
             if gyro_testUNO.change_steer(40, new_rot, go_angle, steer, running_backturn_flag):
                 print("none1", over_sign)
                 last_run = motor.get()[0]
