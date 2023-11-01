@@ -101,7 +101,7 @@ The car changes the way it turns a corner depending on what sign it sees ahead o
 
 * Handling of running in the opposite direction on the third lap
 
-If the color of the sign at the end of the second lap is red, the third lap must be run in the opposite direction. For this reason, the decision to do so, the movements in the corner in such a case, and the subsequent movements are defined.
+If the color of the sign at the end of the second lap is red, the third lap must be run in the opposite direction. For this reason, the decision to do so, the movements in the corner in such a case, and the subsequent movements are defined. To make this determination, the placement of signs in each section may be recorded.
 
 ***
 ### Module for motor control
