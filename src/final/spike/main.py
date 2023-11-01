@@ -57,13 +57,11 @@ if True:
     end_flag = False
     throttle = 0
     steer = 0
-    p_steer = 0
     rot = 0
     over_sign = 0
 
     go_angle = 0
 
-    count = 0
     bias_roll = 0
     last_run = 1000000  # Record how far you have progressed since the last turnaround.
 
@@ -86,7 +84,6 @@ if True:
     first_memory_flag = 0
     determine_memory_flag = 0
 
-    done_firstsec = False
     rotation_mode = ""
 
     finish_go = 2100
@@ -638,7 +635,6 @@ if True:
                 print("section_count:", gyro_testUNO.section_count)
 
         resetSerialBuffer()
-        p_steer = steer
 
     # After stopping, move motor_steer so that it reaches 0 degrees in absolute angle
     motor_steer.run_to_position(0,5)

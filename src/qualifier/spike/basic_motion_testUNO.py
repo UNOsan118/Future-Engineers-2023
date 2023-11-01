@@ -9,7 +9,6 @@ class Basic_motion:
     def move(self,throttle, steer): # Functions running at constant steering value and constant speed
         self.motor.run_at_speed(throttle)
         once = False
-        count = 0
 
         if steer > 90:  # Cut values above a certain level to avoid unreasonable angles
             steer = 90
@@ -23,7 +22,6 @@ class Basic_motion:
 
         while True:
             if(self.motor_steer.busy(type=1)): #if motor_steer is moving
-                count = count + 1
                 continue
             elif once: # To be moved only once
                 break

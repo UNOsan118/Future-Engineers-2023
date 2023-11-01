@@ -29,7 +29,6 @@ ser.reset_input_buffer()
 
 green = 0
 red = 0
-count = 0
 _id = 0
 
 mode = "get_img"

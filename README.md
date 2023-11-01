@@ -1,6 +1,6 @@
 Engineering materials [National Institute of Technology, Ishikawa College]
 ====
-This repository contains materials for participating in WRO Future Engineers2023.
+This repository contains materials for participating in WRO Future Engineers2023. Please note that the content is organized into multiple directories to maintain readability.
 
 ## Team members.
 
@@ -29,9 +29,7 @@ The `final` and `qualifier` directories contain the code used in the Obstacle an
 The `raspi` directory contains the program that is executed when the RaspberryPi is started. In the Obstacle competition, the contents of this directory are exactly the same as the `final` - `raspi` directory.
 Scattered throughout each directory, the `results` directory contains the video footage of the scenery captured by the camera after the car has actually driven.
 
-Both folders contain a large number of python files, but
-
-Only `color_avoid_wideangle.py` in the `raspi` folder and `main.py` in the `spike` folder are executed at the start of the competition
+Both folders contain a large number of python files, but only `color_avoid_wideangle.py` in the `raspi` folder and `main.py` in the `spike` folder are executed at the start of the competition
 Other files are imported as modules from the tuning program and the main program.
 
 ***
@@ -59,7 +57,7 @@ When red or green is visible over a certain area, a sign is determined to be pre
 
 * When turning, recognize the sign ahead and the nearby wall.
 
-When turning a corner, it is difficult to avoid a sign ahead of the turn. Therefore, we use the visible area and y-coordinate of red and green to determine whether there is a sign or not. We also determine if the turn is close to a wall on the right or left side, or not close to a wall at all.This process dramatically increases the sense of stability when turning corners.
+When turning a corner, it is difficult to avoid a sign ahead of the turn. Therefore, we use the visible area and y-coordinate of red and green to determine whether there is a sign or not. We also determine if the turn is close to a wall on the right or left side, or not close to a wall at all. This process dramatically increases the sense of stability when turning corners.
 
 ***
 **`color_tracking.py`**
@@ -70,9 +68,7 @@ This module includes the following functions to recognize signs, walls, etc. fro
 
 * `red_detect()`
 
-This function detects and binarizes only the red portion of the image acquired by the camera.
-There are also functions that work in the same way for green, blue, orange, and black. 
-The following image shows the recognition of a red sign on the course.
+This function detects and binarizes only the red portion of the image acquired by the camera. Some functions work in the same way for green, blue, orange, and black. The following image shows the recognition of a red sign on the course.
 
 <img src="./other/red_block_raw.png" width="45%"> <img src="./other/red_block_fil.png" width="45%">
 
@@ -105,7 +101,7 @@ The car changes the way it turns a corner depending on what sign it sees ahead o
 
 * Handling of running in the opposite direction on the third lap
 
-If the color of the sign at the end of the second lap is red, the driver must change direction and run the third lap in the opposite direction. For this purpose, the following rules are established: the decision to run in reverse or not, the movement at the corner in case of running in reverse, and the movement after running in reverse.
+If the color of the sign at the end of the second lap is red, the third lap must be run in the opposite direction. For this reason, the decision to do so, the movements in the corner in such a case, and the subsequent movements are defined.
 
 ***
 ### Module for motor control
@@ -138,11 +134,11 @@ This function controls the car body to be at a reference angle. It requests the 
 <img src="./other/Spike_Hub_yaw1.png" width="50%"> <img src="./other/Spike_Hub_yaw2.png" width="35%"> <br>
 The image's reference is [here](https://afrel.co.jp/product/spike/technology-spike/prime/hardware/largehub/45931/).
 
-The angle at the start is set to 0°. If the yaw angle of the SPIKE hub is tilted, e.g., after avoiding all signs, and you want to run with a 0° orientation, determine the steering value so that the yaw angle tries to return to 0°.
+This angle is set to 0 degrees at the start. If the yaw angle of the SPIKE hub is tilted, e.g., after avoiding signs, and you want to run with a 0° orientation, determine the steering value so that the yaw angle tries to return to 0°.
 
 * `change_steer()` 
 
-This function changes the direction in which the car should go (reference angle) in the corner. It requests the speed of the drive motor (throttle) as argument 1 and the turning direction of the car body (rot) as argument 2. (Argument 3 is basically not used.)When the blue or orange line is recognized, a change of direction is required. Again, the yaw angle of the SPIKE hub is used. For example, if you want to turn clockwise, i.e., 90° to the right at the corner, update the yaw angle to ( current yaw angle - 90° ). In this way, the SPIKE hub will know that the right side is the direction to go straight. After that, it will follow the `straightening()` to go back to 0° and turn 90° on its own.
+This function changes the direction in which the car should go (reference angle) in the corner. It requests the speed of the drive motor (throttle) as argument 1 and the turning direction of the car body (rot) as argument 2. (Argument 3 is basically not used.)When the blue or orange line is recognized, a change of direction is required. Again, the yaw angle of the SPIKE hub is used. For example, if you want to turn clockwise, i.e., 90° to the right at the corner, update the yaw angle to ( current yaw angle - 90° ). In this way, the SPIKE hub will know that the right side is the direction to go straight. Then, by trying to return to 0° according to `straightening()`, the car body changes direction by 90° by itself.
 
 # Writing and executing programs to SPIKE Hub
 
@@ -163,4 +159,7 @@ If you want to upload files from RaspberryPi to SPIKE, click the following butto
 
 During a trial run, the program can be run on the Hub by clicking the Run button on the Mu Editor. However, during a competition, you need to click a button on the Hub to start the run, and since the Hub runs a Python file named main.py when it starts up, you should upload the program to be used during the competition with the name main.py.
 
+# How to start driving during competition
 
+### Advance preparation
+* Import all necessary programs on the Spike side into the Spike Large Hub using the method described in `Upload Program` above. This time, import three programs, `main.py`, `gyro_testUNO.py`, and `basic_motion_testUNO.py`.
