@@ -54,7 +54,6 @@ if True:
     print("--waiting RasPi--")
 
     # Variable Definitions
-    end_flag = False
     throttle = 0
     steer = 0
     rot = 0
@@ -62,11 +61,10 @@ if True:
 
     go_angle = 0
 
-    bias_roll = 0
     last_run = 1000000  # Record how far you have progressed since the last turnaround.
 
     sign_flag = 0
-    last_flag = 0
+    last_sign_flag = 0
 
     determine_backturn_flag = 0 # 0:not yet determined.  1:need to backturn.  2:determined.
     running_backturn_flag = 0 # 0:still not backturn.  1:backturn now.  2:backturned.
@@ -121,7 +119,7 @@ if True:
                 if (int(sign_flag) != int(cmd_list[0].split(",")[2])) and (
                     sign_flag == 1 or sign_flag == 2
                 ):
-                    last_flag = sign_flag
+                    last_sign_flag = sign_flag
                     section_count = gyro_testUNO.section_count
                     sign_count = gyro_testUNO.sign_count
 
@@ -146,19 +144,12 @@ if True:
 
         # When the sign is not recognized as anything, it returns 0, and when it is recognized, it returns a non-zero value.
         if sign_flag == 0 or sign_flag == 3:
-            if bias_roll >= 600:
-                bias_roll = 0
-            st_roll = motor.get()[0]
-
             if rotation_mode == "blue":
                 gyro_testUNO.straightening(throttle, -6)
             elif rotation_mode == "orange":
                 gyro_testUNO.straightening(throttle, 6)
             else:
                 gyro_testUNO.straightening(throttle, 0)
-
-            en_roll = motor.get()[0]
-            bias_roll += en_roll - st_roll
 
         # sign_flag == 4,7,8 are close to the wall sign_flag == 5 has a wall in front
         else:
