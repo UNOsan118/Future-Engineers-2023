@@ -83,7 +83,7 @@ if True:
     determine_memory_flag = 0 # If the color of the sign is recorded in each section, record this.
 
     # Variables for recording other information
-    memory_M_L = [0, 0, 0, 0] # 曲がり始めてからfirst_memory_flagが記録されるまでの駆動モーターの回転数を記録
+    memory_M_L = [0, 0, 0, 0] # Record the number of revolutions of the drive motor from the time it starts to turn the corner until the "first_memory_flag" is recorded.
     memory_last_oversign = [100, 100, 100, 100] # Record the "last_over_sign" value for each section
 
     # Variable to determine if there is a "sign" in the middle of section 1
@@ -92,7 +92,7 @@ if True:
 
     # Variables used for other purposes
     go_angle = 0 # Amount of straight line when turning
-    finish_go = 2100 # 最後の角を曲がってから止まるまでの駆動モーターの回転数
+    finish_go = 2100 # Number of revolutions of the drive motor from turning the last corner to stopping
     last_run = 1000000  # Record how far you have progressed since the last turnaround.
     info_yaw = 0 # Used to slightly change the angle depending on the yaw angle of the Hub when avoiding signsr
 
@@ -181,7 +181,7 @@ if True:
             and gyro_testUNO.section_count <= 3 # When passing through each section for the first time
             and first_memory_flag == 0 # First_memory_flag" has not been determined yet
             and(
-                (motor.get()[0] - last_run >= 400      #曲がりはじめてからある程度すすんだところで、
+                (motor.get()[0] - last_run >= 400      #After some progress from the beginning of the turn.
                 and (count_check_red >= 2 or count_check_green >= 2)) # If you see red or green
                 or
                 (motor.get()[0] - last_run >= 3300)    # When you start to turn and have made some progress
@@ -204,7 +204,7 @@ if True:
         ):
             print(count_check_red, count_check_green, first_memory_flag)
 
-            if gyro_testUNO.section_count == 1 and sec1_check <= 15: # 増えた量でスタートセクションの真ん中に標識があるかないか判断
+            if gyro_testUNO.section_count == 1 and sec1_check <= 15: # Determine if there is a sign in the center of the starting section by the amount of increase
                 sec1_center_sign_flag = 1
                 print("sec1 center sign is here. sec1_check = ", sec1_check)
 
@@ -223,7 +223,7 @@ if True:
                     else:
                         simple_memory_sign[gyro_testUNO.section_count - 1] = 2   # green only
 
-                elif(count_check_red >= count_check_green): # 多く見えていたのが赤なら
+                elif(count_check_red >= count_check_green): # If what you were seeing a lot of is red
                     if first_memory_flag == 12:
                         simple_memory_sign[gyro_testUNO.section_count - 1] = 4   # green -> red
                     else:
@@ -251,7 +251,7 @@ if True:
             elif memory_last_oversign[3]%10 != 0: # 曲がる先の標識が見えているとき（真ん中にあるときは弾けているので曲がってすぐのところのみ）
                 determine_backturn_flag = memory_last_oversign[3]%10
 
-            elif ( # 曲がる先の標識が見えないけど内側を通ってるとき
+            elif ( # When you can't see the sign ahead of the turn, but you're passing on the inside.
                 (rotation_mode == "blue" and memory_last_oversign[3] == 10)
                 or
                 (rotation_mode == "orange" and memory_last_oversign[3] == 20)
@@ -275,7 +275,7 @@ if True:
                     determine_backturn_sec = -1
 
             if determine_backturn_flag == 0: # "determine_backturn_flag" is undecided
-                if determine_backturn_sec == 1: # スタートセクションで判断する
+                if determine_backturn_sec == 1: # To be determined in the starting section
                     if simple_memory_sign[3] == 1 or simple_memory_sign[3] == 3: # red only or red -> green
                         determine_backturn_flag = 1
                     else:                                                        # green only or green -> red
