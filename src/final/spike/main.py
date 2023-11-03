@@ -248,7 +248,7 @@ if True:
             if sec1_center_sign_flag == 1: # When there is a sign in the middle of sec1
                 determine_backturn_sec = -1
 
-            elif memory_last_oversign[3]%10 != 0: # 曲がる先の標識が見えているとき（真ん中にあるときは弾けているので曲がってすぐのところのみ）
+            elif memory_last_oversign[3]%10 != 0: # When you see the sign for the destination of the turn (only immediately after the turn, as it is excluded if it is in the center)
                 determine_backturn_flag = memory_last_oversign[3]%10
 
             elif ( # When you can't see the sign ahead of the turn, but you're passing on the inside.
@@ -258,7 +258,7 @@ if True:
             ):
                 determine_backturn_sec = -1
 
-            elif ( # 外側を通ってるとき
+            elif ( # When running on the outside
                 (rotation_mode == "orange" and memory_last_oversign[3] == 10)
                 or
                 (rotation_mode == "blue" and memory_last_oversign[3] == 20)
@@ -280,7 +280,7 @@ if True:
                         determine_backturn_flag = 1
                     else:                                                        # green only or green -> red
                         determine_backturn_flag = 2
-                else:                           # スタートセクションの1つ前ので判断する
+                else:                           # The decision will be made in the section one before the start section.
                     if simple_memory_sign[2] == 1 or simple_memory_sign[2] == 4: # red only or green -> red
                         determine_backturn_flag = 1
                     else:                                                        # green only or red -> green
@@ -322,7 +322,7 @@ if True:
             gyro_testUNO.section_count = 7
             running_backturn_flag = 2
 
-        # スタートしてから最初に曲がるまで変数を増やす(増えた量でスタートセクションの真ん中に標識があるかないか判断)
+        # From the start to the first turn, keep increasing the variable (the way it is increased determines whether there is a sign in the center of the starting section).
         if (gyro_testUNO.section_count == -1):
             sec1_check = sec1_check + 1
 
@@ -369,7 +369,7 @@ if True:
                         throttle = throttle - 10
                         steer = 70 
 
-                # 標識の記録のために赤色か緑色が見えていることを記録
+                # For the record of the marker, record that the red color or green color is visible.
                 if (gyro_testUNO.section_count >= 0
                     and gyro_testUNO.section_count <= 3
                     and motor.get()[0] - last_run >= 300
@@ -404,7 +404,7 @@ if True:
             # Processing when the red sign is visible
             elif sign_flag == 1:
                 info_yaw = yaw / 5
-                # 標識の記録のために赤色が見えていることを記録
+                # For the record of the marker, record that the red color is visible.
                 if (gyro_testUNO.section_count >= 0
                     and gyro_testUNO.section_count <= 3
                     and motor.get()[0] - last_run >= 300
@@ -461,7 +461,7 @@ if True:
             # Processing when the green sign is visible(The process described below is almost identical to that for recognizing red signs.)
             elif sign_flag == 2:
                 info_yaw = -1 * yaw / 5
-                # 標識の記録のために緑色が見えていることを記録
+                # For the record of the marker, record that the green color is visible.
                 if (gyro_testUNO.section_count >= 0
                     and gyro_testUNO.section_count <= 3
                     and motor.get()[0] - last_run >= 300
@@ -606,7 +606,7 @@ if True:
                     print("lookred_section_count:", gyro_testUNO.section_count)
         # When the timing is right for the reverse run to begin.
         else :
-            # 進行方向と直前に通った標識の色によって直進量を変える
+            # Changes the amount of straight travel depending on the direction of travel and the color of the sign passed just before.
             if rotation_mode == "blue":
                 if simple_memory_sign[3] == 1 or simple_memory_sign[3] == 4: 
                     go_angle = 800
