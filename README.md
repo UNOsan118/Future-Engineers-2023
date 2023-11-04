@@ -163,3 +163,32 @@ During a trial run, the program can be run on the Hub by clicking the Run button
 
 ### Advance preparation
 * Import all necessary programs on the Spike side into the Spike Large Hub using the method described in `Upload Program` above. This time, import three programs, `main.py`, `gyro_testUNO.py`, and `basic_motion_testUNO.py`.
+
+* Place a .service file with the following contents in /etc/systemd/system. This time, we used a file named `test.service`.
+
+`[Unit]`
+`Description=Do test`
+
+`[Service]`
+`ExecStart=sudo python3 /home/pi/WRO2023/src/raspi/color_avoid_wideangle.py`
+
+
+`[Install]`
+`WantedBy=multi-user.target`
+
+This file allows `color_avoid_wideangle.py` to be executed at startup.
+
+### Step1
+Make sure that the Raspberry Pi and Spike Hub are turned off; the Raspberry Pi can be turned off by unplugging the cable connected to the mobile battery, and the Spike Hub can be turned off by pressing and holding the center button.
+
+### Step2
+Set the robot to the start position.
+
+### Step3
+Turn on the Raspberry Pi. At this time, power is supplied from the Raspberry Pi, and the Spike Hub will automatically turn on as well.
+
+### Step4
+Wait for a while.
+
+### Step5
+Press the center button on the Spike Hub to start the robot.
