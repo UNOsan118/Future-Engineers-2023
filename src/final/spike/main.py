@@ -54,47 +54,47 @@ if True:
     print("--waiting RasPi--")
 
     # Variable Definitions
-    # モーターの制御量に関する変数
-    throttle = 0 # 駆動モーターの回転速度
-    steer = 0 # ステアリングモーターの角度
+    # Variables related to the control amount of the motor
+    throttle = 0 # Rotation speed of the drive motor
+    steer = 0 # Steering motor angle
 
-    # 進行方向に関する変数
-    rot = 0 # 進行方向(時計回りか反時計回りか)を記録
-    rotation_mode = "" # rotをstr型で記録 "blue" or "orange"
+    # Variables related to the direction of travel
+    rot = 0 # Record the direction of travel (clockwise or counterclockwise)
+    rotation_mode = "" # Record "rot" as str type "blue" or "orange"
 
-    # 見える標識に関する変数
-    sign_flag = 0 # 現在見えている標識と壁の情報
-    last_sign_flag = 0 # 1つ前のsign_flagの値
-    over_sign = 0 # 曲がる先に見える標識を記録
-    last_over_sign = 0 # 1つ前のover_signの値
+    # Variables for visible signs
+    sign_flag = 0 # Information about the currently visible sign and wall
+    last_sign_flag = 0 # The value of the previous sign_flag
+    over_sign = 0 # Record the signs that can be seen ahead of the turn.
+    last_over_sign = 0 # Value of one previous over_sign
 
-    # バックターンに関する変数
-    determine_backturn_flag = 0 # バックターンするかどうかの判定に用いる 0:not yet determined.  1:need to backturn.  2:determined.
-    running_backturn_flag = 0 # バックターンの状態を示す 0:still not backturn.  1:backturn now.  2:backturned.
-    backturn_orientation = -120 # バックターン中のステアリングモーターの角度
-    determine_backturn_sec = 0 # バックターンをするかどうかの判断をするセクション
-    new_rot = 0 # バックターン後のrot
+    # Variables on backturns
+    determine_backturn_flag = 0 # Used to determine whether to make a back turn 0:not yet determined.  1:need to backturn.  2:determined.
+    running_backturn_flag = 0 # Indicates back-turn status 0:still not backturn.  1:backturn now.  2:backturned.
+    backturn_orientation = -120 # Steering motor angle during the back turn
+    determine_backturn_sec = 0 # Section to decide whether to make a backturn or not.
+    new_rot = 0 # "rot" after back turn
 
-    # 各セクションの標識の配置を記録するための変数
-    count_check_red = 0 # 赤色の標識が見えている時に増加する
-    count_check_green = 0 # 緑色の標識が見えている時に増加する
-    simple_memory_sign = [0, 0, 0, 0] # 各セクションの標識の色の配置を記録する配列
-    first_memory_flag = 0 # 各セクションごとで最初に見えた標識を記録
-    determine_memory_flag = 0 # 各セクションで標識の色の配置を記録済みかを記録
+    # Variables to record the placement of signs in each section
+    count_check_red = 0 # Increase while red signs are visible
+    count_check_green = 0 # Increase while green signs are visible
+    simple_memory_sign = [0, 0, 0, 0] # Array to record the color placement of the signs in each section
+    first_memory_flag = 0 # Record the first sign seen in each section
+    determine_memory_flag = 0 # If the color of the sign is recorded in each section, record this.
 
-    # その他の情報を記録するための変数
-    memory_M_L = [0, 0, 0, 0] # 曲がり始めてからfirst_memory_flagが記録されるまでの駆動モーターの回転数を記録
-    memory_last_oversign = [100, 100, 100, 100] # 各セクションのlast_over_signの値を記録
+    # Variables for recording other information
+    memory_M_L = [0, 0, 0, 0] # Record the number of revolutions of the drive motor from the time it starts to turn the corner until the "first_memory_flag" is recorded.
+    memory_last_oversign = [100, 100, 100, 100] # Record the "last_over_sign" value for each section
 
-    # セクション1の真ん中にsignがあるかどうかを判断するための変数
-    sec1_check = 0 # 走行開始から最初に曲がるまで増え続ける
-    sec1_center_sign_flag = 0 # セクション1の真ん中にsignがあるかどうかを記録
+    # Variable to determine if there is a "sign" in the middle of section 1
+    sec1_check = 0 # Continuously increasing from the start of driving until the first turn.
+    sec1_center_sign_flag = 0 # Record if there is a "sign" in the middle of section 1
 
-    # その他の用途で用いる変数
-    go_angle = 0 # 曲がる際の直進量
-    finish_go = 2100 # 最後の角を曲がってから止まるまでの駆動モーターの回転数
+    # Variables used for other purposes
+    go_angle = 0 # Amount of straight line when turning
+    finish_go = 2100 # Number of revolutions of the drive motor from turning the last corner to stopping
     last_run = 1000000  # Record how far you have progressed since the last turnaround.
-    info_yaw = 0 # 標識を避ける際にHubのヨー角に応じて少し角度を変えるのに用いる
+    info_yaw = 0 # Used to slightly change the angle depending on the yaw angle of the Hub when avoiding signsr
 
     # It doesn't start until a button is pressed.
     while not (center_button.is_pressed()):
@@ -169,67 +169,67 @@ if True:
             elif rot == 2:
                 rotation_mode = "orange"
 
-        # 過去のoversignを記録
+        # Record past "over signs
         if (gyro_testUNO.section_count >= 0
             and gyro_testUNO.section_count <= 3
             and memory_last_oversign[gyro_testUNO.section_count] == 100
         ):
             memory_last_oversign[gyro_testUNO.section_count] = last_over_sign
 
-        # first_memory_flagの決定
+        # Determination of "first_memory_flag
         if (gyro_testUNO.section_count >= 0 
-            and gyro_testUNO.section_count <= 3 # 各セクションを初めて通過するとき
-            and first_memory_flag == 0 # まだfirst_memory_flagの決定がされていない
+            and gyro_testUNO.section_count <= 3 # When passing through each section for the first time
+            and first_memory_flag == 0 # First_memory_flag" has not been determined yet
             and(
-                (motor.get()[0] - last_run >= 400      #曲がりはじめてからある程度すすんだところで、
-                and (count_check_red >= 2 or count_check_green >= 2)) # 赤か緑が見えたら
+                (motor.get()[0] - last_run >= 400      #After some progress from the beginning of the turn.
+                and (count_check_red >= 2 or count_check_green >= 2)) # If you see red or green
                 or
-                (motor.get()[0] - last_run >= 3300)    # 曲がりはじめてある程度進みきったら
+                (motor.get()[0] - last_run >= 3300)    # When you start to turn and have made some progress
             )
         ):
             memory_M_L[gyro_testUNO.section_count] = motor.get()[0] - last_run 
             if (last_over_sign % 10) != 0:
-                first_memory_flag = last_over_sign % 10 + 10 # 曲がる直前に何らかの標識が見えていたならそれが最初に見える標識
+                first_memory_flag = last_over_sign % 10 + 10 # If you saw some kind of sign just before you turned, that's the first sign you'll see
             else:
-                if(count_check_red >= count_check_green):      # 最初に見えたのが赤なら
+                if(count_check_red >= count_check_green):      # If the first thing you see is red.
                     first_memory_flag = 1
-                else:                                     # 最初に見えたのが緑なら
+                else:                                     # If the first thing you see is green.
                     first_memory_flag = 2
             print(count_check_red, count_check_green, first_memory_flag, last_over_sign)
 
-        # simple_memory_signの決定
-        if (gyro_testUNO.section_count >= 1 # 各セクションを通り過ぎたら
+        # Determination of "simple_memory_sign
+        if (gyro_testUNO.section_count >= 1 # After passing through each section
             and gyro_testUNO.section_count <= 4
             and determine_memory_flag == 1
         ):
             print(count_check_red, count_check_green, first_memory_flag)
 
-            if gyro_testUNO.section_count == 1 and sec1_check <= 15: # 増えた量でスタートセクションの真ん中に標識があるかないか判断
+            if gyro_testUNO.section_count == 1 and sec1_check <= 15: # Determine if there is a sign in the center of the starting section by the amount of increase
                 sec1_center_sign_flag = 1
                 print("sec1 center sign is here. sec1_check = ", sec1_check)
 
-            if count_check_red >= 2 and count_check_green >= 2: # 両方の標識を認識
-                if first_memory_flag % 10 == 1:              # 先に見えたのが赤なら
+            if count_check_red >= 2 and count_check_green >= 2: # Recognize both signs
+                if first_memory_flag % 10 == 1:              # If the first thing you see is red.
                     simple_memory_sign[gyro_testUNO.section_count - 1] = 3   #red -> green
-                else:                                        # 先に見えたのが緑なら
+                else:                                        # If what you see ahead is green.
                     simple_memory_sign[gyro_testUNO.section_count - 1] = 4   #green -> red
 
-            else:                                         # 片方の色の標識だけを認識 or 認識できなかったとき
-                if(count_check_red == 0 and count_check_green == 0): # 認識できなかったとき
-                    if memory_last_oversign[gyro_testUNO.section_count -1]%10 == 1: # 過去のoversignの値を用いて決定
+            else:                                         # Recognizes only one color sign or When not recognized
+                if(count_check_red == 0 and count_check_green == 0): # When not recognized
+                    if memory_last_oversign[gyro_testUNO.section_count -1]%10 == 1: # Determined using previous "oversign" values
                         simple_memory_sign[gyro_testUNO.section_count - 1] = 1   # red only
                     elif memory_last_oversign[gyro_testUNO.section_count -1]%10 == 2:
                         simple_memory_sign[gyro_testUNO.section_count - 1] = 2   # green only
                     else:
                         simple_memory_sign[gyro_testUNO.section_count - 1] = 2   # green only
 
-                elif(count_check_red >= count_check_green): # 多く見えていたのが赤なら
+                elif(count_check_red >= count_check_green): # If what you were seeing a lot of is red
                     if first_memory_flag == 12:
                         simple_memory_sign[gyro_testUNO.section_count - 1] = 4   # green -> red
                     else:
                         simple_memory_sign[gyro_testUNO.section_count - 1] = 1   # red only
 
-                else:                                       # 緑なら
+                else:                                       # If it's green...
                     if first_memory_flag == 11:
                         simple_memory_sign[gyro_testUNO.section_count - 1] = 3   # red -> green
                     else:
@@ -237,28 +237,28 @@ if True:
             print(simple_memory_sign)
             print("----------")
 
-            # 次の判断のために変数を初期化
+            # Initialize variables for the next decision
             count_check_red = 0
             count_check_green = 0
             first_memory_flag = 0
             determine_memory_flag = 0
 
-        # 逆走するかどうかの判定
+        # Determining whether to run in reverse
         if(determine_backturn_flag == 0 and gyro_testUNO.section_count == 7):
-            if sec1_center_sign_flag == 1: # sec1の真ん中に標識があるとき
+            if sec1_center_sign_flag == 1: # When there is a sign in the middle of sec1
                 determine_backturn_sec = -1
 
-            elif memory_last_oversign[3]%10 != 0: # 曲がる先の標識が見えているとき（真ん中にあるときは弾けているので曲がってすぐのところのみ）
+            elif memory_last_oversign[3]%10 != 0: # When you see the sign for the destination of the turn (only immediately after the turn, as it is excluded if it is in the center)
                 determine_backturn_flag = memory_last_oversign[3]%10
 
-            elif ( # 曲がる先の標識が見えないけど内側を通ってるとき
+            elif ( # When you can't see the sign ahead of the turn, but you're passing on the inside.
                 (rotation_mode == "blue" and memory_last_oversign[3] == 10)
                 or
                 (rotation_mode == "orange" and memory_last_oversign[3] == 20)
             ):
                 determine_backturn_sec = -1
 
-            elif ( # 外側を通ってるとき
+            elif ( # When running on the outside
                 (rotation_mode == "orange" and memory_last_oversign[3] == 10)
                 or
                 (rotation_mode == "blue" and memory_last_oversign[3] == 20)
@@ -268,19 +268,19 @@ if True:
                 else:
                     determine_backturn_sec = -1
 
-            else: # 壁も標識も見えないとき
+            else: # When you can't see the walls or the signs
                 if memory_M_L[3] < 1300 or memory_M_L[3] > 2800:
                     determine_backturn_sec = 1
                 else:
                     determine_backturn_sec = -1
 
-            if determine_backturn_flag == 0: # determine_backturn_flagが未定
-                if determine_backturn_sec == 1: # スタートセクションで判断する
+            if determine_backturn_flag == 0: # "determine_backturn_flag" is undecided
+                if determine_backturn_sec == 1: # To be determined in the starting section
                     if simple_memory_sign[3] == 1 or simple_memory_sign[3] == 3: # red only or red -> green
                         determine_backturn_flag = 1
                     else:                                                        # green only or green -> red
                         determine_backturn_flag = 2
-                else:                           # スタートセクションの1つ前ので判断する
+                else:                           # The decision will be made in the section one before the start section.
                     if simple_memory_sign[2] == 1 or simple_memory_sign[2] == 4: # red only or green -> red
                         determine_backturn_flag = 1
                     else:                                                        # green only or red -> green
@@ -288,7 +288,7 @@ if True:
             print("determine_backturn_flag: ", determine_backturn_flag)
 
         # make someone run backwards
-        if(gyro_testUNO.section_count == 8 and determine_backturn_flag == 1): # バックターンするべきセクションで
+        if(gyro_testUNO.section_count == 8 and determine_backturn_flag == 1): # In the section where you should backturn.
             running_backturn_flag = 0
             y = hub.motion.yaw_pitch_roll()[0]
 
@@ -310,7 +310,7 @@ if True:
             y = hub.motion.yaw_pitch_roll()[0]
 
             # Process looking back on the spot to some extent
-            # 曲がったすぐ先にある標識に応じてバックターンする際の向きを変える
+            # Change the direction of the back turn depending on the sign just beyond the turn.
             if simple_memory_sign[3] == 2 or simple_memory_sign[3] == 3:
                 backturn_orientation = 120
             else:
@@ -322,7 +322,7 @@ if True:
             gyro_testUNO.section_count = 7
             running_backturn_flag = 2
 
-        # スタートしてから最初に曲がるまで変数を増やす(増えた量でスタートセクションの真ん中に標識があるかないか判断)
+        # From the start to the first turn, keep increasing the variable (the way it is increased determines whether there is a sign in the center of the starting section).
         if (gyro_testUNO.section_count == -1):
             sec1_check = sec1_check + 1
 
@@ -369,7 +369,7 @@ if True:
                         throttle = throttle - 10
                         steer = 70 
 
-                # 標識の記録のために赤色か緑色が見えていることを記録
+                # For the record of the marker, record that the red color or green color is visible.
                 if (gyro_testUNO.section_count >= 0
                     and gyro_testUNO.section_count <= 3
                     and motor.get()[0] - last_run >= 300
@@ -404,7 +404,7 @@ if True:
             # Processing when the red sign is visible
             elif sign_flag == 1:
                 info_yaw = yaw / 5
-                # 標識の記録のために赤色が見えていることを記録
+                # For the record of the marker, record that the red color is visible.
                 if (gyro_testUNO.section_count >= 0
                     and gyro_testUNO.section_count <= 3
                     and motor.get()[0] - last_run >= 300
@@ -461,7 +461,7 @@ if True:
             # Processing when the green sign is visible(The process described below is almost identical to that for recognizing red signs.)
             elif sign_flag == 2:
                 info_yaw = -1 * yaw / 5
-                # 標識の記録のために緑色が見えていることを記録
+                # For the record of the marker, record that the green color is visible.
                 if (gyro_testUNO.section_count >= 0
                     and gyro_testUNO.section_count <= 3
                     and motor.get()[0] - last_run >= 300
@@ -606,7 +606,7 @@ if True:
                     print("lookred_section_count:", gyro_testUNO.section_count)
         # When the timing is right for the reverse run to begin.
         else :
-            # 進行方向と直前に通った標識の色によって直進量を変える
+            # Changes the amount of straight travel depending on the direction of travel and the color of the sign passed just before.
             if rotation_mode == "blue":
                 if simple_memory_sign[3] == 1 or simple_memory_sign[3] == 4: 
                     go_angle = 800
