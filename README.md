@@ -166,15 +166,17 @@ During a trial run, the program can be run on the Hub by clicking the Run button
 
 * Place a .service file with the following contents in /etc/systemd/system. This time, we used a file named `test.service`.
 
-`[Unit]`
-`Description=Do test`
+```
+[Unit]
+Description=Do test
 
-`[Service]`
-`ExecStart=sudo python3 /home/pi/WRO2023/src/raspi/color_avoid_wideangle.py`
+[Service]
+ExecStart=sudo python3 /home/pi/WRO2023/src/raspi/color_avoid_wideangle.py
 
 
-`[Install]`
-`WantedBy=multi-user.target`
+[Install]
+WantedBy=multi-user.target
+```
 
 This file allows `color_avoid_wideangle.py` to be executed at startup.
 
